@@ -1,0 +1,29 @@
+{
+    "params": {
+        "login": {
+            "username": "admin",
+            "password": "admin"
+        },
+        "move_type" : 101,
+        "payload": {
+            "header": {
+                "partner_id": 132,
+                "partner_invoice_id": 132,
+                "partner_shipping_id": 132,
+                "pricelist_id": 3,
+                "date_order": "18/12/2021"
+            },
+            "lines": [
+                {
+                    "product_id": 83,
+                    "product_uom_qty": 5,
+                    "price_unit": 800
+                }
+            ],
+            "invoice_data":{
+                "journal_id": 23,
+                "l10n_latam_document_type_id": 6
+            }
+        }
+    }
+}

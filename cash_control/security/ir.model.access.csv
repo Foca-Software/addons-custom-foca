@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cash_control_config,access_cash_control_config,model_cash_control_config,base.group_user,1,1,1,1
+access_cash_control_session,access_cash_control_session,model_cash_control_session,base.group_user,1,1,1,1
+access_cash_control_transfer_cash,access_cash_control_transfer_cash,model_cash_control_transfer_cash,base.group_user,1,1,1,1
+access_cash_control_session_payment_summary,access_cash_control_session_payment_summary,model_cash_control_session_payment_summary,base.group_user,1,1,1,1

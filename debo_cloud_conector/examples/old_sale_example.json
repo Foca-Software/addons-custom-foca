@@ -1,0 +1,30 @@
+{
+    "params": {
+        "login": {
+            "username": "admin",
+            "password": "admin"
+        },
+        "move_type" : 101,
+        "payload": {
+            "header": {
+                "partner_id": 132,
+                "partner_invoice_id": 132,
+                "partner_shipping_id": 132,
+                "pricelist_id": 3,
+                "date_order": "18/12/2021"
+            },
+            "lines": [
+                {
+                    "product_template_id": 78,
+                    "product_id": 160,
+                    "name": "mi producto",
+                    "product_uom": 1,
+                    "product_uom_qty": 1,
+                    "price_unit": 800,
+                    "tax_id": 137
+                }
+            ],
+            "note": "esto es una nota al pie"
+        }
+    }
+}
