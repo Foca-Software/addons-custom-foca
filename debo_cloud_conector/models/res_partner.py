@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
 import json
 import logging
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -12,7 +13,7 @@ class ResPartner(models.Model):
     def send_debo_fields(self):
         pass
 
-    def _format_vat(self,vat):
+    def _format_vat(self, vat : str) -> str:
         vat_type = self.l10n_latam_identification_type_id.name
         if vat_type == "CUIT":
             vat = f"{vat[0:2]}-{vat[2:10]}-{vat[-1]}"
@@ -20,83 +21,129 @@ class ResPartner(models.Model):
             vat = f"00-{vat}-0"
         return vat
 
-    @profile
-    def get_debo_fields(self):
-        debo_like_fields = {
-            "NOM" : self.name,
-            "DOM" : self.street + " " + (self.street2 or ""),
-            "CPO" : self.zip,
-            "LOC" : self.city,
-            "PCI" : self.state_id.ids,
-            "CUIT" : self._format_vat(self.vat),
-            "TEL" : self.phone,
-            "ACT" : self.actividades_padron.ids, #One2Many en ODOO
-            "MOD" : self.property_product_pricelist.ids,
-            "IVA" : self.l10n_ar_afip_responsibility_type_id.ids,
-            "PCX" : self.state_id.ids,
-            "VEN" : self.user_id.id,
-            "D_EN" : False, #no existe
-            "D_Y" : False, #no existe
-            "NRO_PER_MAY" : self.l10n_ar_gross_income_number,
-            "JUR_MAY_PER" : self.gross_income_jurisdiction_ids.ids,#One2Many en ODOO
-            "MAIL" : self.email,
-            "CONVMULTILATERAL" : 1 if self.l10n_ar_gross_income_type == "multilateral" else 0,
-            "PAIS" : self.country_id.name,
-            "idDeboCloud" : self.id,
+    def _add_alicuot_fields(self) -> dict:
+        alicuot_fields = {
+            "PERC": False,
+            "POR_RED": False,
+            "PER_SL": False,
+            "PERC_PORC": False,
+            "PER_IVARG17": False,
+            "PER_ATER": False,
+            "OpJurMis": False,
+            "TIPO_RES_60": False,
+            "TipAlij19": False,
+            "SL_Concep": False,
+            "SL_TSuj": False,
         }
-        _logger.warn(json.dumps(debo_like_fields))
-        # _logger.info(self.l10n_latam_identification_type_id.read())
-        return debo_like_fields
-
-# unused
-    # def _necessary_fields(self):
-    #     fields = [
-    #         "name",
-    #         "street",
-    #         "street2",
-    #         "zip",
-    #         "city",
-    #         "state_id",
-    #         "vat",
-    #         "phone",
-    #         "property_payment_term_id",
-    #         "actividades_padron",
-    #         "property_product_pricelist",
-    #         "l10n_ar_afip_responsibility_type_id",
-    #         "user_id",
-    #         "email",
-    #         "l10n_ar_gross_income_type",
-    #         "l10n_ar_gross_income_number",
-    #         "gross_income_jurisdiction_ids",
-    #         "country_id",
-    #         "id",
-    #     ]
-    #     return fields
+        fields = [
+            "id",
+            "tag_id",
+            "alicuota_percepcion",
+            "alicuota_retencion",
+            "withholding_amount_type",
+        ]
+        return self.arba_alicuot_ids.read(fields)
 
     # @profile
-    # def get_debo_fields(self):
-    #     fields_dict = self.read(self._necessary_fields)[0]
-    #     debo_like_fields = {
-    #         "NOM" : fields_dict["name"],
-    #         "DOM" : fields_dict["street"] + " " + (fields_dict["street2"] or ""),
-    #         "CPO" : fields_dict["zip"],
-    #         "LOC" : fields_dict["city"],
-    #         "PCI" : fields_dict["state_id"][1],
-    #         "CUIT" : self._format_vat(fields_dict["vat"]),
-    #         "TEL" : fields_dict["phone"],
-    #         "ACT" : fields_dict["actividades_padron"], #One2Many en ODOO
-    #         "MOD" : fields_dict["property_product_pricelist"][0],
-    #         "IVA" : fields_dict["l10n_ar_afip_responsibility_type_id"][0],
-    #         "PCX" : fields_dict["state_id"][0],
-    #         "VEN" : fields_dict["user_id"],
-    #         "D_EN" : False, #no existe
-    #         "D_Y" : False, #no existe
-    #         "NRO_PER_MAY" : fields_dict["l10n_ar_gross_income_number"],
-    #         "JUR_MAY_PER" : fields_dict["gross_income_jurisdiction_ids"],#One2Many en ODOO
-    #         "MAIL" : fields_dict["email"],
-    #         "CONVMULTILATERAL" : fields_dict["l10n_ar_gross_income_type"] == "multilateral",
-    #         "PAIS" : fields_dict["country_id"][1],
-    #         "idDeboCloud" : fields_dict["id"],
-    #     }
-    #     _logger.warn(json.dumps(fields_dict))
-    #     _logger.warn(json.dumps(debo_like_fields))
+    def get_debo_fields(self):
+        debo_like_fields = {
+            "NOM": self.name,
+            "DOM": self.street + " " + (self.street2 or ""),
+            "CPO": self.zip,
+            "LOC": self.city,
+            "PCI": self.state_id.ids,
+            "CUIT": self._format_vat(self.vat),
+            "TEL": self.phone,
+            "FPA": self.property_payment_term_id.id,
+            "CTA": self.parent_id.id if not self.is_company else self.id,
+            "ACT": self.actividades_padron.ids,  # One2Many en ODOO
+            "MOD": self.property_product_pricelist.ids,
+            "IVA": self.l10n_ar_afip_responsibility_type_id.ids,
+            "PCX": self.state_id.ids,
+            "VEN": self.user_id.id,
+            "FEA": datetime.strftime(self.write_date, "%d/%m/%Y"),
+            "D_EN": False,  # no existe
+            "D_Y": False,  # no existe
+            "NHA": 1 if not self.active else 0,
+            "E_HD": False,  # no existe
+            "C_HD": False,  # no existe
+            "ID_LEY": 1,
+            "NRO_PER_MAY": self.l10n_ar_gross_income_number,
+            "JUR_MAY_PER": self.gross_income_jurisdiction_ids.ids,  # One2Many en ODOO
+            "CLI_CON": self.l10n_ar_gross_income_type,
+            "MAIL": self.email,
+            "TIPO_NOTIFICACION": 0,
+            "FEC_CTRL": self.sale_order_ids[0].confirmation_date
+            if len(self.sale_order_ids.ids) > 0
+            else False,
+            "MARCA_SALDO": 0,
+            "CONVMULTILATERAL": 1
+            if self.l10n_ar_gross_income_type == "multilateral"
+            else 0,
+            "PAIS": self.country_id.name,
+            "aplica_perc_IVA": 1 if self.imp_iva_padron else 0,
+            "alicuotas": self._add_alicuot_fields(),
+            "ID_DEBO_CLOUD": self.id,
+        }
+        _logger.warn(json.dumps(debo_like_fields))
+        return debo_like_fields
+
+    def create(self,vals_list):
+        res = super().create(vals_list)
+        try:
+            res.send_debo_fields()
+        except Exception as e:
+            return e.args
+        return res
+# unused
+# def _necessary_fields(self):
+#     fields = [
+#         "name",
+#         "street",
+#         "street2",
+#         "zip",
+#         "city",
+#         "state_id",
+#         "vat",
+#         "phone",
+#         "property_payment_term_id",
+#         "actividades_padron",
+#         "property_product_pricelist",
+#         "l10n_ar_afip_responsibility_type_id",
+#         "user_id",
+#         "email",
+#         "l10n_ar_gross_income_type",
+#         "l10n_ar_gross_income_number",
+#         "gross_income_jurisdiction_ids",
+#         "country_id",
+#         "id",
+#     ]
+#     return fields
+
+# @profile
+# def get_debo_fields(self):
+#     fields_dict = self.read(self._necessary_fields)[0]
+#     debo_like_fields = {
+#         "NOM" : fields_dict["name"],
+#         "DOM" : fields_dict["street"] + " " + (fields_dict["street2"] or ""),
+#         "CPO" : fields_dict["zip"],
+#         "LOC" : fields_dict["city"],
+#         "PCI" : fields_dict["state_id"][1],
+#         "CUIT" : self._format_vat(fields_dict["vat"]),
+#         "TEL" : fields_dict["phone"],
+#         "ACT" : fields_dict["actividades_padron"], #One2Many en ODOO
+#         "MOD" : fields_dict["property_product_pricelist"][0],
+#         "IVA" : fields_dict["l10n_ar_afip_responsibility_type_id"][0],
+#         "PCX" : fields_dict["state_id"][0],
+#         "VEN" : fields_dict["user_id"],
+#         "D_EN" : False, #no existe
+#         "D_Y" : False, #no existe
+#         "NRO_PER_MAY" : fields_dict["l10n_ar_gross_income_number"],
+#         "JUR_MAY_PER" : fields_dict["gross_income_jurisdiction_ids"],#One2Many en ODOO
+#         "MAIL" : fields_dict["email"],
+#         "CONVMULTILATERAL" : fields_dict["l10n_ar_gross_income_type"] == "multilateral",
+#         "PAIS" : fields_dict["country_id"][1],
+#         "idDeboCloud" : fields_dict["id"],
+#     }
+#     _logger.warn(json.dumps(fields_dict))
+#     _logger.warn(json.dumps(debo_like_fields))
