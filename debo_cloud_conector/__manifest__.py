@@ -9,7 +9,7 @@
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Endpoint",
-    "version": "13.0.0.0.4",
+    "version": "13.0.0.0.3",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
@@ -25,8 +25,8 @@
     ],
     "data": [
         # "data/auth_jwt_validator.xml",
-        "views/res_partner.xml",
+        # "views/res_partner.xml",
         # "views/product_product.xml",
-        # "views/res_company.xml",
+        "views/res_company.xml",
     ],
 }

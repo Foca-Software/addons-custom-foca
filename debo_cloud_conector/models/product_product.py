@@ -87,7 +87,7 @@ class ProductProduct(models.Model):
         # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
         method_endpoints = {
             'create' : '/guardarProducto',
-            'write' : '',
+            'write' : '/guardarProducto',
         }
         try:
             headers = {"Authorization" : "none",
@@ -113,16 +113,24 @@ class ProductProduct(models.Model):
 
         return True
 
-
+    @api.model
     def create(self,vals_list):
         res = super().create(vals_list)
         try:
-            res.send_debo_fields()
+            res.send_debo_fields('create')
         except Exception as e:
             return e.args
         return res
 
-
+    def write(self, vals_list):
+        res = super().write(vals_list)
+        _logger.info(res)
+        if res:
+            try:
+                self.send_debo_fields('write')
+            except Exception as e:
+                return e.args
+        return res
 # unused
 
 # def _necessary_fields(self) -> list:

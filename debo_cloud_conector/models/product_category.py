@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
         }
     
     def _send_debo_fields(self):
-        fields = self._get_debo_fields
+        fields = self._get_debo_fields()
         #TODO: connect to debo endpoint
         return True
 

@@ -18,7 +18,7 @@ class ResPartner(models.Model):
         # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
         method_endpoints = {
             'create' : '/guardarCliente',
-            'write' : '',
+            'write' : '/guardarCliente',
         }
         try:
             headers = {"Authorization" : "none",
@@ -127,30 +127,40 @@ class ResPartner(models.Model):
             return e.args
         return res
 
-    def _necessary_fields(self):
-        fields = [
-            "name",
-            "street",
-            "street2",
-            "zip",
-            "city",
-            "state_id",
-            "vat",
-            "phone",
-            "property_payment_term_id",
-            "actividades_padron",
-            "property_product_pricelist",
-            "l10n_ar_afip_responsibility_type_id",
-            "user_id",
-            "email",
-            "l10n_ar_gross_income_type",
-            "l10n_ar_gross_income_number",
-            "gross_income_jurisdiction_ids",
-            "country_id",
-            "id",
-        ]
-        return fields
+    def write(self, vals_list):
+        res = super().write(vals_list)
+        _logger.info(res)
+        if res:
+            try:
+                self.send_debo_fields('write')
+            except Exception as e:
+                return e.args
+        return res
+
 # unused
+    # def _necessary_fields(self):
+    #     fields = [
+    #         "name",
+    #         "street",
+    #         "street2",
+    #         "zip",
+    #         "city",
+    #         "state_id",
+    #         "vat",
+    #         "phone",
+    #         "property_payment_term_id",
+    #         "actividades_padron",
+    #         "property_product_pricelist",
+    #         "l10n_ar_afip_responsibility_type_id",
+    #         "user_id",
+    #         "email",
+    #         "l10n_ar_gross_income_type",
+    #         "l10n_ar_gross_income_number",
+    #         "gross_income_jurisdiction_ids",
+    #         "country_id",
+    #         "id",
+    #     ]
+    #     return fields
 
 # @profile
 # def get_debo_fields(self):
