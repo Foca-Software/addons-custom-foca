@@ -26,7 +26,7 @@
     "data": [
         # "data/auth_jwt_validator.xml",
         "views/res_partner.xml",
-        "views/product_product.xml",
-        "views/res_company.xml",
+        # "views/product_product.xml",
+        # "views/res_company.xml",
     ],
 }
