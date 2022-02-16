@@ -38,6 +38,7 @@ class ReceiveData(Controller):
 
     @route("/debocloud/create", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
+        _logger.warning(kwargs)
         # ---------------------------this won't be necessary once jwt is implemented----------------------------
         if "login" not in kwargs:
             return {

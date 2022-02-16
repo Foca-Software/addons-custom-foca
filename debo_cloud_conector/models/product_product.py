@@ -1,4 +1,3 @@
-from attr import fields_dict
 from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
 from odoo.exceptions import Warning
@@ -12,6 +11,7 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    @api.depends('lst_price', 'taxes_id')
     def _calculate_PreVen(self, lst_price: float, taxes_id: list) -> float:
         percent = 0
         fixed = 0
@@ -55,19 +55,19 @@ class ProductProduct(models.Model):
         PreVen = self._calculate_PreVen(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
-            "Categ": self.categ_id.ids,
-            "Costo": self.standard_price,
-            "PreNet": self.lst_price,
+            "Categ": self.categ_id.ids[0] if len(self.categ_id.ids) > 0 else 0,
+            "Costo": self.standard_price or 0,
+            "PreNet": self.lst_price or 0,
             "Taxes": Taxes,
-            "UniVen": self.uom_id.ids,
+            "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
             "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
-            "CodPro": self.seller_ids.ids,
+            "CodPro": self.seller_ids.ids[0] if len(self.seller_id.ids) > 0 else 0,
             "ExiDep": self.qty_available,
             "PreVen": PreVen,
             "TIP": self.type,
             "ESS": 1 if self.type == "service" else 0,
             "NHA": 0 if self.active else 1,
-            "DET_LAR": self.display_name,
+            "DET_LAR": self.display_name or "",
             "IMP_IMP_INT": 1 if len(Taxes) > 0 else 0,
             "LISPSD": self.pricelist_id.read(),
             "E_HD": "",
@@ -77,7 +77,7 @@ class ProductProduct(models.Model):
             "E_HD2": "",
             "C_HD2": "",
             "ID_DEBO_CLOUD": self.id,
-            "ID_CLIENTE_DEBO" : self.company_id.id
+            "ID_CLIENTE_DEBO" : self.env.company.id
         }
         debo_like_fields.update(self._calculate_bom_fields())
         _logger.warn(json.dumps(debo_like_fields))
