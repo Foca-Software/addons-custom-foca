@@ -118,6 +118,7 @@ class ResPartner(models.Model):
         }
         return debo_like_fields
 
+    @api.model
     def create(self,vals_list):
         res = super().create(vals_list)
         try:
