@@ -14,37 +14,38 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     def send_debo_fields(self, method="create"):
-        #TODO: create debo config model?
+        # TODO: create debo config model?
         # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
         method_endpoints = {
-            'create' : '/guardarCliente',
-            'write' : '/guardarCliente',
+            "create": "/guardarCliente",
+            "write": "/guardarCliente",
         }
         try:
-            headers = {"Authorization" : "none",
-                    "Content-Type" : "application/json",
-                    "Accept" : "*/*"}
+            headers = {
+                "Authorization": "none",
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+            }
             data = self.get_debo_fields()
             if not self.env.company.debo_cloud_url:
-                raise Warning('No se ha configurado la URL de Debo Cloud')
+                raise Warning("No se ha configurado la URL de Debo Cloud")
             url = self.env.company.debo_cloud_url + method_endpoints[method]
             r = requests.post(
-                url=url,
-                headers=headers,
-                data=json.dumps(data),
-                verify=True
+                url=url, headers=headers, data=json.dumps(data), verify=True
             )
         except Exception as e:
+            _logger.error(e)
             raise Warning(e)
         try:
             response = r.text
             _logger.info(response)
         except Exception as e:
+            _logger.error(e)
             raise Warning(e.args)
 
         return True
 
-    def _format_vat(self, vat : str) -> str:
+    def _format_vat(self, vat: str) -> str:
         if not vat:
             return False
         vat_type = self.l10n_latam_identification_type_id.name
@@ -77,6 +78,14 @@ class ResPartner(models.Model):
         ]
         return self.arba_alicuot_ids.read(fields)
 
+    def _compute_CTA(self):
+        if self.is_company:
+            return 0
+        else:
+            if self.parent_id:
+                return self.parent_id.id
+            else:
+                return 0
     # @profile
     def get_debo_fields(self):
         debo_like_fields = {
@@ -88,11 +97,17 @@ class ResPartner(models.Model):
             "CUIT": self._format_vat(self.vat) or "",
             "TEL": self.phone or 0,
             "FPA": self.property_payment_term_id.id or 0,
-            "CTA": self.parent_id.id if not self.is_company else self.id,
-            "ACT": self.actividades_padron.ids[0] or 0,  # One2Many en ODOO
-            "MOD": self.property_product_pricelist.ids[0] or 0,
-            "IVA": self.l10n_ar_afip_responsibility_type_id.ids[0] or 0,
-            "PCX": self.state_id.ids[0] or 0,
+            "CTA": self._compute_CTA(),
+            "ACT": self.actividades_padron.ids[0]
+            if len(self.actividades_padron.ids) > 0
+            else 0,  # One2Many en ODOO
+            "MOD": self.property_product_pricelist.ids[0]
+            if len(self.property_product_pricelist.ids) > 0
+            else 0,
+            "IVA": self.l10n_ar_afip_responsibility_type_id.ids[0]
+            if len(self.l10n_ar_afip_responsibility_type_id.ids) > 0
+            else 0,
+            "PCX": self.state_id.ids[0] if len(self.actividades_padron.ids) > 0 else 0,
             "VEN": self.user_id.id or 0,
             "FEA": datetime.strftime(self.write_date, "%d/%m/%Y"),
             "D_EN": 0,  # no existe
@@ -102,9 +117,11 @@ class ResPartner(models.Model):
             "C_HD": 0,  # no existe
             "ID_LEY": 1,
             "NRO_PER_MAY": self.l10n_ar_gross_income_number or 0,
-            "JUR_MAY_PER": self.gross_income_jurisdiction_ids.ids[0] or 0,  # One2Many en ODOO
+            "JUR_MAY_PER": self.gross_income_jurisdiction_ids.ids[0]
+            if len(self.actividades_padron.ids) > 0
+            else 0,  # One2Many en ODOO
             "CLI_CON": self.l10n_ar_gross_income_type,
-            "MAIL": self.email or '',
+            "MAIL": self.email or "",
             "TIPO_NOTIFICACION": 0,
             "FEC_CTRL": self.sale_order_ids[0].confirmation_date
             if len(self.sale_order_ids.ids) > 0
@@ -117,15 +134,15 @@ class ResPartner(models.Model):
             "aplica_perc_IVA": 1 if self.imp_iva_padron else 0,
             "alicuotas": self._add_alicuot_fields(),
             "ID_DEBO_CLOUD": self.id,
-            "ID_CLIENTE_DEBO" : self.company_id.id
+            "ID_CLIENTE_DEBO": self.env.company.id,
         }
         return debo_like_fields
 
     @api.model
-    def create(self,vals_list):
+    def create(self, vals_list):
         res = super().create(vals_list)
         try:
-            res.send_debo_fields('create')
+            res.send_debo_fields("create")
         except Exception as e:
             return e.args
         return res
@@ -135,35 +152,36 @@ class ResPartner(models.Model):
         _logger.info(res)
         if res:
             try:
-                self.send_debo_fields('write')
+                self.send_debo_fields("write")
             except Exception as e:
                 return e.args
         return res
 
+
 # unused
-    # def _necessary_fields(self):
-    #     fields = [
-    #         "name",
-    #         "street",
-    #         "street2",
-    #         "zip",
-    #         "city",
-    #         "state_id",
-    #         "vat",
-    #         "phone",
-    #         "property_payment_term_id",
-    #         "actividades_padron",
-    #         "property_product_pricelist",
-    #         "l10n_ar_afip_responsibility_type_id",
-    #         "user_id",
-    #         "email",
-    #         "l10n_ar_gross_income_type",
-    #         "l10n_ar_gross_income_number",
-    #         "gross_income_jurisdiction_ids",
-    #         "country_id",
-    #         "id",
-    #     ]
-    #     return fields
+# def _necessary_fields(self):
+#     fields = [
+#         "name",
+#         "street",
+#         "street2",
+#         "zip",
+#         "city",
+#         "state_id",
+#         "vat",
+#         "phone",
+#         "property_payment_term_id",
+#         "actividades_padron",
+#         "property_product_pricelist",
+#         "l10n_ar_afip_responsibility_type_id",
+#         "user_id",
+#         "email",
+#         "l10n_ar_gross_income_type",
+#         "l10n_ar_gross_income_number",
+#         "gross_income_jurisdiction_ids",
+#         "country_id",
+#         "id",
+#     ]
+#     return fields
 
 # @profile
 # def get_debo_fields(self):
