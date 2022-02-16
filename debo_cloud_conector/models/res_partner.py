@@ -93,7 +93,9 @@ class ResPartner(models.Model):
             "DOM": self.street + " " + (self.street2 or ""),
             "CPO": self.zip,
             "LOC": self.city,
-            "PCI": self.state_id.ids,
+            "PCI": self.state_id.ids[0]
+            if len(self.state_id.ids) > 0
+            else 0,
             "CUIT": self._format_vat(self.vat) or "",
             "TEL": self.phone or 0,
             "FPA": self.property_payment_term_id.id or 0,

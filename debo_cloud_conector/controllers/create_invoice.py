@@ -100,7 +100,7 @@ class ReceiveData(Controller):
             except Exception as e:
                 _logger.error(e)
                 res["status"] = "Error"
-                res["message"] = "Error creating invoice \n %s" % e.args
+                res["message"] = e.args
                 return res
 
             return res
