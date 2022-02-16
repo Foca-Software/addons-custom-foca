@@ -45,6 +45,8 @@ class ResPartner(models.Model):
         return True
 
     def _format_vat(self, vat : str) -> str:
+        if not vat:
+            return False
         vat_type = self.l10n_latam_identification_type_id.name
         if vat_type == "CUIT":
             vat = f"{vat[0:2]}-{vat[2:10]}-{vat[-1]}"
@@ -83,15 +85,15 @@ class ResPartner(models.Model):
             "CPO": self.zip,
             "LOC": self.city,
             "PCI": self.state_id.ids,
-            "CUIT": self._format_vat(self.vat),
-            "TEL": self.phone,
-            "FPA": self.property_payment_term_id.id,
+            "CUIT": self._format_vat(self.vat) or "",
+            "TEL": self.phone or 0,
+            "FPA": self.property_payment_term_id.id or 0,
             "CTA": self.parent_id.id if not self.is_company else self.id,
-            "ACT": self.actividades_padron.ids,  # One2Many en ODOO
-            "MOD": self.property_product_pricelist.ids,
-            "IVA": self.l10n_ar_afip_responsibility_type_id.ids,
-            "PCX": self.state_id.ids,
-            "VEN": self.user_id.id,
+            "ACT": self.actividades_padron.ids[0] or 0,  # One2Many en ODOO
+            "MOD": self.property_product_pricelist.ids[0] or 0,
+            "IVA": self.l10n_ar_afip_responsibility_type_id.ids[0] or 0,
+            "PCX": self.state_id.ids[0] or 0,
+            "VEN": self.user_id.id or 0,
             "FEA": datetime.strftime(self.write_date, "%d/%m/%Y"),
             "D_EN": 0,  # no existe
             "D_Y": 0,  # no existe
@@ -99,10 +101,10 @@ class ResPartner(models.Model):
             "E_HD": 0,  # no existe
             "C_HD": 0,  # no existe
             "ID_LEY": 1,
-            "NRO_PER_MAY": self.l10n_ar_gross_income_number,
-            "JUR_MAY_PER": self.gross_income_jurisdiction_ids.ids,  # One2Many en ODOO
+            "NRO_PER_MAY": self.l10n_ar_gross_income_number or 0,
+            "JUR_MAY_PER": self.gross_income_jurisdiction_ids.ids[0] or 0,  # One2Many en ODOO
             "CLI_CON": self.l10n_ar_gross_income_type,
-            "MAIL": self.email,
+            "MAIL": self.email or '',
             "TIPO_NOTIFICACION": 0,
             "FEC_CTRL": self.sale_order_ids[0].confirmation_date
             if len(self.sale_order_ids.ids) > 0
