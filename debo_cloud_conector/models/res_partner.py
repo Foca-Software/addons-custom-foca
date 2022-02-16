@@ -115,6 +115,7 @@ class ResPartner(models.Model):
             "aplica_perc_IVA": 1 if self.imp_iva_padron else 0,
             "alicuotas": self._add_alicuot_fields(),
             "ID_DEBO_CLOUD": self.id,
+            "ID_CLIENTE_DEBO" : self.company_id.id
         }
         return debo_like_fields
 

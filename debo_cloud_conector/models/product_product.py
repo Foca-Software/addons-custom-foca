@@ -69,7 +69,6 @@ class ProductProduct(models.Model):
             "NHA": 0 if self.active else 1,
             "DET_LAR": self.display_name,
             "IMP_IMP_INT": 1 if len(Taxes) > 0 else 0,
-            "ID_DEBO_CLOUD": self.id,
             "LISPSD": self.pricelist_id.read(),
             "E_HD": "",
             "C_HD": "",
@@ -77,6 +76,8 @@ class ProductProduct(models.Model):
             "C_HD1": "",
             "E_HD2": "",
             "C_HD2": "",
+            "ID_DEBO_CLOUD": self.id,
+            "ID_CLIENTE_DEBO" : self.company_id.id
         }
         debo_like_fields.update(self._calculate_bom_fields())
         _logger.warn(json.dumps(debo_like_fields))
