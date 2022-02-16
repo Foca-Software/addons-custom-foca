@@ -1,10 +1,11 @@
 from attr import fields_dict
 from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
+from odoo.exceptions import Warning
 from datetime import datetime
 import json
 import logging
-
+import requests
 _logger = logging.getLogger(__name__)
 
 
@@ -81,8 +82,37 @@ class ProductProduct(models.Model):
         _logger.warn(json.dumps(debo_like_fields))
         return debo_like_fields
 
-    def send_debo_fields(self):
-        pass
+    def send_debo_fields(self, method="create"):
+        #TODO: create debo config model?
+        # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
+        method_endpoints = {
+            'create' : '/guardarProducto',
+            'write' : '',
+        }
+        try:
+            headers = {"Authorization" : "none",
+                    "Content-Type" : "application/json",
+                    "Accept" : "*/*"}
+            data = self.get_debo_fields()
+            if not self.env.company.debo_cloud_url:
+                raise Warning('No se ha configurado la URL de Debo Cloud')
+            url = self.env.company.debo_cloud_url + method_endpoints[method]
+            r = requests.post(
+                url=url,
+                headers=headers,
+                data=json.dumps(data),
+                verify=True
+            )
+        except Exception as e:
+            raise Warning(e)
+        try:
+            response = r.text
+            _logger.info(response)
+        except Exception as e:
+            raise Warning(e.args)
+
+        return True
+
 
     def create(self,vals_list):
         res = super().create(vals_list)
