@@ -27,6 +27,7 @@ class ResPartner(models.Model):
                 "Accept": "*/*",
             }
             data = self.get_debo_fields()
+            _logger.error(data)
             if not self.env.company.debo_cloud_url:
                 raise Warning("No se ha configurado la URL de Debo Cloud")
             url = self.env.company.debo_cloud_url + method_endpoints[method]

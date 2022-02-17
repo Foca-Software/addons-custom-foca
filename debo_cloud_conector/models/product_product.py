@@ -61,7 +61,7 @@ class ProductProduct(models.Model):
             "Taxes": Taxes,
             "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
             "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
-            "CodPro": self.seller_ids.ids[0] if len(self.seller_id.ids) > 0 else 0,
+            "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
             "PreVen": PreVen,
             "TIP": self.type,
@@ -105,11 +105,13 @@ class ProductProduct(models.Model):
                 verify=True
             )
         except Exception as e:
+            _logger.error(e)
             raise Warning(e)
         try:
             response = r.text
             _logger.info(response)
         except Exception as e:
+            _logger.error(e)
             raise Warning(e.args)
 
         return True

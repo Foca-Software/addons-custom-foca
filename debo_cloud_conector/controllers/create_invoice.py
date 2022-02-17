@@ -53,7 +53,7 @@ class ReceiveData(Controller):
         )  # TODO: use JWT instead
         if not user_id:
             return {"status": "Error", "message": "Wrong username or password"}
-        # ------------------------------------------------------------------------------------------------------
+        # --------------------------------S----------------------------------------------------------------------
         payload = kwargs.get("payload", False)
         if not payload:
             return {"status": "Error", "message": "Payload not found"}
@@ -116,7 +116,7 @@ class ReceiveData(Controller):
             return create_invoice(user_id, payload)
 
         if move_code == DEBO_TEST_CODE:
-            res = request.env["account.move"].with_user(1).browse(333)
+            res = request.env["account.move"].with_user(1).browse(335)
             acc_pay_group_obj = request.env["account.payment.group"].with_user(1)
             acc_payment_obj = request.env["account.payment"].with_user(1)
             # _logger.info(res)
