@@ -20,6 +20,8 @@ class ResPartner(models.Model):
             "create": "/guardarCliente",
             "write": "/guardarCliente",
         }
+        if self._context.get('import_file',False):
+            return False
         try:
             headers = {
                 "Authorization": "none",

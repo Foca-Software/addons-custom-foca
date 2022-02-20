@@ -90,6 +90,8 @@ class ProductProduct(models.Model):
             'create' : '/guardarProducto',
             'write' : '/guardarProducto',
         }
+        if self._context.get('import_file',False):
+            return False
         try:
             headers = {"Authorization" : "none",
                     "Content-Type" : "application/json",
@@ -122,7 +124,8 @@ class ProductProduct(models.Model):
         try:
             res.send_debo_fields('create')
         except Exception as e:
-            return e.args
+            _logger.error(e.args)
+            raise Warning("Error sending data to DEBO, please try again later")
         return res
 
     def write(self, vals_list):
