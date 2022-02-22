@@ -1,4 +1,4 @@
- [FIX][debo_cloud_conector]
+ [ADD][cash_control_multi_store, credit_card_instalment, _pos, _sale]
 
-- fix seller_ids field
-- add _logger errors in exceptions
+ [UPD][cash_control]
+
