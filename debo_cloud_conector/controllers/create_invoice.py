@@ -108,8 +108,8 @@ class ReceiveData(Controller):
                 created_invoices = auto_create_invoice(sale)
                 for invoice in created_invoices:
                     invoice.write(payload["invoice_data"])
-                    if not payload["invoice_data"].get("pay_now_journal_id", False):
-                        invoice.pay_now_journal_id = self._get_default_payment_journal()
+                    # if not payload["invoice_data"].get("pay_now_journal_id", False):
+                    #     invoice.pay_now_journal_id = self._get_default_payment_journal()
                     invoice.action_post()
                 _logger.info(created_invoices)
                 res["invoice_ids"] = (
