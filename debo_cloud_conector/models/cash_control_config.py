@@ -18,18 +18,22 @@ class CashControlSession(models.Model):
     def _api_open_cashbox_pos(self, number : int = 1, coin_value : float = 0.0): #, number : int = 0, coin_value : int = 0
         self.ensure_one()
         subtotal = coin_value * number
-        # action = self.statement_id.open_cashbox_id()
+        action = self.statement_id.open_cashbox_id()
+        action = action['context']
+        # _logger.error(action['context'])
         ctx = {}
         ctx.update(self.env.context)
+        ctx['statement_id'] = action['statement_id']
         ctx['pos_session_id'] = self.id
         ctx['default_pos_id'] = self.config_id.id
+        # _logger.error(ctx)
         open_dict = {
             'cashbox_lines_ids' : [(0, 0, {'number': number, 'coin_value': coin_value, 'subtotal': subtotal})],
         }
         _logger.warning(open_dict)
         wiz = self.env['account.bank.statement.cashbox'].with_context(ctx).create(open_dict)
         wiz._validate_cashbox()
-        _logger.warning(wiz)
+        # _logger.warning(wiz)
         return wiz
 
 #trash

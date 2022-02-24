@@ -46,6 +46,10 @@ class OpenSession(Controller):
             return {"status": "ERROR", "message": "Cash box not found"}
 
         try:
+            if cash_box.session_state_info == 'opened':
+                Response.status= "200 OK"
+                return {"status": "OK", "message": "Cash box %s already opened" %(cash_box.name)}
+            Response.status= "200 OK"
             cash_box.api_open_cashbox(coin_value=data.get('amount',False))
             return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
         except Exception as e:
