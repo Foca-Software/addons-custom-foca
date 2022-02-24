@@ -18,6 +18,7 @@
         "bin": [],
     },
     "depends": [
+        "base",
         "account",
         "contacts",
         "product",
