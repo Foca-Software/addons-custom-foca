@@ -11,6 +11,8 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    id_debo = fields.Char(string="ID Debo", readonly=True)
+
     @api.depends('lst_price', 'taxes_id')
     def _calculate_PreVen(self, lst_price: float, taxes_id: list) -> float:
         percent = 0
@@ -29,8 +31,21 @@ class ProductProduct(models.Model):
             "name",
             "amount",
             "amount_type",
+            "id_debo",
         ]
         return taxes.read(necessary_tax_fields)
+
+    def _calculate_category(self) -> list or 0:
+        necessary_category_fields = [
+            "id",
+            "name",
+            "id_debo",
+        ]
+        try:
+            return self.categ_id.read(necessary_category_fields)[0]
+        except Exception as e:
+            _logger.error(e)
+            return 0
 
     def _calculate_bom_fields(self) -> dict:
         dictionary = {}
@@ -55,7 +70,7 @@ class ProductProduct(models.Model):
         PreVen = self._calculate_PreVen(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
-            "Categ": self.categ_id.ids[0] if len(self.categ_id.ids) > 0 else 0,
+            "Categ": self._calculate_category(),
             "Costo": self.standard_price or 0,
             "PreNet": self.lst_price or 0,
             "Taxes": Taxes,
@@ -77,7 +92,8 @@ class ProductProduct(models.Model):
             "E_HD2": "",
             "C_HD2": "",
             "ID_DEBO_CLOUD": self.id,
-            "ID_CLIENTE_DEBO" : self.env.company.id
+            "ID_CLIENTE_DEBO" : self.env.company.id,
+            "id_debo": self.id_debo,
         }
         debo_like_fields.update(self._calculate_bom_fields())
         _logger.warn(json.dumps(debo_like_fields))

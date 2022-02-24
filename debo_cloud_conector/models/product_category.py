@@ -11,6 +11,8 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.category"
 
+    id_debo = fields.Char(string="ID Debo", readonly=True)
+
     def _get_debo_fields(self):
         return {
             "ID_DEBO_CLOUD" : self.id,

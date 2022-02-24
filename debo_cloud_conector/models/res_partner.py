@@ -13,6 +13,8 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    id_debo = fields.Char(string="ID Debo", readonly=True)
+
     def send_debo_fields(self, method="create"):
         # TODO: create debo config model?
         # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
@@ -140,6 +142,7 @@ class ResPartner(models.Model):
             "alicuotas": self._add_alicuot_fields(),
             "ID_DEBO_CLOUD": self.id,
             "ID_CLIENTE_DEBO": self.env.company.id,
+            "id_debo": self.id_debo,
         }
         return debo_like_fields
 
