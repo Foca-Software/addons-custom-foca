@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 class OpenSession(Controller):
     _name = "debo.cloud.connector.open.session"
 
-    @route("/debocloud/open_session", type="json", auth="none", methods=["POST"], csrf=False)
+    @route("/debocloud/close_session", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
         #----------------------------------------------------------------------------------------------------------------------
         _logger.warning(kwargs)
@@ -50,12 +50,12 @@ class OpenSession(Controller):
             return {"status": "ERROR", "message": "Cash box not found"}
 
         try:
-            if cash_box.session_state_info == 'opened':
-                # Response.status= "200 OK"
-                return {"status": "OK", "message": "Cash box %s already opened" %(cash_box.name)}
+            que_es_esto =cash_box.api_open_cashbox(coin_value=data.get('amount',False),balance="close")
+            _logger.info(que_es_esto)
+            y_esto = cash_box.api_close_session()
+            _logger.info(y_esto)
             # Response.status= "200 OK"
-            cash_box.api_open_cashbox(coin_value=data.get('amount',False),balance='start')
-            return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
+            return {"status": "OK", "message": "Cash box %s Closed" %(cash_box.name)} 
         except Exception as e:
             # Response.status = "400 Bad Request"
             return {"status": "ERROR", "message": e.args[0]}
