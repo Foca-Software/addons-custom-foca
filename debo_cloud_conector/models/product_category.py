@@ -17,6 +17,7 @@ class ProductProduct(models.Model):
         return {
             "ID_DEBO_CLOUD" : self.id,
             "NOM": self.name,
+            "id_debo" : self.id_debo,
         }
     
     def _send_debo_fields(self):
