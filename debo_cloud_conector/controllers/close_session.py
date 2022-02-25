@@ -32,7 +32,7 @@ class OpenSession(Controller):
                 request.session.db, login, password
             )  # TODO: use JWT instead
         except:
-            Response.status = "401 Unauthorized"
+            # Response.status = "401 Unauthorized"
             return {"status": "ERROR", "message": "Wrong username or password"}
         #----------------------------------------------------------------------------------------------------------------------
         # my_user = request.env['res.users'].sudo().search([('id','=',2)])
@@ -44,7 +44,7 @@ class OpenSession(Controller):
             return {"status": "ERROR", "message": "Data not found in request"}
 
         try:
-            cash_box = request.env['cash.control.config'].with_user(2).browse(data.get('cash_id',[]))
+            cash_box = request.env['cash.control.config'].with_user(user_id).browse(data.get('cash_id',[]))
         except Exception as e:
             # Response.status = "400 Bad Request"
             return {"status": "ERROR", "message": "Cash box not found"}
