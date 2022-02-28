@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    id_debo = fields.Char(string="ID Debo", readonly=True)
+    id_debo = fields.Char(string="ID Debo")
 
     @api.depends('lst_price', 'taxes_id')
     def _calculate_PreVen(self, lst_price: float, taxes_id: list) -> float:
