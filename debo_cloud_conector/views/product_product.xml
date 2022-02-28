@@ -1,0 +1,12 @@
+<odoo>
+    <record id="product_button_for_testing_purposes" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="before">
+                <button name="send_debo_fields" string="Test Button" type="object" class="oe_highlight"/> 
+            </xpath>
+        </field>
+    </record>
+</odoo>

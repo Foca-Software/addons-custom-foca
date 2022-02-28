@@ -1,28 +1,26 @@
 {
     "params": {
         "login": {
-            "username": "admin",
-            "password": "admin"
+            "username": "aquintana@focasoftware.com",
+            "password": "Foca.21"
         },
         "move_type" : 101,
         "payload": {
+            "company_id" : 1,
             "header": {
-                "partner_id": 132,
-                "partner_invoice_id": 132,
-                "partner_shipping_id": 132,
-                "pricelist_id": 3,
-                "date_order": "18/12/2021"
+                "partner_id": 143011,
+                "date_order": "22/02/2022"
             },
             "lines": [
                 {
-                    "product_id": 83,
-                    "product_uom_qty": 5,
-                    "price_unit": 800
+                    "product_id": 14107,
+                    "product_uom_qty": 5
                 }
             ],
             "invoice_data":{
-                "journal_id": 23,
-                "l10n_latam_document_type_id": 6
+                "journal_id": 2,
+                "l10n_latam_document_type_id": 6,
+                "pay_now_journal_id": 7
             }
         }
     }

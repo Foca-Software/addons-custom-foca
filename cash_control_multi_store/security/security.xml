@@ -1,0 +1,20 @@
+<odoo>
+    <record id="cash_control.rule_own_cash_control" model="ir.rule" context="{'noadmin':True}">
+        <field name="name">Own Cash Control</field>
+        <field name="model_id" search="[('model','=','cash.control.config')]" model="ir.model"/>
+        <field name="groups" eval="[(6,0,[ref('cash_control.caja')])]"/>
+        <field name="domain_force">[
+            '|',
+            ('user_ids','=',user.id),
+            '|',
+            ('is_main_cash_control','=',True),
+            '&amp;',
+            ('is_acum_cash_control','=',True),
+            ('store_id','child_of',[user.store_id.id])]
+        </field>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="0" name="perm_create"/>
+        <field eval="0" name="perm_unlink"/>
+    </record>
+</odoo>
