@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    id_debo = fields.Char(string="ID Debo", readonly=True)
+    id_debo = fields.Char(string="ID Debo")
 
     def send_debo_fields(self, method="create"):
         # TODO: create debo config model?
