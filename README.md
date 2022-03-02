@@ -2,3 +2,4 @@
 
  [UPD][cash_control]
 
+ [UPD][product_template] From import
