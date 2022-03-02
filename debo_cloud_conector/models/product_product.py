@@ -91,6 +91,8 @@ class ProductProduct(models.Model):
             "C_HD1": "",
             "E_HD2": "",
             "C_HD2": "",
+            "CODBAR" : self.barcode or 0,
+            "IMAGEN" : self.image_512 or 0,
             "ID_DEBO_CLOUD": self.id,
             "ID_CLIENTE_DEBO" : self.env.company.id,
             "id_debo": self.id_debo,
