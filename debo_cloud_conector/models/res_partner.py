@@ -93,7 +93,10 @@ class ResPartner(models.Model):
                 return 0
     
     def decode_img(self):
-        return self.image_512.decode("utf8") or ""
+        if self.image_512:
+            return self.image_512.decode("utf8")
+        else:
+            return ""
     # @profile
     def get_debo_fields(self):
         debo_like_fields = {
