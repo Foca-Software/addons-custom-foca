@@ -2,3 +2,6 @@
 
  [UPD][cash_control]
 
+ [UPD][product_template] From import
+
+ [FIX][debo_cloud_conector]

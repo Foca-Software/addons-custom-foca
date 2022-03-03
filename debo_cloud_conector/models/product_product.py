@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
 from odoo.exceptions import Warning
 from datetime import datetime
+import base64
 import json
 import logging
 import requests
@@ -64,6 +65,9 @@ class ProductProduct(models.Model):
         dictionary["CLA"] = 5 if is_ingredient else 0
         return dictionary
 
+    def decode_img(self):
+        return self.image_512.decode("utf8") or ""
+
     # @profile
     def get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
@@ -91,12 +95,14 @@ class ProductProduct(models.Model):
             "C_HD1": "",
             "E_HD2": "",
             "C_HD2": "",
+            "CODBAR" : self.barcode or "",
+            "IMAGEN" : self.decode_img(),
             "ID_DEBO_CLOUD": self.id,
             "ID_CLIENTE_DEBO" : self.env.company.id,
             "id_debo": self.id_debo,
         }
         debo_like_fields.update(self._calculate_bom_fields())
-        _logger.warn(json.dumps(debo_like_fields))
+        # _logger.warn(debo_like_fields)
         return debo_like_fields
 
     def send_debo_fields(self, method="create"):
