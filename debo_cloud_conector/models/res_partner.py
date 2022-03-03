@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
+import base64
 import json
 import logging
 import requests
@@ -31,7 +32,6 @@ class ResPartner(models.Model):
                 "Accept": "*/*",
             }
             data = self.get_debo_fields()
-            _logger.error(data)
             if not self.env.company.debo_cloud_url:
                 raise Warning("No se ha configurado la URL de Debo Cloud")
             url = self.env.company.debo_cloud_url + method_endpoints[method]
@@ -91,6 +91,9 @@ class ResPartner(models.Model):
                 return self.parent_id.id
             else:
                 return 0
+    
+    def decode_img(self):
+        return self.image_512.decode("utf8") or ""
     # @profile
     def get_debo_fields(self):
         debo_like_fields = {
@@ -140,6 +143,7 @@ class ResPartner(models.Model):
             "PAIS": self.country_id.name,
             "aplica_perc_IVA": 1 if self.imp_iva_padron else 0,
             "alicuotas": self._add_alicuot_fields(),
+            "IMAGEN" : self.decode_img(),
             "ID_DEBO_CLOUD": self.id,
             "ID_CLIENTE_DEBO": self.env.company.id,
             "id_debo": self.id_debo,
