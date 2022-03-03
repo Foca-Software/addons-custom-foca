@@ -53,7 +53,7 @@ class ReceiveData(Controller):
                 request.session.db, login, password
             )  # TODO: use JWT instead
         except:
-            Response.status = "401 Unauthorized"
+            # Response.status = "401 Unauthorized"
             return {"status": "Error", "message": "Wrong username or password"}
         # if not user_id:
         #     Response.status = "401 Unauthorized"
@@ -83,7 +83,7 @@ class ReceiveData(Controller):
                 }
             res = create_sale_order(user_id, payload)
             if res["status"] == "error":
-                Response.status = "400 Bad Request"
+                # Response.status = "400 Bad Request"
                 return res
             sale = res["sale_order_id"]
             res["sale_order_id"] = sale.id
