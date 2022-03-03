@@ -55,6 +55,7 @@ class OpenSession(Controller):
                 return {"status": "OK", "message": "Cash box %s already opened" %(cash_box.name)}
             # Response.status= "200 OK"
             cash_box.api_open_cashbox(coin_value=data.get('amount',False),balance='start')
+            cash_box.current_session_id.id_debo = data.get('id_debo',False)
             return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
         except Exception as e:
             # Response.status = "400 Bad Request"
