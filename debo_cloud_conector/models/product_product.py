@@ -23,8 +23,11 @@ class ProductProduct(models.Model):
                 percent += tax.amount
             else:
                 fixed += tax.amount
-        percent *= 0.01
-        return lst_price / (1 + percent) - fixed
+        if percent and percent > 0:
+            percent *= 0.01
+            return lst_price / (1 + percent) - fixed
+        else:
+            return lst_price - fixed
 
     def _calculate_taxes(self, taxes) -> list:
         necessary_tax_fields = [
