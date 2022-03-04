@@ -5,6 +5,7 @@ _logger = logging.getLogger(__name__)
 class CashControlConfig(models.Model):
     _inherit = "cash.control.config"
 
+    id_debo = fields.Char(related="current_session_id.id_debo", string="Planilla actual")
     # @api.model
     def api_open_cashbox(self, balance, number : int = 1, coin_value : float = 0.0):
         if not self.session_state:
@@ -22,6 +23,8 @@ class CashControlConfig(models.Model):
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
+    id_debo = fields.Char(string="Planilla")
+    
     def _api_open_cashbox_pos(self, number : int = 1, coin_value : float = 0.0): #, number : int = 0, coin_value : int = 0
         self.ensure_one()
         subtotal = coin_value * number
