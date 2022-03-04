@@ -59,4 +59,7 @@ class OpenSession(Controller):
             return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
         except Exception as e:
             # Response.status = "400 Bad Request"
+            request.env["cash.control.session"].with_user(user_id).search(
+                [("config_id", "=", data.get("cash_id", [])), ("state", "!=", "closed")]
+            ).write({"state": "closed", "active": False})
             return {"status": "ERROR", "message": e.args[0]}

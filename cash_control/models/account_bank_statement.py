@@ -15,11 +15,11 @@ class account_bank_statement(models.Model):
         copy=False
     )
 
-    @api.constrains('journal_id', 'balance_start', 'cash_control_session_id')
-    def chek_session(self):
-        if self.journal_id.type == 'cash' and self.cash_control_session_id:
-            if self.balance_start != self.cash_control_session_id.previous_session_id.statement_balance_end:
-                raise UserError(_('Las balance end not eq balance start'))
+    # @api.constrains('journal_id', 'balance_start', 'cash_control_session_id')
+    # def chek_session(self):
+    #     if self.journal_id.type == 'cash' and self.cash_control_session_id:
+    #         if self.balance_start != self.cash_control_session_id.previous_session_id.statement_balance_end:
+    #             raise UserError(_('Las balance end not eq balance start'))
 
 
 class AccountBankStatementLine(models.Model):
