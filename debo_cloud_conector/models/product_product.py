@@ -23,11 +23,8 @@ class ProductProduct(models.Model):
                 percent += tax.amount
             else:
                 fixed += tax.amount
-        if percent and percent > 0:
-            percent *= 0.01
-            return lst_price / (1 + percent) - fixed
-        else:
-            return lst_price - fixed
+        percent *= 0.01
+        return lst_price * (1 + percent) + fixed
 
     def _calculate_taxes(self, taxes) -> list:
         necessary_tax_fields = [
@@ -76,18 +73,18 @@ class ProductProduct(models.Model):
     # @profile
     def get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
-        PreNet = self._calculate_PreVen(self.lst_price, self.taxes_id)
+        PreVen = self._calculate_PreVen(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
             "Categ": self._calculate_category(),
             "Costo": self.standard_price or 0,
-            "PreNet": round(PreNet,2),
+            "PreNet": self.lst_price or 0,
             "Taxes": Taxes,
             "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
             "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
             "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
-            "PreVen": self.lst_price or 0,
+            "PreVen": PreVen,
             "TIP": self.type,
             "ESS": 1 if self.type == "service" else 0,
             "NHA": 0 if self.active else 1,
