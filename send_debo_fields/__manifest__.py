@@ -1,8 +1,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "DEBO Integration Fields",
+    "name": "Send DEBO Fields",
     "summary": """
-        Add fields needed for integration.
+        Add capability to send data to DEBO db.
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
@@ -22,8 +22,9 @@
         "account",
         "contacts",
         "product",
+        "debo_integration_fields",
     ],
     "data": [
-        "views/res_company.xml",
+        "views/res_config.xml",
     ],
 }

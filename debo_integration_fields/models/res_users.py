@@ -4,7 +4,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class ProductProduct(models.Model):
-    _inherit = "product.product"
+class ResUsers(models.Model):
+    _inherit = "res.users"
 
     id_debo = fields.Char(string="ID_DEBO")
