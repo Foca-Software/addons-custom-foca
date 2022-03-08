@@ -18,18 +18,18 @@ class ProductProduct(models.Model):
 
 
 {
-    "DESCRIPCION": "lista de prueba",
+    "DESCRIPCION": "lista de prueba", name
     "CATEGORIA": [1234, "lista de mentira"],
     "PRODUCTO": 1,
     "SIGNO": "+",
     "PORCENTAJE": 50,
-    "FECHA_VENCIMIENTO": "10/10/20222",
+    "FECHA_VENCIMIENTO": "10/10/20222", date_end
     "ID_DEBO_CLOUD": 1,
     "ID_CLIENTE_DEBO": 1,
     "id_debo": 1
 } 
 
-def _get_debo_fields(self) -> dict:
+    def _get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
         PreNet = self._calculate_PreVen(self.lst_price, self.taxes_id)
         debo_like_fields = {
