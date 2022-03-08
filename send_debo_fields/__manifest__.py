@@ -26,5 +26,6 @@
     ],
     "data": [
         "views/res_config.xml",
+        "views/res_partner.xml",
     ],
 }

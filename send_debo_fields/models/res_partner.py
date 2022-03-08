@@ -14,6 +14,12 @@ class ResPartner(models.Model):
 
     id_debo = fields.Char(string="ID_DEBO")
 
+    def test_button(self):
+        return data_sender.send_debo_fields(
+                data=res._get_debo_fields(),
+                endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
+            )
+
     def _format_vat(self, vat: str) -> str:
         if not vat:
             return False
