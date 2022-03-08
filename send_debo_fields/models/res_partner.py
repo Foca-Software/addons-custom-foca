@@ -12,8 +12,6 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    id_debo = fields.Char(string="ID_DEBO")
-
     def _format_vat(self, vat: str) -> str:
         if not vat:
             return False
