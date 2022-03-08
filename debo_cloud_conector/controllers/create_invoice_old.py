@@ -135,85 +135,160 @@ class ReceiveData(Controller):
             return create_invoice(user_id, payload)
 
         if move_code == DEBO_TEST_CODE:
-            #get 'account.move' object
             invoice_id = payload["payment_data"]["invoice_id"]
             res = request.env["account.move"].with_user(user_id).browse(invoice_id)
             _logger.info(res.invoice_line_ids)
-            #--------------------------------------------------------------------------
-            #create payment and payment group objects
             acc_pay_group_obj = request.env["account.payment.group"].with_user(user_id)
             acc_payment_obj = request.env["account.payment"].with_user(user_id)
-            #--------------------------------------------------------------------------
-            #execute 'register payment' button to get context values
+            # _logger.info(res)
             wizard = res.with_context(
                 active_ids=[res.id],
-                active_model="account.move",
+                active_model="account.move",  # agregar active_model='account.move'
             ).action_account_invoice_payment_group()
             context = wizard["context"]
             _logger.info(context)
-            #--------------------------------------------------------------------------
-            #create payment group
+            # _logger.info(acc_payment_obj.default_get(context))
             to_pay_move_lines = context["to_pay_move_line_ids"]
             payment_data = payload["payment_data"]
-            apg_vals_list = {
-                "partner_id": context["default_partner_id"],
-                "to_pay_move_line_ids": context["to_pay_move_line_ids"],
-                "company_id": context["default_company_id"],
-                "state": "draft",
-                "partner_type": "customer",
-            }
-            payment_group = acc_pay_group_obj.with_context(
-                active_ids=[res.id],
-                active_model="account.move"
-            ).create(apg_vals_list)
-            #--------------------------------------------------------------------------
-            #create payment
-            # TODO: if pay_now_journal_id is set, invoice_state would be 'paid' which
-            #       will throw an error.
-            # TODO: for payment in payment_data...
+            # apg_vals_list = {
+            #     "name": payload["payment_data"]["name"],
+            #     "partner_id": context["default_partner_id"],
+            #     "to_pay_move_line_ids": context["to_pay_move_line_ids"],
+            #     "company_id": context["default_company_id"],
+            #     "state": "draft",
+            #     "partner_type": "customer",
+            # }
+            # payment_group = acc_pay_group_obj.with_context(
+            #     active_ids=[res.id],
+            #     active_model="account.move",
+            #     create_from_website=True,
+            # ).create(apg_vals_list)
+
             ap_vals_list = {
-                #inmutable fields
                 "partner_id": res.partner_id.id,
                 "payment_type": "inbound",
                 "partner_type": "customer",
-                "payment_group_id": payment_group.id,
-                "amount": acc_payment_obj._compute_payment_amount(
-                    res, res.currency_id, res.journal_id, res.invoice_date
-                ),  # TODO: receive amounts?
-                #payment_data dependant fields
+                # "payment_group_id": payment_group.id,
                 "journal_id": payment_data["journal_id"],
                 "payment_method_id": payment_data["payment_method_id"],
+                "amount": acc_payment_obj._compute_payment_amount(
+                    res, res.currency_id, res.journal_id, res.invoice_date
+                ),  # ver
                 "company_id": context["default_company_id"],
                 "card_id": payment_data["card_id"],
                 "instalment_id": payment_data["instalment_id"],
             }
+            # _logger.warn(request._context)
             payment_context = {
                 "active_ids": res.ids,
                 "active_model": "account.move",
+                "create_from_website": True,
                 "to_pay_move_line_ids": to_pay_move_lines,
             }
             payment_context.update(context)
             payment = acc_payment_obj.with_context(payment_context).create(ap_vals_list)
+            # # payment_group compute methods
+            # payment._onchange_partner_id()
+            # payment._onchange_journal()
+            # payment._compute_reconciled_invoice_ids()
+            # payment_group.with_context(
+            #     payment_group=res.id
+            # )._compute_matched_move_line_ids()
+            # payment_group._compute_matched_amounts()
+            # payment_group._compute_matched_amount_untaxed()
+            # payment_group._compute_move_lines()
+            # _logger.info("________PAYMENT GROUP________")
+            # _logger.info(payment_group.read())
+            # _logger.info("-----------PAYMENT------------")
+            # _logger.info(payment.read())
             payment_group = payment.payment_group_id
-
-            #payment group compute methods
+            # payment_group.write(
+            #     {
+            #         "display_name": payment_group.payment_ids[0].name,
+            #         "name": payment_group.payment_ids[0].name,
+            #     }
+            # )
             payment_group._compute_payments_amount()
             payment_group._compute_matched_amounts()
             payment_group._compute_document_number()
             payment_group._compute_matched_amount_untaxed()
             payment_group._compute_move_lines()
-            # payment compute methods
+            # payment
             payment._onchange_partner_id()
             payment._compute_reconciled_invoice_ids()
-
+            res.write({"payment_group_ids": [(4, payment.payment_group_id.id)]})
             payment.post()
-            payment_group.post()
+            # payment.payment_group_id.write({"document_number": str(payment.name)})
+            # res.payment_ids = [(4, payment.id)]
             return {
                 "res": res.read(),
                 # "wizard": wizard,
                 "payment_group": payment_group.read(),
                 "payment": payment.read(),
             }
+            # payment._onchange_payment_method()
+        #     invoice_id = payload["payment_data"]["invoice_id"]
+        #     res = request.env["account.move"].with_user(user_id).browse(invoice_id)
+        #     acc_pay_group_obj = request.env["account.payment.group"].with_user(user_id)
+        #     acc_payment_obj = request.env["account.payment"].with_user(user_id)
+        #     # _logger.info(res)
+        #     wizard = res.with_context(
+        #         active_ids=[res.id]
+        #     ).action_account_invoice_payment_group()
+        #     context = wizard["context"]
+        #     # _logger.info(acc_payment_obj.default_get(context))
+        #     # to_pay_move_lines = context['to_pay_move_line_ids']
+        #     apg_vals_list = {
+        #         "name": payload["payment_data"]["name"],
+        #         "partner_id": context["default_partner_id"],
+        #         "to_pay_move_line_ids": context["to_pay_move_line_ids"],
+        #         "company_id": context["default_company_id"],
+        #         "state": "draft",
+        #         "partner_type": "customer",
+        #     }
+        #     payment_group = acc_pay_group_obj.with_context(active_ids=[res.id]).create(
+        #         apg_vals_list
+        #     )
+
+        #     ap_vals_list = {
+        #         "partner_id": payment_group.partner_id.id,
+        #         "payment_type": "inbound",
+        #         "partner_type": "customer",
+        #         "payment_group_id": payment_group.id,
+        #         "journal_id": res.journal_id.id,
+        #         "payment_method_id": payload["payment_data"]["method_id"],
+        #         "amount": acc_payment_obj._compute_payment_amount(
+        #             res, res.currency_id, res.journal_id, res.invoice_date
+        #         ),
+        #         "company_id": context["default_company_id"],
+        #     }
+        #     _logger.warn(request._context)
+        #     payment = acc_payment_obj.with_context(active_ids=[res.id]).create(
+        #         ap_vals_list
+        #     )
+        #     # payment_group compute methods
+        #     payment._onchange_partner_id()
+        #     payment._onchange_journal()
+        #     payment._compute_reconciled_invoice_ids()
+        #     payment_group.with_context(
+        #         payment_group=res.id
+        #     )._compute_matched_move_line_ids()
+        #     payment_group._compute_matched_amounts()
+        #     payment_group._compute_matched_amount_untaxed()
+        #     payment_group._compute_move_lines()
+        #     _logger.info("________PAYMENT GROUP________")
+        #     _logger.info(payment_group.read())
+        #     _logger.info("-----------PAYMENT------------")
+        #     _logger.info(payment.read())
+        #     return {
+        #         "res": res,
+        #         "wizard": wizard,
+        #         "payment_group": payment_group,
+        #         "payment": payment,
+        #     }
+        #     # payment._onchange_payment_method()
+
+        # return {"status": "Error", "message": "Move type not found"}
 
     def _get_default_payment_journal(self, company_id: int) -> int:
         return (
