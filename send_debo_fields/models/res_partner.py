@@ -16,8 +16,8 @@ class ResPartner(models.Model):
 
     def test_button(self):
         return data_sender.send_debo_fields(
-                data=res._get_debo_fields(),
-                endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
+                data=self._get_debo_fields(),
+                endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
             )
 
     def _format_vat(self, vat: str) -> str:
