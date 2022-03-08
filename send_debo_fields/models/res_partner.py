@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+<<<<<<< HEAD
     id_debo = fields.Char(string="ID_DEBO")
 
     def test_button(self):
@@ -20,6 +21,8 @@ class ResPartner(models.Model):
                 endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
             )
 
+=======
+>>>>>>> dev_add_send_pricelist
     def _format_vat(self, vat: str) -> str:
         if not vat:
             return False
