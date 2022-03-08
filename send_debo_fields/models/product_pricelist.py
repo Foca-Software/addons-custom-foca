@@ -15,29 +15,15 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.pricelist"
 
-
-
-{
-    "DESCRIPCION": "lista de prueba", name
-    "CATEGORIA": [1234, "lista de mentira"],
-    "PRODUCTO": 1,
-    "SIGNO": "+",
-    "PORCENTAJE": 50,
-    "FECHA_VENCIMIENTO": "10/10/20222", date_end
-    "ID_DEBO_CLOUD": 1,
-    "ID_CLIENTE_DEBO": 1,
-    "id_debo": 1
-} 
-
     def _get_debo_fields(self) -> dict:
-        Taxes = self._calculate_taxes(self.taxes_id)
-        PreNet = self._calculate_PreVen(self.lst_price, self.taxes_id)
+        lines_debo_fields = []
+        for line in self.item_ids:
+            lines_debo_fields.append(line._get_debo_fields())
         debo_like_fields = {
+            "DESCRIPCION": "name",
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
-            "ID_DEBO_CLOUD": self.id,
-            "id_debo" : self.id_debo,
+            "REGLAS" : lines_debo_fields,
         }
-        debo_like_fields.update(self._calculate_bom_fields())
         return debo_like_fields
 
     def _get_base_endpoint(self):
@@ -48,7 +34,7 @@ class ProductProduct(models.Model):
         return proper_config
 
     def _get_final_endpoint(self):
-        return "/guardarProducto"
+        return "/guardarListaPrecio"
 
     @api.model
     def create(self, vals_list):
@@ -76,3 +62,18 @@ class ProductProduct(models.Model):
                 raise Warning(e.args)
         return res
     
+class ProductPriceListItem(models.Model):
+    _inherit = "product.pricelist.item"
+
+    def _get_debo_fields(self):
+        debo_like_fields = {
+            "CATEGORIA": self.categ_id.id if self.categ_id else False,
+            "PRODUCTO": self.product_id.id if self.product_id else False,
+            "SIGNO": "-" if self.percent_price >= 0 else "+",
+            "PORCENTAJE": self.percent_price,
+            "FIJO" : self.fixed_price,
+            "FECHA_VENCIMIENTO": datetime.strftime(self.date_end, data_sender._debo_date_format()),
+            "ID_DEBO_CLOUD": self.id,
+            "id_debo": self.id_debo,
+        }
+        return debo_like_fields
