@@ -85,7 +85,6 @@ class ProductProduct(models.Model):
     # @profile
     def _get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
-        PreNet = self._calculate_PreNet(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
             "Categ": self._calculate_category(),
