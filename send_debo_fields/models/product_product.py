@@ -15,18 +15,22 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    pre_net = fields.Float(string="Precio Neto", compute="_compute_pre_net")
+
     @api.depends("lst_price", "taxes_id")
-    def _calculate_PreVen(self, lst_price: float, taxes_id: list) -> float:
+    def _compute_pre_net(self) -> float:
         percent = 0
         fixed = 0
-        for tax in taxes_id:
-            if tax.amount_type == "percent":
-                percent += tax.amount
-            else:
-                fixed += tax.amount
-        percent *= 0.01
-        return lst_price / (1 + percent) - fixed
+        if self.taxes_id and self.lst_price != 0:
+            for tax in self.taxes_id:
+                if tax.amount_type == "percent":
+                    percent += tax.amount
+                else:
+                    fixed += tax.amount
+            percent *= 0.01
+        self.pre_net = self.lst_price / (1 + percent) - fixed
 
+    @api.depends("pre_net")
     def _calculate_taxes(self, taxes) -> list:
         necessary_tax_fields = [
             "id",
@@ -35,7 +39,14 @@ class ProductProduct(models.Model):
             "amount_type",
             "id_debo",
         ]
-        return taxes.read(necessary_tax_fields)
+        tax_dictionary = taxes.read(necessary_tax_fields)
+        for tax in tax_dictionary:
+            if tax['amount_type'] == 'percent':
+                monto = tax['amount'] * 0.01 * self.pre_net
+                tax['monto'] = round(monto, 4)
+            else:
+                tax['monto'] = tax['amount']
+        return tax_dictionary
 
     def _calculate_category(self) -> list or 0:
         necessary_category_fields = [
@@ -74,14 +85,15 @@ class ProductProduct(models.Model):
     # @profile
     def _get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
-        PreNet = self._calculate_PreVen(self.lst_price, self.taxes_id)
+        PreNet = self._calculate_PreNet(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
             "Categ": self._calculate_category(),
             "Costo": self.standard_price or 0,
-            "PreNet": round(PreNet, 2),
+            "PreNet": round(self.pre_net,4) or 0,
             "Taxes": Taxes,
             "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
+            "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
             "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
             "PreVen": self.lst_price or 0,
@@ -168,7 +180,7 @@ class ProductProduct(models.Model):
 #     return fields
 # fields = self._necessary_fields()
 # fields_dict = self.read(fields)[0]
-# PreVen = self._calculate_PreVen(
+# PreVen = self._calculate_PreNet(
 #     fields_dict["lst_price"], fields_dict["taxes_id"]
 # )
 # ExiDep = self._calculate_ExiDep(fields_dict["lst_price"], fields_dict["qty_available"])
