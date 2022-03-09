@@ -24,8 +24,16 @@
             "payment_data" :[{
                 "journal_id": 10,
                 "payment_method_id": 4,
+                "amount" : 20,
                 "card_id" : 1,
-                "instalment_id" : 1
+                "card_number" : "4111111111111111",
+                "lot_number" : "123456789",
+                "ticket_number" : "123456789"
+            },
+            {
+                "journal_id": 7,
+                "payment_method_id": 1,
+                "amount" : 15
             }]
         }
     }
