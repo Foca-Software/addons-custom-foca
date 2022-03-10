@@ -110,8 +110,12 @@ class ReceiveData(Controller):
                     invoice.write(payload["invoice_data"])
                     # if it's not manual, will raise an error
                     if invoice.pay_now_journal_id:
-                        payment_methods = invoice.pay_now_journal_id.inbound_payment_method_ids
-                        payment_method = payment_methods.filtered(lambda x: x.code == 'manual')
+                        payment_methods = (
+                            invoice.pay_now_journal_id.inbound_payment_method_ids
+                        )
+                        payment_method = payment_methods.filtered(
+                            lambda x: x.code == "manual"
+                        )
                         if not payment_method:
                             invoice.pay_now_journal_id = False
                     # if not payload["invoice_data"].get("pay_now_journal_id", False):
@@ -135,18 +139,20 @@ class ReceiveData(Controller):
                 if not payment_data:
                     res["message"] = "Invoice is not Paid, Payment data not found"
                     return res
-                #create payment and payment group objects
-                acc_pay_group_obj = request.env["account.payment.group"].with_user(user_id)
+                # create payment and payment group objects
+                acc_pay_group_obj = request.env["account.payment.group"].with_user(
+                    user_id
+                )
                 acc_payment_obj = request.env["account.payment"].with_user(user_id)
-                #--------------------------------------------------------------------------
-                #execute 'register payment' button to get context values
+                # --------------------------------------------------------------------------
+                # execute 'register payment' button to get context values
                 wizard = created_invoices.with_context(
                     active_ids=created_invoices.ids,
                     active_model="account.move",
                 ).action_account_invoice_payment_group()
                 context = wizard["context"]
-                #--------------------------------------------------------------------------
-                #create payment group
+                # --------------------------------------------------------------------------
+                # create payment group
                 to_pay_move_lines = context["to_pay_move_line_ids"]
                 apg_vals_list = {
                     "partner_id": context["default_partner_id"],
@@ -156,145 +162,83 @@ class ReceiveData(Controller):
                     "partner_type": "customer",
                 }
                 payment_group = acc_pay_group_obj.with_context(
-                    active_ids=created_invoices.ids,
-                    active_model="account.move"
+                    active_ids=created_invoices.ids, active_model="account.move"
                 ).create(apg_vals_list)
-                #--------------------------------------------------------------------------
-                #create payment
-                # TODO: for payment in payment_data...
-                ap_vals_list = {
-                    #inmutable fields
-                    "partner_id": created_invoices.partner_id.id,
-                    "payment_type": "inbound",
-                    "partner_type": "customer",
-                    "payment_group_id": payment_group.id,
-                    "amount": acc_payment_obj._compute_payment_amount(
-                        created_invoices, created_invoices.currency_id, created_invoices.journal_id, created_invoices.invoice_date
-                    ),  # TODO: receive amounts?
-                    #payment_data dependant fields
-                    "journal_id": payment_data["journal_id"],
-                    "payment_method_id": payment_data.get("payment_method_id", False), #esto por ahi se puede computar
-                    "company_id": context["default_company_id"],
-                    "card_id": payment_data.get("card_id",False), #computable?
-                    "instalment_id": payment_data.get("instalment_id",False), #computable?
-                }
-                payment_context = {
-                    "active_ids": created_invoices.ids,
-                    "active_model": "account.move",
-                    "to_pay_move_line_ids": to_pay_move_lines,
-                }
-                payment_context.update(context)
-                payment = acc_payment_obj.with_context(payment_context).create(ap_vals_list)
-                payment_group = payment.payment_group_id
+                # --------------------------------------------------------------------------
+                # create payments
+                if len(payment_data) > 1:
+                    for payment_method in payment_data:
+                        if "amount" not in payment_method.keys():
+                            res["status"] = "Error"
+                            res[
+                                "message"
+                            ] = "Payment data is not valid. If multiple payment methods are used, amount must be provided for each payment method"
+                            return res
+                for payment in payment_data:
+                    payment_journal = request.env["account.journal"].browse(
+                        payment["journal_id"]
+                    )
+                    payment_method = payment_journal.inbound_payment_method_ids
+                    _logger.info(payment_method)
+                    ap_vals_list = {
+                        # inmutable fields
+                        "partner_id": created_invoices.partner_id.id,
+                        "payment_type": "inbound",
+                        "partner_type": "customer",
+                        "payment_group_id": payment_group.id,
+                        "amount": payment.get("amount", False)
+                        or acc_payment_obj._compute_payment_amount(
+                            created_invoices,
+                            created_invoices.currency_id,
+                            created_invoices.journal_id,
+                            created_invoices.invoice_date,
+                        ),
+                        # payment_data dependant fields
+                        "journal_id": payment["journal_id"],
+                        "payment_method_id": payment.get(
+                            "payment_method_id", False
+                        ),  # esto por ahi se puede computar
+                        "company_id": context["default_company_id"],
+                        # not required
+                    }
+                    payment_context = {
+                        "active_ids": created_invoices.ids,
+                        "active_model": "account.move",
+                        "to_pay_move_line_ids": to_pay_move_lines,
+                    }
+                    payment_context.update(context)
+                    acc_payment = acc_payment_obj.with_context(payment_context).create(
+                        ap_vals_list
+                    )
+                    if acc_payment.journal_id.code in ['inbound_debit_card','inbound_credit_card']:
+                        acc_payment.write({
+                        "card_id": payment.get("card_id", False),  # computable?
+                        "instalment_id": payment.get(
+                            "instalment_id", False
+                        ),  # computable?
+                        "tiket_number": payment.get("ticket_number", False),
+                        "card_number": payment.get("card_number", False),
+                        "lot_number": payment.get("lot_number", False),
+                        })
 
-                #payment group compute methods
+                # payment group compute methods
                 payment_group._compute_payments_amount()
                 payment_group._compute_matched_amounts()
                 payment_group._compute_document_number()
                 payment_group._compute_matched_amount_untaxed()
                 payment_group._compute_move_lines()
                 # payment compute methods
-                payment._onchange_partner_id()
-                payment._compute_reconciled_invoice_ids()
-
-                payment.post()
+                for payment in payment_group.payment_ids:
+                    payment._onchange_partner_id()
+                    payment._compute_reconciled_invoice_ids()
+                    payment.post()
                 payment_group.post()
             except Exception as e:
                 _logger.error(e)
                 res["status"] = "Error"
                 res["message"] = e.args
-                
+
             return res
-
-        if move_code == DEBO_INVOICE_CODE:
-            missing_fields = check_required_fields(payload, move_code)
-            if missing_fields:
-                return {
-                    "status": "Error",
-                    "message": "Missing fields: %s" % ",".join(missing_fields),
-                }
-            return create_invoice(user_id, payload)
-
-        if move_code == DEBO_TEST_CODE:
-            #get 'account.move' object
-            invoice_id = payload["payment_data"]["invoice_id"]
-            res = request.env["account.move"].with_user(user_id).browse(invoice_id)
-            _logger.info(res.invoice_line_ids)
-            #--------------------------------------------------------------------------
-            #create payment and payment group objects
-            acc_pay_group_obj = request.env["account.payment.group"].with_user(user_id)
-            acc_payment_obj = request.env["account.payment"].with_user(user_id)
-            #--------------------------------------------------------------------------
-            #execute 'register payment' button to get context values
-            wizard = res.with_context(
-                active_ids=[res.id],
-                active_model="account.move",
-            ).action_account_invoice_payment_group()
-            context = wizard["context"]
-            _logger.info(context)
-            #--------------------------------------------------------------------------
-            #create payment group
-            to_pay_move_lines = context["to_pay_move_line_ids"]
-            payment_data = payload["payment_data"]
-            apg_vals_list = {
-                "partner_id": context["default_partner_id"],
-                "to_pay_move_line_ids": context["to_pay_move_line_ids"],
-                "company_id": context["default_company_id"],
-                "state": "draft",
-                "partner_type": "customer",
-            }
-            payment_group = acc_pay_group_obj.with_context(
-                active_ids=[res.id],
-                active_model="account.move"
-            ).create(apg_vals_list)
-            #--------------------------------------------------------------------------
-            #create payment
-            # TODO: if pay_now_journal_id is set, invoice_state would be 'paid' which
-            #       will throw an error.
-            # TODO: for payment in payment_data...
-            ap_vals_list = {
-                #inmutable fields
-                "partner_id": res.partner_id.id,
-                "payment_type": "inbound",
-                "partner_type": "customer",
-                "payment_group_id": payment_group.id,
-                "amount": acc_payment_obj._compute_payment_amount(
-                    res, res.currency_id, res.journal_id, res.invoice_date
-                ),  # TODO: receive amounts?
-                #payment_data dependant fields
-                "journal_id": payment_data["journal_id"],
-                "payment_method_id": payment_data.get("payment_method_id", False),
-                "company_id": context["default_company_id"],
-                "card_id": payment_data.get("card_id",False),
-                "instalment_id": payment_data.get("instalment_id",False),
-            }
-            payment_context = {
-                "active_ids": res.ids,
-                "active_model": "account.move",
-                "to_pay_move_line_ids": to_pay_move_lines,
-            }
-            payment_context.update(context)
-            payment = acc_payment_obj.with_context(payment_context).create(ap_vals_list)
-            payment_group = payment.payment_group_id
-
-            #payment group compute methods
-            payment_group._compute_payments_amount()
-            payment_group._compute_matched_amounts()
-            payment_group._compute_document_number()
-            payment_group._compute_matched_amount_untaxed()
-            payment_group._compute_move_lines()
-            # payment compute methods
-            payment._onchange_partner_id()
-            payment._compute_reconciled_invoice_ids()
-
-            payment.post()
-            payment_group.post()
-            return {
-                "res": res.read(),
-                # "wizard": wizard,
-                "payment_group": payment_group.read(),
-                "payment": payment.read(),
-            }
 
     def _get_default_payment_journal(self, company_id: int) -> int:
         return (
