@@ -17,7 +17,7 @@ class ProductProduct(models.Model):
 
     pre_net = fields.Float(string="Precio Neto", compute="_compute_pre_net")
 
-    @api.depends("lst_price", "taxes_id")
+    # @api.depends("lst_price", "taxes_id")
     def _compute_pre_net(self) -> float:
         percent = 0
         fixed = 0
@@ -30,7 +30,7 @@ class ProductProduct(models.Model):
             percent *= 0.01
         self.pre_net = self.lst_price / (1 + percent) - fixed
 
-    @api.depends("pre_net")
+    # @api.depends("pre_net")
     def _calculate_taxes(self, taxes) -> list:
         necessary_tax_fields = [
             "id",
@@ -129,11 +129,15 @@ class ProductProduct(models.Model):
 
     @api.model
     def create(self, vals_list):
+        # _logger.info(self.id)
         res = super().create(vals_list)
+        # _logger.info(">>>CREATE<<<")
+        # _logger.info(vals_list)
         try:
             data_sender.send_debo_fields(
                 data=res._get_debo_fields(),
                 endpoint=f'{res._get_base_endpoint()}{res._get_final_endpoint()}',
+                allow_import = True,
             )
         except Exception as e:
             _logger.error(e)
@@ -141,12 +145,16 @@ class ProductProduct(models.Model):
         return res
 
     def write(self, vals_list):
+        # _logger.info(self.id)
         res = super().write(vals_list)
+        # _logger.info('>>>WRITE<<<')
+        # _logger.info(vals_list)
         if res:
             try:
                 data_sender.send_debo_fields(
                     data=self._get_debo_fields(),
                     endpoint=f'{self._get_base_endpoint()}{self._get_final_endpoint()}',
+                    allow_import = True,
                 )
             except Exception as e:
                 _logger.error(e)

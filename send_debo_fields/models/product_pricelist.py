@@ -64,8 +64,8 @@ class ProductPriceListItem(models.Model):
             "CATEGORIA": self._format_categ_id(),
             "PRODUCTO": self.product_id.id if self.product_id else False,
             "SIGNO": "-" if self.percent_price >= 0 else "+",
-            "PORCENTAJE": self.percent_price,
-            "FIJO": self.fixed_price,
+            "PORCENTAJE": abs(self.percent_price),
+            "FIJO": abs(self.fixed_price),
             "FECHA_VENCIMIENTO": datetime.strftime(
                 self.date_end, data_sender._debo_date_format()
             ),
