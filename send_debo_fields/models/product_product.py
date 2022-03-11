@@ -92,7 +92,7 @@ class ProductProduct(models.Model):
             "PreNet": round(self.pre_net,4) or 0,
             "Taxes": Taxes,
             "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
-            "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
+            "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y") if self.write_date else datetime.strftime(fields.Date.today(),"%d/%m/%Y"),
             "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
             "PreVen": self.lst_price or 0,
@@ -129,10 +129,7 @@ class ProductProduct(models.Model):
 
     @api.model
     def create(self, vals_list):
-        # _logger.info(self.id)
         res = super().create(vals_list)
-        # _logger.info(">>>CREATE<<<")
-        # _logger.info(vals_list)
         try:
             data_sender.send_debo_fields(
                 data=res._get_debo_fields(),
@@ -144,18 +141,17 @@ class ProductProduct(models.Model):
             raise Warning(e.args)
         return res
 
+
     def write(self, vals_list):
-        # _logger.info(self.id)
         res = super().write(vals_list)
-        # _logger.info('>>>WRITE<<<')
-        # _logger.info(vals_list)
         if res:
             try:
-                data_sender.send_debo_fields(
-                    data=self._get_debo_fields(),
-                    endpoint=f'{self._get_base_endpoint()}{self._get_final_endpoint()}',
-                    allow_import = True,
-                )
+                if not self.env.context.get("create_product_product",False):
+                    data_sender.send_debo_fields(
+                        data=self._get_debo_fields(),
+                        endpoint=f'{self._get_base_endpoint()}{self._get_final_endpoint()}',
+                        allow_import = True,
+                    )
             except Exception as e:
                 _logger.error(e)
                 raise Warning(e.args)
