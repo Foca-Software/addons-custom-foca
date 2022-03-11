@@ -287,8 +287,8 @@ class AccountPayment(models.Model):
                 rec.amount = rec.amount + rec.fee - rec.discount_amount
 
         ret = super(AccountPayment, self).post()
-        if len(rec.sale_order_id):
-            return rec.sale_order_id.action_register_sale_payment()
+        # if len(rec.sale_order_id):
+        #     return rec.sale_order_id.action_register_sale_payment()
         return ret
 
     @api.depends('instalment_id', 'amount')

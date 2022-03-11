@@ -1,4 +1,3 @@
-from attr import fields_dict
 from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
 from datetime import datetime
