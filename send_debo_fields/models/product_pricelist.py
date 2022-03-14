@@ -29,7 +29,7 @@ class ProductProduct(models.Model):
     def create(self, vals_list):
         res = super().create(vals_list)
         try:
-            for rule in self.item_ids:
+            for rule in res.item_ids:
                 data_sender.send_debo_fields(
                     data=rule._get_debo_fields(),
                     endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
@@ -63,17 +63,32 @@ class ProductPriceListItem(models.Model):
             "ID_CLIENTE_DEBO": self.pricelist_id.env.company.id_debo,
             "CATEGORIA": self._format_categ_id(),
             "PRODUCTO": self.product_id.id if self.product_id else False,
-            "SIGNO": "-" if self.percent_price >= 0 else "+",
-            "PORCENTAJE": abs(self.percent_price),
             "FIJO": abs(self.fixed_price),
             "FECHA_VENCIMIENTO": datetime.strftime(
                 self.date_end, data_sender._debo_date_format()
             ),
-            "ID_DEBO_CLOUD": self.id,
-            "id_debo": self.id_debo,
+            "ID_DEBO_CLOUD": self.pricelist_id.id,
+            "id_debo": self.pricelist_id.id_debo,
         }
+        debo_like_fields.update(self._format_amounts())
         return debo_like_fields
 
+    
+    def _format_amounts(self):
+        #TODO:
+        # "SIGNO" : "+","-","I"
+        # "PORCENTAJE" : percent_price or fixed_price 
+        # "SIGNO": "-" if self.percent_price >= 0 else "+",
+        # "PORCENTAJE": abs(self.percent_price),
+        porcentaje = self.percent_price or self.fixed_price
+        signo = "I"
+        if self.percent_price:
+            signo = "-" if porcentaje >= 0 else "+"
+        return {
+            "SIGNO": signo,
+            "PORCENTAJE": abs(porcentaje),
+        }
+        
     def _format_categ_id(self):
         categ_id = self.categ_id
         if categ_id:
