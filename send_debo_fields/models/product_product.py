@@ -28,7 +28,7 @@ class ProductProduct(models.Model):
                 else:
                     fixed += tax.amount
             percent *= 0.01
-        self.pre_net = self.lst_price / (1 + percent) - fixed
+        self.pre_net = (self.lst_price - fixed) / (1 + percent)
 
     # @api.depends("pre_net")
     def _calculate_taxes(self, taxes) -> list:
@@ -41,11 +41,11 @@ class ProductProduct(models.Model):
         ]
         tax_dictionary = taxes.read(necessary_tax_fields)
         for tax in tax_dictionary:
-            if tax['amount_type'] == 'percent':
-                monto = tax['amount'] * 0.01 * self.pre_net
-                tax['monto'] = round(monto, 4)
+            if tax["amount_type"] == "percent":
+                monto = tax["amount"] * 0.01 * self.pre_net
+                tax["monto"] = round(monto, 4)
             else:
-                tax['monto'] = tax['amount']
+                tax["monto"] = tax["amount"]
         return tax_dictionary
 
     def _calculate_category(self) -> list or 0:
@@ -82,6 +82,7 @@ class ProductProduct(models.Model):
             return self.image_512.decode("utf8")
         else:
             return ""
+
     # @profile
     def _get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
@@ -89,10 +90,12 @@ class ProductProduct(models.Model):
             "DetArt": self.name,
             "Categ": self._calculate_category(),
             "Costo": self.standard_price or 0,
-            "PreNet": round(self.pre_net,4) or 0,
+            "PreNet": round(self.pre_net, 4) or 0,
             "Taxes": Taxes,
             "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
-            "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y") if self.write_date else datetime.strftime(fields.Date.today(),"%d/%m/%Y"),
+            "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y")
+            if self.write_date
+            else datetime.strftime(fields.Date.today(), "%d/%m/%Y"),
             "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
             "PreVen": self.lst_price or 0,
@@ -112,7 +115,7 @@ class ProductProduct(models.Model):
             "IMAGEN": self.decode_img(),
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
             "ID_DEBO_CLOUD": self.id,
-            "id_debo" : self.id_debo,
+            "id_debo": self.id_debo,
         }
         debo_like_fields.update(self._calculate_bom_fields())
         return debo_like_fields
@@ -133,24 +136,23 @@ class ProductProduct(models.Model):
         try:
             data_sender.send_debo_fields(
                 data=res._get_debo_fields(),
-                endpoint=f'{res._get_base_endpoint()}{res._get_final_endpoint()}',
-                allow_import = True,
+                endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
+                allow_import=True,
             )
         except Exception as e:
             _logger.error(e)
             raise Warning(e.args)
         return res
 
-
     def write(self, vals_list):
         res = super().write(vals_list)
         if res:
             try:
-                if not self.env.context.get("create_product_product",False):
+                if not self.env.context.get("create_product_product", False):
                     data_sender.send_debo_fields(
                         data=self._get_debo_fields(),
-                        endpoint=f'{self._get_base_endpoint()}{self._get_final_endpoint()}',
-                        allow_import = True,
+                        endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
+                        allow_import=True,
                     )
             except Exception as e:
                 _logger.error(e)
