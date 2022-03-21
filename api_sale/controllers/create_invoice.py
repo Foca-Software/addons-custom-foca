@@ -39,26 +39,36 @@ class ReceiveData(Controller):
     @route("/debocloud/create", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
         _logger.warning(kwargs)
-        # ---------------------------this won't be necessary once jwt is implemented----------------------------
-        if "login" not in kwargs:
+        # # ---------------------------this won't be necessary once jwt is implemented----------------------------
+        # if "login" not in kwargs:
+        #     return {
+        #         "status": "ERROR",
+        #         "user_id": 0,
+        #         "message": "Credentials not found in request",
+        #     }
+        # login = kwargs["login"]["username"]
+        # password = kwargs["login"]["password"]
+        # try:
+        #     user_id = request.session.authenticate(
+        #         request.session.db, login, password
+        #     )  # TODO: use JWT instead
+        # except:
+        #     # Response.status = "401 Unauthorized"
+        #     return {"status": "Error", "message": "Wrong username or password"}
+        # # if not user_id:
+        # #     Response.status = "401 Unauthorized"
+        # # --------------------------------S----------------------------------------------------------------------
+        # _logger.warning(request.env.company)
+        sent_user_id = kwargs.get('user_id', False)
+        if not sent_user_id:
             return {
                 "status": "ERROR",
                 "user_id": 0,
                 "message": "Credentials not found in request",
             }
-        login = kwargs["login"]["username"]
-        password = kwargs["login"]["password"]
-        try:
-            user_id = request.session.authenticate(
-                request.session.db, login, password
-            )  # TODO: use JWT instead
-        except:
-            # Response.status = "401 Unauthorized"
-            return {"status": "Error", "message": "Wrong username or password"}
-        # if not user_id:
-        #     Response.status = "401 Unauthorized"
-        # --------------------------------S----------------------------------------------------------------------
-        _logger.warning(request.env.company)
+        user_id = request.env['res.users'].sudo().search([('id','=',sent_user_id)])
+        request.env.user = user_id
+        # request.env.company = user_id.company_id
         payload = kwargs.get("payload", False)
         if not payload:
             return {"status": "Error", "message": "Payload not found"}
@@ -175,7 +185,7 @@ class ReceiveData(Controller):
                             ] = "Payment data is not valid. If multiple payment methods are used, amount must be provided for each payment method"
                             return res
                 for payment in payment_data:
-                    payment_journal = request.env["account.journal"].browse(
+                    payment_journal = request.env["account.journal"].with_user(user_id).browse(
                         payment["journal_id"]
                     )
                     payment_method = payment_journal.inbound_payment_method_ids

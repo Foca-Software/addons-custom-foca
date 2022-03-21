@@ -12,26 +12,33 @@ class CloseSession(Controller):
     @route("/debocloud/close_session", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
         #----------------------------------------------------------------------------------------------------------------------
-        _logger.warning(kwargs)
-        if "login" not in kwargs:
+        # _logger.warning(kwargs)
+        # if "login" not in kwargs:
+        #     return {
+        #         "status": "ERROR",
+        #         "user_id": 0,
+        #         "message": "Credentials not found in request",
+        #     }
+        # login = kwargs["login"]["username"]
+        # password = kwargs["login"]["password"]
+        # try:
+        #     user_id = request.session.authenticate(
+        #         request.session.db, login, password
+        #     )  # TODO: use JWT instead
+        # except:
+        #     # Response.status = "401 Unauthorized"
+        #     return {"status": "ERROR", "message": "Wrong username or password"}
+        #----------------------------------------------------------------------------------------------------------------------
+        sent_user_id = kwargs.get('user_id', False)
+        if not sent_user_id:
             return {
                 "status": "ERROR",
                 "user_id": 0,
                 "message": "Credentials not found in request",
             }
-        login = kwargs["login"]["username"]
-        password = kwargs["login"]["password"]
-        try:
-            user_id = request.session.authenticate(
-                request.session.db, login, password
-            )  # TODO: use JWT instead
-        except:
-            # Response.status = "401 Unauthorized"
-            return {"status": "ERROR", "message": "Wrong username or password"}
-        #----------------------------------------------------------------------------------------------------------------------
-        # my_user = request.env['res.users'].sudo().search([('id','=',2)])
-        # request.env.user = my_user
-        # request.env.company = my_user.company_id
+        user_id = request.env['res.users'].sudo().search([('id','=',sent_user_id)])
+        request.env.user = user_id
+        request.env.company = user_id.company_id
         data = kwargs.get("data",False)
         if not data:
             # Response.status = "400 Bad Request"

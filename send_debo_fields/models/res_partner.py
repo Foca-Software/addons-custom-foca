@@ -133,18 +133,20 @@ class ResPartner(models.Model):
     def _get_final_endpoint(self):
         return "/guardarCliente"
 
-    @api.model
-    def create(self, vals_list):
-        res = super().create(vals_list)
-        try:
-            data_sender.send_debo_fields(
-                data=res._get_debo_fields(),
-                endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
-            )
-        except Exception as e:
-            _logger.error(e)
-            raise Warning(e.args)
-        return res
+    # @api.model
+    # def create(self, vals_list):
+    #     res = super().create(vals_list)
+    #     _logger.info(">>>CREATE<<<")
+    #     _logger.info(self.env.context)
+    #     try:
+    #         data_sender.send_debo_fields(
+    #             data=res._get_debo_fields(),
+    #             endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
+    #         )
+    #     except Exception as e:
+    #         _logger.error(e)
+    #         raise Warning(e.args)
+    #     return res
 
     def write(self, vals_list):
         res = super().write(vals_list)
