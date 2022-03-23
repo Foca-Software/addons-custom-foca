@@ -56,15 +56,13 @@ class OpenSession(Controller):
                 request.env["cash.control.transfer.wizard"]
                 .with_user(user_id.id)
                 .with_context(context)
-                .create({
-                    # 'orig_journal_id': cashbox_id.journal_id.id,
-                    # 'dest_cash_control_id' : cashbox_id.accumulator_cash_id.id,
-                    # "amount": amount,
-                })
+                .create({})
             )
-            transfer_movement = transfer_wizard.api_transfer_cash()
-            # transfer_movement.post()
-            # transfer_movement = transfer_wizard.
+            transfer_number = data.get("transfer_number", False)
+            transfer_ref = (
+                f"{cashbox_id.name}:{cashbox_id.current_session_id.id_debo}-{transfer_number}"
+            )
+            transfer_movement = transfer_wizard.api_transfer_cash(ref=transfer_ref)
             _logger.info(transfer_movement)
             return {
                 "status": "SUCCESS",
@@ -72,7 +70,7 @@ class OpenSession(Controller):
             }
         except Exception as e:
             _logger.error(e)
-            return self._return_error('other',e.args[0])
+            return self._return_error("other", e.args[0])
             return {
                 "status": "ERROR",
                 "message": f"Error al realizar la transferencia: {e.args[0]}",
@@ -93,11 +91,15 @@ class OpenSession(Controller):
         return missing_fields
 
     def _required_fields(self) -> list:
-        return ["user_id", "cashbox_id", "amount"]
+        return ["user_id", "cashbox_id", "amount", "transfer_number"]
 
     def _get_cashbox(self, data: dict) -> object:
         user = request.env.user
-        cashbox_id = request.env["cash.control.config"].with_user(user.id).browse(data.get("cashbox_id"))
+        cashbox_id = (
+            request.env["cash.control.config"]
+            .with_user(user.id)
+            .browse(data.get("cashbox_id"))
+        )
         _logger.info(cashbox_id)
         return cashbox_id
 
@@ -106,11 +108,10 @@ class OpenSession(Controller):
             "missing fields": f"Missing fields: {info}",
             "user_id": "Invalid User ID",
             "cashbox_id": "Invalid Cashbox ID",
-            "other" : f"Error al realizar la transferencia: {info}",
+            "other": f"Error al realizar la transferencia: {info}",
         }
         _logger.error(messages[error_type])
         return {
             "status": "ERROR",
             "message": messages[error_type],
         }
-    

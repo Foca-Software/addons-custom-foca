@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-        <record id="cash_control_config_kanban" model="ir.ui.view">
-            <field name="name">cash_control_config.kanban</field>
+        <record id="cash_control_config_add_accumultaor" model="ir.ui.view">
+            <field name="name">cash.control.config.form.inherit</field>
             <field name="model">cash.control.config</field>
             <field name="inherit_id" ref="cash_control.cash_control_config_form"/>
             <field name="arch" type="xml">

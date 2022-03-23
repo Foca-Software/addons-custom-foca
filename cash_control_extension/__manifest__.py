@@ -23,5 +23,6 @@
     ],
     "data": [
         'views/cash_control_config.xml',
+        'views/cash_control_session.xml'
     ],
 }
