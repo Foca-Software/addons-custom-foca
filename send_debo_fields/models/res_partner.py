@@ -118,7 +118,8 @@ class ResPartner(models.Model):
             "IMAGEN": self.decode_img_512(),
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
             "ID_DEBO_CLOUD": self.id,
-            "id_debo": self.id_debo,
+            "id_debo_c": self.id_debo_c,
+            "id_debo_p": self.id_debo_p
         }
         # res.update(debo_like_fields)
         return debo_like_fields

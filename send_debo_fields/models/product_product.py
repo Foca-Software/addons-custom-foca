@@ -102,7 +102,7 @@ class ProductProduct(models.Model):
             "TIP": self.type,
             "ESS": 1 if self.type == "service" else 0,
             "NHA": 0 if self.active else 1,
-            "DET_LAR": self.display_name or "",
+            "DET_LAR": self.name,
             "IMP_IMP_INT": 1 if len(Taxes) > 0 else 0,
             "LISPSD": self.pricelist_id.read(),
             "E_HD": "",
