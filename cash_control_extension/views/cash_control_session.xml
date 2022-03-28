@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="cash_control_session_add_transfer_tree" model="ir.ui.view">
+            <field name="name">cash.control.session.form.inherit</field>
+            <field name="model">cash.control.session</field>
+            <field name="inherit_id" ref="cash_control.cash_control_session_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="transfers" string="Transfers">
+                        <field name="transfer_ids">
+                            <tree>
+                                <field name="date"/>
+                                <field name="ref"/>
+                                <field name="amount"/>
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+</odoo>

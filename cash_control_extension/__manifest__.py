@@ -1,8 +1,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "DEBO Api Cashbox Integration",
+    "name": "DEBO Cash Control Extension",
     "summary": """
-        Open and Close Cash_control Sessions through API requests.
+        Add DEBO specific fields and interactions.
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
@@ -20,10 +20,9 @@
     "depends": [
         "base",
         "cash_control",
-        "cash_control_extension",
     ],
     "data": [
-        "views/cash_control_config.xml",
-        "views/cash_control_session.xml",
+        'views/cash_control_config.xml',
+        'views/cash_control_session.xml'
     ],
 }

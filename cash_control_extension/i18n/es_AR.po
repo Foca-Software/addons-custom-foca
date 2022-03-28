@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* cash_control_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-23 12:37+0000\n"
+"PO-Revision-Date: 2022-03-23 12:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cash_control_extension
+#: model:ir.model.fields,field_description:cash_control_extension.field_cash_control_config__accumulator_cash_id
+msgid "Accumulator Cashbox"
+msgstr "Caja Acumuladora"
+
+#. module: cash_control_extension
+#: model:ir.model,name:cash_control_extension.model_cash_control_config
+msgid "Cash Control Config"
+msgstr "Control de Caja"
+
+#. module: cash_control_extension
+#: model:ir.model,name:cash_control_extension.model_cash_control_session
+msgid "Cash Control Session"
+msgstr "Sesión"
+
+#. module: cash_control_extension
+#: model_terms:ir.ui.view,arch_db:cash_control_extension.cash_control_session_add_transfer_tree
+msgid "Transfers"
+msgstr "Transferencias"
+
+#. module: cash_control_extension
+#: model:ir.model.fields,field_description:cash_control_extension.field_cash_control_session__transfer_ids
+msgid "transfers"
+msgstr "transferencias"
