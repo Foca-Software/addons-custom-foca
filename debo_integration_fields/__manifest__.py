@@ -25,7 +25,8 @@
         "sale",
     ],
     "data": [
-        "views/res_company.xml",
+        "views/id_debo_views.xml",
+        # "views/res_company.xml",
         "views/product_pricelist_item.xml",
     ],
 }
