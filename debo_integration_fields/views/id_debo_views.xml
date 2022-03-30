@@ -33,8 +33,8 @@
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='display_name']" position="before">
-                <field name="id_debo_c"/>
-                <field name="id_debo_p"/>
+                <field name="id_debo_c" optional="show"/>
+                <field name="id_debo_p" optional="show"/>
             </xpath>
         </field>
     </record>
@@ -49,8 +49,131 @@
         </field>
     </record>
     <!-- _________________________PRODUCT________________________ -->
+    <record model="ir.ui.view" id="product_product_form_debo_fields">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']/div[1]" position="before">
+                <div>
+                    <field name="id_debo"/>
+                    <label for="id_debo" string="legacy_code"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_product_tree_debo_fields">
+        <field name="name">product.product.tree</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="id_debo" string="Legacy Code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_product_search_debo_fields">
+        <field name="name">product.product.tree</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy Code" filter_domain="[('id_debo','=',self)]"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- ________________________PRICELIST_______________________ -->
+    <record model="ir.ui.view" id="product_pricelist_form_debo_fields">
+        <field name="name">product.pricelist.form</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricelist_settings']" position="before">
+                <field name="id_debo" string="Legacy Code"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_pricelist_tree_debo_fields">
+        <field name="name">product.pricelist.tree</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy Code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_pricelist_search_debo_fields">
+        <field name="name">product.pricelist.search</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy code" filter_domain="[('id_debo','=',self)]"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- __________________________USERS_________________________ -->
+    <record model="ir.ui.view" id="res_users_form_debo_fields">
+        <field name="name">res.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']/group/field[@name='partner_id']" position="before">
+                <field name="id_debo" string="Legacy Code"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="res_users_tree_debo_fields">
+        <field name="name">res.users.tree</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="id_debo" string="Legacy Code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="res_users_search_debo_fields">
+        <field name="name">res.users.search</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy code" filter_domain="[('id_debo','=',self)]"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- __________________________TAXES_________________________ -->
+    <record model="ir.ui.view" id="account_tax_form_debo_fields">
+        <field name="name">account.tax.form</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy Code"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="account_tax_tree_debo_fields">
+        <field name="name">account.tax.tree</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy Code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="account_tax_search_debo_fields">
+        <field name="name">account.tax.search</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_account_tax_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="id_debo" string="Legacy code" filter_domain="[('id_debo','=',self)]"/>
+            </xpath>
+        </field>
+    </record>
 
-
-    <!-- ______________________________________________________________________________________________ -->
-    
 </odoo>
