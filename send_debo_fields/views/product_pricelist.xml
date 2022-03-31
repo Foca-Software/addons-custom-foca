@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="product_pricelist_tree_view">
+        <field name="name">product.pricelist.tree</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="is_up_to_date" optional="hide"/>
+            </xpath>
+            <tree position="attributes">
+                <attribute name="decoration-muted">is_up_to_date != True</attribute>
+            </tree> 
+        </field>
+    </record>
+</odoo>

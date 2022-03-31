@@ -17,6 +17,21 @@ class ProductProduct(models.Model):
 
     pre_net = fields.Float(string="Precio Neto", compute="_compute_pre_net")
 
+    is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
+    
+    # def _default_last_update_debo(self):
+    #     if not self.last_update_debo:
+    #         return self.write_date - datetime.timedelta(days=1)
+
+    last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
+    
+    def _compute_is_up_to_date(self):
+        for record in self:
+            if not record.last_update_debo or record.last_update_debo < record.write_date:
+                record.is_up_to_date = False
+            else:
+                record.is_up_to_date = True
+
     # @api.depends("lst_price", "taxes_id")
     def _compute_pre_net(self) -> float:
         percent = 0
