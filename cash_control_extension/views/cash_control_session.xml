@@ -5,6 +5,9 @@
             <field name="model">cash.control.session</field>
             <field name="inherit_id" ref="cash_control.cash_control_session_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" postion="before">
+                    <field name="user_id"/>
+                </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="transfers" string="Transfers">
                         <field name="transfer_ids">
