@@ -34,16 +34,17 @@ class ProductProduct(models.Model):
 
     # @api.depends("lst_price", "taxes_id")
     def _compute_pre_net(self) -> float:
-        percent = 0
-        fixed = 0
-        if self.taxes_id and self.lst_price != 0:
-            for tax in self.taxes_id:
-                if tax.amount_type == "percent":
-                    percent += tax.amount
-                else:
-                    fixed += tax.amount
-            percent *= 0.01
-        self.pre_net = (self.lst_price - fixed) / (1 + percent)
+        for record in self:
+            percent = 0
+            fixed = 0
+            if record.taxes_id and record.lst_price != 0:
+                for tax in record.taxes_id:
+                    if tax.amount_type == "percent":
+                        percent += tax.amount
+                    else:
+                        fixed += tax.amount
+                percent *= 0.01
+            record.pre_net = (record.lst_price - fixed) / (1 + percent)
 
     # @api.depends("pre_net")
     def _calculate_taxes(self, taxes) -> list:
