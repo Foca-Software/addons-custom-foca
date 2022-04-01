@@ -24,6 +24,7 @@ class CashControlSession(models.Model):
     @api.model
     def create(self,vals):
         res = super().create(vals)
+        cashbox_user_ids = config.user_ids.filtered(lambda u: u.has_group('account.group_account_user'))
         res.user_ids = res.config_id.user_ids
         res.user_id = self.env.user.id
         return res
