@@ -20,6 +20,7 @@
     "depends": [
         "base",
         "cash_control",
+        "cash_control_extension",
     ],
     "data": [
         "views/cash_control_config.xml",

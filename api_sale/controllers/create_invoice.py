@@ -68,12 +68,16 @@ class ReceiveData(Controller):
             }
         user_id = request.env['res.users'].sudo().search([('id','=',sent_user_id)])
         request.env.user = user_id
+        _logger.info(user_id)
+        _logger.info(request.env.user)
         # request.env.company = user_id.company_id
         payload = kwargs.get("payload", False)
         if not payload:
             return {"status": "Error", "message": "Payload not found"}
 
         company_id = payload.get("company_id", False)
+        _logger.info(company_id)
+        _logger.info(request.env.company)
         if not company_id:
             return {"status": "Error", "message": "Company not found, or not valid"}
         if company_id not in request.env.user.company_ids.ids:

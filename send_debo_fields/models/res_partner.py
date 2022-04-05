@@ -12,7 +12,23 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    #esto no deberia estar aca... no deberia estar directamente...
     id_debo = fields.Char(string="ID_DEBO")
+
+    is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
+    
+    # def _default_last_update_debo(self):
+    #     if not self.last_update_debo:
+    #         return self.write_date - datetime.timedelta(days=1)
+
+    last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
+    
+    def _compute_is_up_to_date(self):
+        for record in self:
+            if not record.last_update_debo or record.last_update_debo < record.write_date:
+                record.is_up_to_date = False
+            else:
+                record.is_up_to_date = True
 
     def test_button(self):
         return data_sender.send_debo_fields(
@@ -118,7 +134,8 @@ class ResPartner(models.Model):
             "IMAGEN": self.decode_img_512(),
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
             "ID_DEBO_CLOUD": self.id,
-            "id_debo": self.id_debo,
+            "id_debo_c": self.id_debo_c,
+            "id_debo_p": self.id_debo_p
         }
         # res.update(debo_like_fields)
         return debo_like_fields
@@ -133,6 +150,24 @@ class ResPartner(models.Model):
     def _get_final_endpoint(self):
         return "/guardarCliente"
 
+
+    def write(self, vals_list):
+        res = super().write(vals_list)
+        if res:
+            try:
+                up_to_date = sent_to_debo = data_sender.send_debo_fields(
+                    data=self._get_debo_fields(),
+                    endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
+                )
+                if not up_to_date:
+                    _logger.warning("Error sending data to debo")
+            except Exception as e:
+                _logger.error(e)
+                raise Warning(e.args)
+        return res
+
+
+# unused
     # @api.model
     # def create(self, vals_list):
     #     res = super().create(vals_list)
@@ -147,22 +182,6 @@ class ResPartner(models.Model):
     #         _logger.error(e)
     #         raise Warning(e.args)
     #     return res
-
-    def write(self, vals_list):
-        res = super().write(vals_list)
-        if res:
-            try:
-                data_sender.send_debo_fields(
-                    data=self._get_debo_fields(),
-                    endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
-                )
-            except Exception as e:
-                _logger.error(e)
-                raise Warning(e.args)
-        return res
-
-
-# unused
 # def _necessary_fields(self):
 #     fields = [
 #         "name",

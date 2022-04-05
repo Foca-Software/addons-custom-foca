@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="cash_control_config_add_accumultaor" model="ir.ui.view">
+            <field name="name">cash.control.config.form.inherit</field>
+            <field name="model">cash.control.config</field>
+            <field name="inherit_id" ref="cash_control.cash_control_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position='before'>
+                    <field name='accumulator_cash_id'/>
+                </xpath>
+                <xpath expr="//button[@name='%(cash_control.action_cash_control_transfer_wizard)d']" position="attributes">
+                    <attribute name="context">{
+                        'default_orig_journal_id': journal_id,
+                        'default_dest_cash_control_id' : accumulator_cash_id,
+                        'default_amount': statement_balance_end,
+                        'default_is_acum_cash_control': is_acum_cash_control
+                    }</attribute>
+                </xpath>
+            </field>
+        </record>
+</odoo>

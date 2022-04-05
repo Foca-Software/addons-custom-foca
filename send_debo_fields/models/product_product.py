@@ -17,18 +17,34 @@ class ProductProduct(models.Model):
 
     pre_net = fields.Float(string="Precio Neto", compute="_compute_pre_net")
 
+    is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
+    
+    # def _default_last_update_debo(self):
+    #     if not self.last_update_debo:
+    #         return self.write_date - datetime.timedelta(days=1)
+
+    last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
+    
+    def _compute_is_up_to_date(self):
+        for record in self:
+            if not record.last_update_debo or record.last_update_debo < record.write_date:
+                record.is_up_to_date = False
+            else:
+                record.is_up_to_date = True
+
     # @api.depends("lst_price", "taxes_id")
     def _compute_pre_net(self) -> float:
-        percent = 0
-        fixed = 0
-        if self.taxes_id and self.lst_price != 0:
-            for tax in self.taxes_id:
-                if tax.amount_type == "percent":
-                    percent += tax.amount
-                else:
-                    fixed += tax.amount
-            percent *= 0.01
-        self.pre_net = (self.lst_price - fixed) / (1 + percent)
+        for record in self:
+            percent = 0
+            fixed = 0
+            if record.taxes_id and record.lst_price != 0:
+                for tax in record.taxes_id:
+                    if tax.amount_type == "percent":
+                        percent += tax.amount
+                    else:
+                        fixed += tax.amount
+                percent *= 0.01
+            record.pre_net = (record.lst_price - fixed) / (1 + percent)
 
     # @api.depends("pre_net")
     def _calculate_taxes(self, taxes) -> list:
@@ -102,7 +118,7 @@ class ProductProduct(models.Model):
             "TIP": self.type,
             "ESS": 1 if self.type == "service" else 0,
             "NHA": 0 if self.active else 1,
-            "DET_LAR": self.display_name or "",
+            "DET_LAR": self.name,
             "IMP_IMP_INT": 1 if len(Taxes) > 0 else 0,
             "LISPSD": self.pricelist_id.read(),
             "E_HD": "",

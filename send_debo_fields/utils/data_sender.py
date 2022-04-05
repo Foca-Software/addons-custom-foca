@@ -49,7 +49,8 @@ class DataSender:
                 _logger.info(response)
             else:
                 _logger.error(response)
-                raise Warning(response)
+                return False
+                # raise Warning(response)
         except Exception as e:
             _logger.error(e)
             raise Warning(e.args)

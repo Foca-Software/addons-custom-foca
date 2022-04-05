@@ -26,6 +26,8 @@
     ],
     "data": [
         "views/res_config.xml",
-        # "views/res_partner.xml",
+        "views/res_partner.xml",
+        "views/product_product.xml",
+        "views/product_pricelist.xml",
     ],
 }

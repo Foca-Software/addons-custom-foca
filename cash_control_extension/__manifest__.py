@@ -1,15 +1,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "DEBO Integration Fields",
+    "name": "DEBO Cash Control Extension",
     "summary": """
-        Add fields needed for integration.
+        Add DEBO specific fields and interactions.
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Endpoint",
-    "version": "13.0.1.0.1",
+    "version": "13.0.0.0.1",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
@@ -19,14 +19,10 @@
     },
     "depends": [
         "base",
-        "account",
-        "contacts",
-        "product",
-        "sale",
+        "cash_control",
     ],
     "data": [
-        "views/id_debo_views.xml",
-        # "views/res_company.xml",
-        "views/product_pricelist_item.xml",
+        'views/cash_control_config.xml',
+        'views/cash_control_session.xml'
     ],
 }

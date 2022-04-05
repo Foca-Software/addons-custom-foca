@@ -15,6 +15,21 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.pricelist"
 
+    is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
+    
+    # def _default_last_update_debo(self):
+    #     if not self.last_update_debo:
+    #         return self.write_date - datetime.timedelta(days=1)
+
+    last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
+    
+    def _compute_is_up_to_date(self):
+        for record in self:
+            if not record.last_update_debo or record.last_update_debo < record.write_date:
+                record.is_up_to_date = False
+            else:
+                record.is_up_to_date = True
+
     def _get_base_endpoint(self):
         config_params = self.env["ir.config_parameter"].sudo()
         proper_config = config_params.get_param("debo_cloud_conector.debo_endpoint")

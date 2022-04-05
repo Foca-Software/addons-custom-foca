@@ -1,0 +1,8 @@
+{
+    "params":{
+        "user_id" : 6,
+        "cashbox_id" : 10,
+        "amount" : 500,
+        "transfer_number" : 5
+    }
+}
