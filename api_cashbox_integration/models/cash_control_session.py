@@ -9,7 +9,17 @@ class CashControlSession(models.Model):
     
     def _api_add_user(self, user_id):
         try:
-            self.user_ids = [(4,0, user_id)]
+            self.write({"user_ids" : [(4, user_id)]})
+            return True
+        except Exception as e:
+            _logger.error(e)
+            return False
+
+
+
+    def _api_remove_user(self,user_id):
+        try:
+            self.write({"user_ids" : [(3, user_id)]})
             return True
         except Exception as e:
             _logger.error(e)

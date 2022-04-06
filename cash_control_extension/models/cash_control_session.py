@@ -24,6 +24,10 @@ class CashControlSession(models.Model):
     @api.model
     def create(self,vals):
         res = super().create(vals)
-        res.user_id = self.env.user.id
+        _logger.info("llegamos al create")
+        try:
+            res.user_id = self.env.user.id
+        except Exception as e:
+            _logger.error(e)
         return res
         # vals['user_ids'] = config_id.user_ids.ids
