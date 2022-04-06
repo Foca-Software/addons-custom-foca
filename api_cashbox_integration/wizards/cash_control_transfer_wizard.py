@@ -20,7 +20,7 @@ class CashControlTransferWizard(models.TransientModel):
             }
             transfer = self.env['cash.control.transfer.cash'].create(vals)
             transfer.action_transfer(ref=ref)
-            transfer.action_receipt(ref=ref)
+            # transfer.action_receipt(ref=ref)
         elif self.operation == 'transfer_to_bank':
             payment_type = 'outbound'
             payment_methods = self.bank_journal_id.outbound_payment_method_ids
