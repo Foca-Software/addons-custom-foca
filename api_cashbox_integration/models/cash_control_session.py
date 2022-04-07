@@ -7,6 +7,25 @@ class CashControlSession(models.Model):
 
     id_debo = fields.Char(string="Planilla")
     
+    def _api_add_user(self, user_id):
+        try:
+            self.write({"user_ids" : [(4, user_id)]})
+            return True
+        except Exception as e:
+            _logger.error(e)
+            return False
+
+
+
+    def _api_remove_user(self,user_id):
+        try:
+            self.write({"user_ids" : [(3, user_id)]})
+            return True
+        except Exception as e:
+            _logger.error(e)
+            return False
+
+
     def _api_open_cashbox_pos(self, number : int = 1, coin_value : float = 0.0): #, number : int = 0, coin_value : int = 0
         self.ensure_one()
         subtotal = coin_value * number
