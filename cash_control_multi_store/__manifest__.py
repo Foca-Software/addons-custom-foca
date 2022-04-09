@@ -19,4 +19,5 @@
     'qweb': [
     ],
     'installable': True,
+    'install_hook' : 'install_hook',
 }
