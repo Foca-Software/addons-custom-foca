@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-09 16:29+0000\n"
-"PO-Revision-Date: 2022-04-09 16:29+0000\n"
+"POT-Creation-Date: 2022-04-11 17:40+0000\n"
+"PO-Revision-Date: 2022-04-11 17:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -118,14 +118,21 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimiento de productos (Movimiento de existencias)"
+
+#. module: stock_fuel_tanks
 #: model:ir.model,name:stock_fuel_tanks.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__pump_ids
+#: model:ir.ui.menu,name:stock_fuel_tanks.stock_pump_view_menu_act
+#: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.add_tank_info
 msgid "Pumps"
-msgstr "Surtidor"
+msgstr "Surtidores"
 
 #. module: stock_fuel_tanks
 #: model:ir.model,name:stock_fuel_tanks.model_stock_pump
@@ -146,9 +153,4 @@ msgstr "Información de Tanque"
 #. module: stock_fuel_tanks
 #: model:ir.actions.act_window,name:stock_fuel_tanks.stock_pump_view_action
 msgid "stock.pump.action"
-msgstr "Surtidores"
-
-#. module: stock_fuel_tanks
-#: model:ir.ui.menu,name:stock_fuel_tanks.stock_pump_view_menu_act
-msgid "Pumps"
 msgstr "Surtidores"
