@@ -12,15 +12,30 @@
                 <group name='tank_info' string="Tank Info" attrs="{'invisible':[('usage','!=','fuel_tank')]}">
                     <field name="product_id" attrs="{'required':[('usage','=','fuel_tank')]}"/>
                     <field name="capacity" attrs="{'required':[('usage','=','fuel_tank')]}"/>
-                    <field name="pump_ids">
-                        <tree editable="bottom">
-                            <field name="code" required="1"/>
-                            <field name="name" required="1"/>
-                        </tree>
+                    <field name="pump_ids" widget="many2many_tags" context="{'default_tank_id': id}" domain="[('tank_id','=',False)]">
+                        <form string="Pumps">
+                            <group name="Container" string="">
+                            <!-- <h1> -->
+                                <div class="oe_title">
+                                    <field name="name"/>
+                                </div>
+                            <!-- </h1> -->
+                                <group name="data" string="">
+                                    <field name="code"/>
+                                    <field name="description"/>
+                                </group>
+                            </group>
+                        </form>
                     </field>
+                    <!-- <field name="pump_ids" widget="many2many_tags"/> -->
                 </group>
             </xpath>
         </field>
     </record>
 
 </odoo>
+
+                        <!-- <tree editable="bottom">
+                            <field name="code" required="1"/>
+                            <field name="name" required="1"/>
+                        </tree> -->

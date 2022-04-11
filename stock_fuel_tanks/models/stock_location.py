@@ -17,4 +17,3 @@ class StockLocation(models.Model):
     )
     pump_ids = fields.One2many(comodel_name='stock.pump', inverse_name='tank_id', string='Pumps')
     
-    
