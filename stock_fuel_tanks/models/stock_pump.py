@@ -11,6 +11,6 @@ class StockPump(models.Model):
     name = fields.Char(string="Name")
     code = fields.Char(string="Code")
     description = fields.Char(string="Description")
-    tank_id = fields.Many2one(comodel_name='stock.location', string='Tank')
+    tank_id = fields.Many2one(comodel_name='stock.location', string='Tank', domain="[('is_fuel_tank','=',True)]")
     product_id = fields.Many2one(related="tank_id.product_id", string='Product')
     

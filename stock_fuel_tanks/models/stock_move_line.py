@@ -22,9 +22,6 @@ class StockMoveLine(models.Model):
                 ("location_id", "=", move.location_dest_id.id),
             ]
             product_qty = stock_quant_obj.search(domain).quantity
-            _logger.warning(move.qty_done)
-            _logger.warning(product_qty)
-            _logger.warning(move.location_dest_id.capacity)
             # if move.product_uom_qty + product_qty > move.location_dest_id.capacity:
             #     raise Warning("Confirming this transfer will exceed tank capacity")
             if move.qty_done + product_qty > move.location_dest_id.capacity:
@@ -36,4 +33,5 @@ class StockMoveLine(models.Model):
             if not move.product_id.is_fuel or move.location_dest_id.usage == "customer":
                 continue
             if move.product_id != move.location_dest_id.product_id:
+                pass
                 raise ValidationError("You cannot mix products in tanks")

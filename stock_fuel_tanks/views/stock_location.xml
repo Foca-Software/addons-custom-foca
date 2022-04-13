@@ -6,12 +6,13 @@
         <field name="model">stock.location</field>
         <field name="inherit_id" ref="stock.view_location_form"/>
         <field name="arch" type="xml">
-            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='usage']" position="after">
+                <field name="is_fuel_tank"/>
+            </xpath>
             <xpath expr="//group[1]" position="inside">
-                <!-- Add your fields here -->
-                <group name='tank_info' string="Tank Info" attrs="{'invisible':[('usage','!=','fuel_tank')]}">
-                    <field name="product_id" attrs="{'required':[('usage','=','fuel_tank')]}"/>
-                    <field name="capacity" attrs="{'required':[('usage','=','fuel_tank')]}"/>
+                <group name='tank_info' string="Tank Info" attrs="{'invisible':[('is_fuel_tank','!=',True)]}">
+                    <field name="product_id" attrs="{'required':[('is_fuel_tank','=',True)]}"/>
+                    <field name="capacity" attrs="{'required':[('is_fuel_tank','=',True)]}"/>
                     <field name="pump_ids" widget="many2many_tags" context="{'default_tank_id': id}" domain="[('tank_id','=',False)]">
                         <form string="Pumps">
                             <group name="Container" string="">
@@ -27,15 +28,9 @@
                             </group>
                         </form>
                     </field>
-                    <!-- <field name="pump_ids" widget="many2many_tags"/> -->
                 </group>
             </xpath>
         </field>
     </record>
 
 </odoo>
-
-                        <!-- <tree editable="bottom">
-                            <field name="code" required="1"/>
-                            <field name="name" required="1"/>
-                        </tree> -->
