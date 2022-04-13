@@ -33,5 +33,4 @@ class StockMoveLine(models.Model):
             if not move.product_id.is_fuel or move.location_dest_id.usage == "customer":
                 continue
             if move.product_id != move.location_dest_id.product_id:
-                pass
                 raise ValidationError("You cannot mix products in tanks")
