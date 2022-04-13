@@ -4,7 +4,8 @@
         "data": {
             "cash_id": 10,
             "amount" : 1000,
-            "id_debo" : "0899926"
+            "id_debo" : "0899926",
+            "pump_ids" : [1]
         }
     }
 }

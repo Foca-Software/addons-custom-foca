@@ -45,16 +45,13 @@ class CashControlSession(models.Model):
         for line in data:
             _logger.warning(line)
             try:
-                fuel_move = self.fuel_move_ids.filtered(lambda p: int(p.pump_id_debo) == int(line.get("id_debo",False)))
-                _logger.warning(self.fuel_move_ids.read(['pump_id_debo']))
-                _logger.warning(fuel_move)
+                fuel_move = self.fuel_move_ids.filtered(lambda p: int(p.pump_id) == int(line.get("pump_id",False)))
                 fuel_move_id = fuel_move.id if fuel_move else False
                 if not fuel_move_id:
                     _logger.error("fuel move id not found")
                     continue
                 move_line = self.env['fuel.move.line'].browse(fuel_move_id)
-                del line['id_debo']
-                _logger.warning(line)
+                del line['pump_id']
                 move_line.write(line)
             except Exception as e:
                 _logger.error(e)

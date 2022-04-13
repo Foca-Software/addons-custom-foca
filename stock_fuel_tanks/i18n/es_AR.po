@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 17:40+0000\n"
-"PO-Revision-Date: 2022-04-11 17:40+0000\n"
+"POT-Creation-Date: 2022-04-13 13:55+0000\n"
+"PO-Revision-Date: 2022-04-13 13:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,11 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__id_debo
+msgid "ID debo"
+msgstr "ID DEBO"
+
+#. module: stock_fuel_tanks
 #: model:ir.model.fields.selection,name:stock_fuel_tanks.selection__stock_location__usage__fuel_tank
 msgid "Internal - Fuel Tank"
 msgstr "Interna - Tanque de Combustible"
@@ -84,6 +89,11 @@ msgstr "Interna - Tanque de Combustible"
 #: model:ir.model,name:stock_fuel_tanks.model_stock_location
 msgid "Inventory Locations"
 msgstr "Ubicaciones de inventario"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__is_fuel_tank
+msgid "Is a Fuel Tank"
+msgstr "Es un Tanque de Combustible"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump____last_update
@@ -149,6 +159,11 @@ msgstr "Tanque"
 #: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.add_tank_info
 msgid "Tank Info"
 msgstr "Información de Tanque"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_move_line__pump_id
+msgid "pump"
+msgstr "Id Surtidor"
 
 #. module: stock_fuel_tanks
 #: model:ir.actions.act_window,name:stock_fuel_tanks.stock_pump_view_action
