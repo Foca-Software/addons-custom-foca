@@ -1,13 +1,10 @@
 {
     "params":{
-        "login": {
-            "username": "aquintana@focasoftware.com",
-            "password": "Foca.21"
-        },
+        "user_id" : 6,
         "data": {
-            "cash_id": 3,
-            "amount" : 1500,
+            "cash_id": 10,
+            "amount" : 1000,
             "id_debo" : "0899926"
         }
-    }   
+    }
 }

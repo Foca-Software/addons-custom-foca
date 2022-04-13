@@ -5,7 +5,7 @@ _logger = logging.getLogger(__name__)
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
-    id_debo = fields.Char(string="Planilla")
+
     
     def _api_add_user(self, user_id):
         try:
@@ -14,8 +14,6 @@ class CashControlSession(models.Model):
         except Exception as e:
             _logger.error(e)
             return False
-
-
 
     def _api_remove_user(self,user_id):
         try:
@@ -29,12 +27,9 @@ class CashControlSession(models.Model):
     def _api_open_cashbox_pos(self, number : int = 1, coin_value : float = 0.0): #, number : int = 0, coin_value : int = 0
         self.ensure_one()
         subtotal = coin_value * number
-        # action = self.statement_id.open_cashbox_id()
-        # action = action['context']
-        # _logger.error(action['context'])
         ctx = {}
         ctx.update(self.env.context)
-        ctx['statement_id'] = self.statement_id.id #action['statement_id']
+        ctx['statement_id'] = self.statement_id.id
         ctx['pos_session_id'] = self.id
         ctx['default_pos_id'] = self.config_id.id
         _logger.error(ctx)
@@ -44,7 +39,6 @@ class CashControlSession(models.Model):
         _logger.warning(open_dict)
         wiz = self.env['account.bank.statement.cashbox'].with_context(ctx).create(open_dict)
         wiz._validate_cashbox()
-        # _logger.warning(wiz)
         return wiz
 
 
@@ -52,19 +46,10 @@ class CashControlSession(models.Model):
         _logger.info('clossing session....')
 
         if abs(self.statement_difference) > self.config_id.amount_authorized_diff:
-            # Only pos manager can close statements with statement_difference greater than amount_authorized_diff.
-            # if not self.user_has_groups("point_of_sale.group_pos_manager"):
-            #     raise UserError(_(
-            #         "Your ending balance is too different from the theoretical cash closing (%.2f), "
-            #         "the maximum allowed is: %.2f. You can contact your manager to force it."
-            #     ) % (self.statement_difference, self.config_id.amount_authorized_diff))
-            # else:
-            #     return self._warning_balance_closing()
             raise UserError(_(
                 "Your ending balance is too different from the theoretical cash closing (%.2f), "
                 "the maximum allowed is: %.2f. You can contact your manager to force it."
             ) % (self.statement_difference, self.config_id.amount_authorized_diff))
-        # odoo 12 - session - action_pos_session_close
         # Close CashBox
         self._check_pos_session_balance()
         company_id = self.config_id.company_id.id

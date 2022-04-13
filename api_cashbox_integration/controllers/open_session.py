@@ -41,13 +41,11 @@ class OpenSession(Controller):
             # Response.status= "200 OK"
             cash_box.api_open_cashbox(coin_value=data.get('amount',False),balance='start')
             cash_box.current_session_id.id_debo = data.get('id_debo',False)
-            try:
-                pump_ids = data.get('pump_ids',False)
-                if pump_ids:
-                    cash_box.current_session_id.pump_ids = [(6,cash_box.current_session_id.id,pump_ids)]
-                    cash_box.current_session_id.create_fuel_move_lines()
-            except Exception as e:
-                _logger.error(e)
+
+            pump_ids = data.get('pump_ids',False)
+            if pump_ids:
+                cash_box.current_session_id.pump_ids = [(6,cash_box.current_session_id.id,pump_ids)]
+                cash_box.current_session_id.create_fuel_move_lines()
             return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
         except Exception as e:
             # Response.status = "400 Bad Request"

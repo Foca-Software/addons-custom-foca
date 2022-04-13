@@ -6,11 +6,11 @@
         <field name="model">stock.pump</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="id_debo"/>
                 <field name="code"/>
                 <field name="name"/>
                 <field name="description"/>
                 <field name="tank_id"/>
-
             </tree>
         </field>
     </record>
@@ -58,8 +58,9 @@
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 <!-- Add Text Here -->
-            </p><p>
-                <!-- More details about what a user can do with this object will be OK --> 
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
             </p>
         </field>
     </record>

@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
+    id_debo = fields.Char(string="Planilla")
     pump_ids = fields.Many2many(comodel_name="stock.pump", string="Pumps")
     fuel_move_ids = fields.One2many(
         comodel_name="fuel.move.line",
@@ -15,22 +16,49 @@ class CashControlSession(models.Model):
         string="Fuel Movements",
     )
 
+    # to be handled by api_cashbox_integration__________________________________________
     @api.depends("pump_ids")
-    # @api.onchange("pump_ids")
     def create_fuel_move_lines(self):
+        """
+        Creates fuel_move_lines depending on the pumps declared on session opening
+        """
         for session in self:
             if not session.pump_ids:
                 session.fuel_move_ids = False
-
             fuel_move_obj = self.env["fuel.move.line"]
-            # pump_lines = [pump_obj.create({
-            #     "session_id" : session.id,
-            #     "pump_id" : pump.id
-            # }) for pump in session.pump_ids]
             line_ids = []
             for pump in session.pump_ids:
-                new_line = fuel_move_obj.create({"session_id": session.id, "pump_id": pump.id})
+                new_line = fuel_move_obj.create(
+                    {
+                        "session_id": session.id,
+                        "pump_id": pump.id,
+                    }
+                )
                 line_ids.append(new_line.id)
-            # _logger.info(pump_lines)
             _logger.info(line_ids)
-            session.write({'fuel_move_ids' : [(6,session.id,line_ids)]})
+            session.write({"fuel_move_ids": [(6, session.id, line_ids)]})
+
+    def _api_edit_fuel_lines(self, data: dict) -> bool:
+        """
+        Edits all fuel lines depending on the pump closing data handled by the controller
+        """
+        for line in data:
+            _logger.warning(line)
+            try:
+                fuel_move = self.fuel_move_ids.filtered(lambda p: int(p.pump_id_debo) == int(line.get("id_debo",False)))
+                _logger.warning(self.fuel_move_ids.read(['pump_id_debo']))
+                _logger.warning(fuel_move)
+                fuel_move_id = fuel_move.id if fuel_move else False
+                if not fuel_move_id:
+                    _logger.error("fuel move id not found")
+                    continue
+                move_line = self.env['fuel.move.line'].browse(fuel_move_id)
+                del line['id_debo']
+                _logger.warning(line)
+                move_line.write(line)
+            except Exception as e:
+                _logger.error(e)
+                return False
+        return True
+
+    # __________________________________________________________________________________
