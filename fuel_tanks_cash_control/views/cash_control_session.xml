@@ -16,6 +16,7 @@
                             <field name="tank_id" invisible="1"/>
                             <field name="price"/>
                             <field name="product_id"/>
+                            <field name="pump_id_debo"/>
                             <field name="pump_code" colspan="1"/>
                             <field name="initial_qty"/>
                             <field name="final_qty"/>
