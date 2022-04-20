@@ -1,14 +1,14 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "DEBO Api Cashbox Integration",
+    "name": "Cash Control - Stock Fuel Tanks",
     "summary": """
-        Open and Close Cash_control Sessions through API requests.
+       Manage fuel transactions in cash control sessions
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
-    "category": "Endpoint",
+    "category": "Stock",
     "version": "13.0.0.0.1",
     "development_status": "Production/Stable",
     "application": False,
@@ -19,13 +19,11 @@
     },
     "depends": [
         "base",
-        # "cash_control",
-        # "cash_control_extension",
-        # "stock_fuel_tanks",
-        "fuel_tanks_cash_control",
+        "stock_fuel_tanks",
+        "cash_control_extension",
     ],
     "data": [
-        "views/cash_control_config.xml",
-        "views/cash_control_session.xml",
+        "security/ir.model.access.csv",
+        "views/cash_control_session.xml"
     ],
 }

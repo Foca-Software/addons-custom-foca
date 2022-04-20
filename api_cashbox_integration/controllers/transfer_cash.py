@@ -7,7 +7,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class OpenSession(Controller):
+class TransferCash(Controller):
     _name = "debo.cloud.connector.transfer.cash"
 
     @route(

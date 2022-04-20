@@ -11,24 +11,7 @@ class OpenSession(Controller):
 
     @route("/debocloud/open_session", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
-        #----------------------------------------------------------------------------------------------------------------------
-        # _logger.warning(kwargs)
-        # if "login" not in kwargs:
-        #     return {
-        #         "status": "ERROR",
-        #         "user_id": 0,
-        #         "message": "Credentials not found in request",
-        #     }
-        # login = kwargs["login"]["username"]
-        # password = kwargs["login"]["password"]
-        # try:
-        #     user_id = request.session.authenticate(
-        #         request.session.db, login, password
-        #     )  # TODO: use JWT instead
-        # except:
-        #     # Response.status = "401 Unauthorized"
-        #     return {"status": "ERROR", "message": "Wrong username or password"}
-        #----------------------------------------------------------------------------------------------------------------------
+        #check request ok
         sent_user_id = kwargs.get('user_id', False)
         if not sent_user_id:
             return {
@@ -50,6 +33,7 @@ class OpenSession(Controller):
             # Response.status = "400 Bad Request"
             return {"status": "ERROR", "message": "Cash box not found"}
 
+        #try open
         try:
             if cash_box.session_state_info == 'opened':
                 # Response.status= "200 OK"
@@ -57,6 +41,11 @@ class OpenSession(Controller):
             # Response.status= "200 OK"
             cash_box.api_open_cashbox(coin_value=data.get('amount',False),balance='start')
             cash_box.current_session_id.id_debo = data.get('id_debo',False)
+
+            pump_ids = data.get('pump_ids',False)
+            if pump_ids:
+                cash_box.current_session_id.pump_ids = [(6,cash_box.current_session_id.id,pump_ids)]
+                cash_box.current_session_id.create_fuel_move_lines()
             return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
         except Exception as e:
             # Response.status = "400 Bad Request"

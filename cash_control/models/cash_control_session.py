@@ -193,6 +193,7 @@ class CashControlSession(models.Model):
                 _("The user %s already has an opened session" % (self.env.user.name)))
         if 'user_ids' not in vals:
             vals['user_ids'] = [(4, self.env.user.id)]
+            # vals['user_ids'] = config_id.user_ids.ids
 
         res = super(CashControlSession, self).create(vals)
 

@@ -1,23 +1,17 @@
 {
     "params": {
-        "login": {
-            "username": "admin",
-            "password": "admin"
-        },
-        "move_type" : 102,
+        "user_id": 2,
+        "company_id": 1,
         "payload": {
-            "header": {
-                "partner_id": 132,
-                "partner_shipping_id": 132,
-                "ref": "test",
-                "invoice_date": "31/12/2021",
-                "journal_id" : 37,
-                "l10n_latam_document_type_id": 1,
-                "company_id": 4,
-                "currency_id" : 19
-            },
-            "invoice_line_ids": [
-                {
+            "partner_id": 132,
+            "partner_shipping_id": 132,
+            "ref": "test",
+            "invoice_date": "31/12/2021",
+            "journal_id" : 37,
+            "l10n_latam_document_type_id": 1,
+            "company_id": 4,
+            "currency_id" : 19,
+            "invoice_line_ids": [[6,0,{
                     "product_id": 145,
                     "name": "Envase",
                     "account_id": 644,
@@ -26,7 +20,7 @@
                     "price_unit": 350,
                     "tax_ids": 137
                 }
-            ]
+            ]]
         }
     }
 }
