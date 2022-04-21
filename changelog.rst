@@ -24,7 +24,8 @@
 -------
 
 - Added submodules
+- Removed modules present in submodules
 - Added changelog file
 - Updated Readme
-- Aded requirements.txt
+- Added requirements.txt
 
