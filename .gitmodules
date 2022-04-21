@@ -134,3 +134,7 @@
 	url = https://github.com/muk-it/muk_web.git
 	path = submodules/muk-it/muk-web
 	branch = refs/heads/13.0
+[submodule "submodules/calyx-servicios/pos"]
+	path = submodules/calyx-servicios/pos
+	url = https://github.com/calyx-servicios/pos.git
+	branch = 13.0
