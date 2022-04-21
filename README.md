@@ -1,7 +1,19 @@
- [ADD][cash_control_multi_store, credit_card_instalment, _pos, _sale]
+# Foca Odoo 13.0 CE
 
- [UPD][cash_control]
+## Clone
 
- [UPD][product_template] From import
+`git clone --recurse-submodules --branch 13.0 https://github.com/Foca-Software/addons_custom_foca.git`
 
- [FIX][debo_cloud_conector]
+## .conf File
+
+This file is for reference of how is the `odoo.conf` addons path is configured in production.
+
+## requirements.txt
+
+This file has all the python packages using in production. It has the Odoo dependencies as well.
+
+Useful to create a new python environment for development purposes.
+
+Consider to add there if a module has new dependencies.
+
+`pip3 install -r requirements.txt`
