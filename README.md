@@ -2,7 +2,7 @@
 
 ## Clone
 
-`git clone --recurse-submodules --branch 13.0 https://github.com/Foca-Software/addons_custom_foca.git`
+`git clone --recurse-submodules --branch 13.0 https://github.com/Foca-Software/addons-custom-foca.git`
 
 ## .conf File
 
