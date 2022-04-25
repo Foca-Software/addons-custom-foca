@@ -8,7 +8,8 @@ odoo.define(
         const Widget = require("web.AbstractField");
         const registry = require("web.field_registry");
 
-        const getProductSalesList = (spreadsheetId, tableBody) => {
+        const getProductSalesList = (spreadsheetId) => {
+            const tableBody = document.querySelector("#productSalesList");
             ajax.rpc(
                 "/web/dataset/call_kw/cash.control.session.spreadsheet/get_session_product_sales_list",
                 {
@@ -20,17 +21,20 @@ odoo.define(
             ).then((response) => {
                 if (response) {
                     const list = JSON.parse(response);
+                    tableBody.innerHTML = "";
                     list.forEach((row) => {
-                        tableBody.insertAdjacentHTML(
-                            "beforeend",
-                            `<tr>
-                                <td>${row.invoice}</td>
-                                <td>${row.product}</td>
-                                <td>${row.quantity}</td>
-                                <td>$ ${row.price_unit},00</td>
-                                <td>$ ${row.price_total},00</td>
-                            </tr>`
-                        );
+                        document
+                            .querySelector("#productSalesList")
+                            .insertAdjacentHTML(
+                                "afterbegin",
+                                `<tr>
+                                    <td>${row.invoice}</td>
+                                    <td>${row.product}</td>
+                                    <td>${row.quantity}</td>
+                                    <td>$ ${row.price_unit},00</td>
+                                    <td>$ ${row.price_total},00</td>
+                                </tr>`
+                            );
                     });
                 }
             });
@@ -65,8 +69,8 @@ odoo.define(
                         });
                     });
                 };
-                const tableBody = await waitForElm("#productSalesList");
-                getProductSalesList(this.record.res_id, tableBody);
+                await waitForElm("#productSalesList");
+                getProductSalesList(this.record.res_id);
             },
 
             isSet() {
