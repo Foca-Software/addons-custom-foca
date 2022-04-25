@@ -122,7 +122,7 @@
                                 <field name="session_state" invisible="True"/>
                                 <field attrs="{'readonly': [('current_session_id', '!=', False)]}" name="code"/>
                                 <field attrs="{'readonly': [('current_session_id', '!=', False)],'invisible':[('is_main_cash_control','=',True)],'required':[('is_main_cash_control','=',False)]}" name="store_id"/>
-                                <field domain="[('store_ids','=',store_id),]" name="user_ids" required="True" widget="many2many_tags"/>
+                                <field domain="[('store_ids','in',store_id),]" name="user_ids" required="True" widget="many2many_tags"/>
                                 <field attrs="{'readonly': [('current_session_id', '!=', False)]}" name="amount_authorized_diff"/>
                                 <field name="session_sequence_id" readonly="True"/>
                                 <!-- groups="cash_control.administacion"  -->
@@ -231,10 +231,10 @@
                     <field attrs="{'readonly': [('current_session_id', '!=', False)],'invisible':[('is_main_cash_control','=',True)],'required':[('is_main_cash_control','=',False)]}" name="store_id"/>
                 </xpath>
                 <xpath expr="//field[@name='user_ids']" position="attributes">
-                    <attribute name="domain">[('store_ids','=',store_id),]</attribute>
+                    <attribute name="domain">[('store_ids','in',store_id),]</attribute>
                 </xpath>
                 <xpath expr="//field[@name='sale_journal_ids']" position="attributes">
-                    <attribute name="domain">[('store_ids','=',store_id),('type','=','sale')]</attribute>
+                    <attribute name="domain">[('store_id','=',store_id),('type','=','sale')]</attribute>
                 </xpath>
                 
             </field>
