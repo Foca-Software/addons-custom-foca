@@ -20,10 +20,8 @@
     "depends": [
         "base",
         "stock_fuel_tanks",
+        "debo_integration_fields",
         "cash_control_extension",
     ],
-    "data": [
-        "security/ir.model.access.csv",
-        "views/cash_control_session.xml"
-    ],
+    "data": ["security/ir.model.access.csv", "views/cash_control_session.xml"],
 }

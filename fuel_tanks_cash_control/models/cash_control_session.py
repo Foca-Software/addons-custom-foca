@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
-    id_debo = fields.Char(string="Planilla")
     pump_ids = fields.Many2many(comodel_name="stock.pump", string="Pumps")
     fuel_move_ids = fields.One2many(
         comodel_name="fuel.move.line",
@@ -45,13 +44,15 @@ class CashControlSession(models.Model):
         for line in data:
             _logger.warning(line)
             try:
-                fuel_move = self.fuel_move_ids.filtered(lambda p: int(p.pump_id) == int(line.get("pump_id",False)))
+                fuel_move = self.fuel_move_ids.filtered(
+                    lambda p: int(p.pump_id) == int(line.get("pump_id", False))
+                )
                 fuel_move_id = fuel_move.id if fuel_move else False
                 if not fuel_move_id:
                     _logger.error("fuel move id not found")
                     continue
-                move_line = self.env['fuel.move.line'].browse(fuel_move_id)
-                del line['pump_id']
+                move_line = self.env["fuel.move.line"].browse(fuel_move_id)
+                del line["pump_id"]
                 move_line.write(line)
             except Exception as e:
                 _logger.error(e)
