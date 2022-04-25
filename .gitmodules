@@ -138,3 +138,7 @@
 	path = submodules/calyx-servicios/pos
 	url = https://github.com/calyx-servicios/pos.git
 	branch = 13.0
+[submodule "submodules/ingadhoc/multi-store"]
+	path = submodules/ingadhoc/multi-store
+	url = https://github.com/ingadhoc/multi-store.git
+	branch = 13.0
