@@ -2,7 +2,7 @@
 
 ## Clone
 
-`git clone --recurse-submodules --branch 13.0 https://github.com/Foca-Software/addons-custom-foca.git`
+`git clone --recurse-submodules -b develop https://github.com/Foca-Software/addons-custom-foca.git`
 
 ## .conf File
 
@@ -17,3 +17,13 @@ Useful to create a new python environment for development purposes.
 Consider to add there if a module has new dependencies.
 
 `pip3 install -r requirements.txt`
+
+## .vscode.settings.json
+
+This file has the suggested Python Pylint package configuration. To install the Odoo Pylint plugin:
+
+`pip3 install --upgrade git+https://github.com/oca/pylint-odoo.git`
+
+To disable errors that the developer doesn't want to consider, check the table here:
+
+`https://github.com/OCA/pylint-odoo`

@@ -48,6 +48,8 @@ xlrd==1.1.0
 pypiwin32 ; sys_platform == 'win32'
 
 # Submodules
+pdf2image
+httpagentparser==1.8.1
 numpy<=1.19.4
 numpy-financial<=1.0.0
 astor
@@ -61,28 +63,33 @@ matplotlib==3.4.1; python_version >= '3.7'
 mpld3==0.3
 cssselect
 freezegun
+email-validator==1.1.1
 pyzbar
-pdf2image
 py3o.template
 py3o.formats
 genshi>=0.7
 cryptography
-email_validator
 python-ldap==3.1.0
 zxcvbn-python==4.4.24
 python-jose[cryptography]
 pysaml2
-redis==3.3.11
+git+https://github.com/mercadolibre/python-sdk.git
 pyOpenSSL
 M2Crypto
 httplib2>=0.7
+git+https://github.com/pysimplesoap/pysimplesoap@31c85822dec55de8df947a62db99a298b4aa1a51 # stable_py3k branch
 git+https://github.com/ingadhoc/pyafipws@py3k
-git+https://github.com/pysimplesoap/pysimplesoap@31c85822dec55de8df947a62db99a298b4aa1a51
 git+https://github.com/OCA/openupgradelib/@master
-git+https://github.com/edgewall/genshi@stable/0.7.x
 git+https://github.com/adhoc-dev/aeroolib@master-fix-ods
 git+https://github.com/aeroo/currency2text.git
 html2text
 suds-jurko
 requests
+phonenumbers
+zeep
+pdf417gen
+cubiscan
+mock
+pyjwt
+freezegun
 git+https://github.com/OCA/openupgradelib/@master
