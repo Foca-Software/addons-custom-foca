@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="Debo Cash Control Session Spreadsheet Assets" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/debo_cc_session_spreadsheet/static/src/js/spreadsheet_product_sales_list.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

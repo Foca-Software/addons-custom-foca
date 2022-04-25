@@ -1,0 +1,22 @@
+<template id="template" xml:space="preserve">
+    <t t-name="debo_cc_session_spreadsheet.product_sales_list_widget_template">
+        <div class="o_spreadsheet_product_list_data_root">
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-start">
+                    <table class="table table-bordered" style="table-layout:fixed">
+                        <thead>
+                            <tr>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productSalesList"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
