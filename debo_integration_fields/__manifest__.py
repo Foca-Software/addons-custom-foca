@@ -19,7 +19,9 @@
     },
     "depends": ["base", "account", "contacts", "product", "sale", "cash_control"],
     "data": [
+        "views/account_move.xml",
         "views/id_debo_views.xml",
         "views/product_pricelist_item.xml",
+        "views/sale_order.xml",
     ],
 }
