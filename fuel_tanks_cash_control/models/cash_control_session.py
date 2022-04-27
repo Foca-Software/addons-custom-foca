@@ -59,4 +59,11 @@ class CashControlSession(models.Model):
                 return False
         return True
 
+    def create_stock_moves(self):
+        """
+        Creates stock moves for the fuel moves
+        """
+        for session in self:
+            session.fuel_move_ids.create_stock_moves()
+
     # __________________________________________________________________________________
