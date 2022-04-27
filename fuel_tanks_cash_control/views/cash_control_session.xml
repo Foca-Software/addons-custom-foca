@@ -25,7 +25,6 @@
                             <field name="amount" />
                         </tree>
                     </field>
-                    <button name="create_stock_moves" type="object" string="crear weas"/>
                 </page>
             </xpath>
         </field>
