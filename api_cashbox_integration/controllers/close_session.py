@@ -48,7 +48,9 @@ class CloseSession(Controller):
             fuel_lines = data.get('fuel_moves', False)
             _logger.warning(fuel_lines)
             if fuel_lines:
-                cash_box.current_session_id._api_edit_fuel_lines(fuel_lines)
+                session_id = cash_box.current_session_id
+                session_id._api_edit_fuel_lines(fuel_lines)
+                session_id.create_stock_moves()
             cash_box.api_close_session()
             return {"status": "OK", "message": "Cash box %s Closed" % (cash_box.name)}
         except Exception as e:
