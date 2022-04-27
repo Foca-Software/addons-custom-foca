@@ -284,7 +284,7 @@ msgstr ""
 #. module: debo_cc_session_spreadsheet
 #: model:ir.ui.menu,name:debo_cc_session_spreadsheet.menu_cash_control_session_spreadsheet
 msgid "Spreadsheet Close Control"
-msgstr "Planilla de Cierre de Sesiones"
+msgstr "Cierre de Planilla"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__state
