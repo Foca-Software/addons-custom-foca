@@ -23,7 +23,7 @@ Module Name
 
 .. !!! Description must be max 2-3 paragraphs, and is required.
 
-This module extends the functionality of ... to support ... and to allow you to ...
+TODO
 
 **Table of contents**
 
@@ -35,19 +35,19 @@ This module extends the functionality of ... to support ... and to allow you to 
 Install
 =======
 
-Do this ...
+TODO
 
 .. !!! Configuration: This file is optional, it should explain how to configure the module before using it; it is aimed at advanced users. To configure this module, you need to:
 
 Configure
 =========
 
-Go to ...
+TODO
 
 Usage
 =====
 
-1. Go to ...
+TODO
 
 Known issues / Roadmap
 ======================

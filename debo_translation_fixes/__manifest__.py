@@ -1,9 +1,9 @@
 # pylint: disable=missing-module-docstring,pointless-statement
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "DEBO Translation Fixes",
+    "name": "Debo Translation Fixes",
     "summary": """
-        Translation for several fields requested by DEBO
+        Translation for several fields requested by Debo
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
