@@ -16,6 +16,7 @@ from ..utils.create_methods import (
     create_sale_order,
     check_required_fields,
     search_stock_picking,
+    DEBO_DATE_FORMAT,
 )
 
 _logger = logging.getLogger(__name__)
@@ -194,7 +195,8 @@ class ReceiveData(Controller):
                     payment_journal = request.env["account.journal"].with_user(user_id).browse(
                         payment["journal_id"]
                     )
-                    payment_method = payment_journal.inbound_payment_method_ids
+                    payment_method = payment_journal.inbound_payment_method_ids[0] \
+                        if len(payment_journal.inbound_payment_method_ids) > 0 else False
                     _logger.info(payment_method)
                     ap_vals_list = {
                         # inmutable fields
@@ -223,15 +225,30 @@ class ReceiveData(Controller):
                         "to_pay_move_line_ids": to_pay_move_lines,
                     }
                     payment_context.update(context)
+
+                    #if a check is used, required data needs to be added at payment creation
+                    #TODO: CLEAN UP AFTER DEMO
+                    if payment_method.code in self._inbound_check_codes():
+                        ap_vals_list.update({
+                        "check_number": payment.get("check_number", False) or 1115588,
+                        "check_name" : self._get_name_from_number(payment.get("check_number", 1)),
+                        "check_bank_id": payment.get("check_bank_id", False) or 1,
+                        "check_issue_date": datetime.strptime(payment.get("check_issue_date", "28/04/2022"), DEBO_DATE_FORMAT),
+                        "check_owner_vat" : payment_group.partner_id.vat,
+                        "check_owner_name": payment_group.partner_id.name,
+                        })
+                    #----------------------
                     acc_payment = acc_payment_obj.with_context(payment_context).create(
                         ap_vals_list
                     )
-                    if acc_payment.journal_id.code in ['inbound_debit_card','inbound_credit_card']:
+                    if acc_payment.payment_method_id.code in self._inbound_card_codes():
                         acc_payment.write({
+                        #TODO; dejar fijo
                         "card_id": payment.get("card_id", False),  # computable?
                         "instalment_id": payment.get(
                             "instalment_id", False
                         ),  # computable?
+                        #------------------------------------------------------
                         "tiket_number": payment.get("ticket_number", False),
                         "card_number": payment.get("card_number", False),
                         "lot_number": payment.get("lot_number", False),
@@ -263,5 +280,15 @@ class ReceiveData(Controller):
             .id
         )
 
+    def _inbound_check_codes(self):
+        return ["received_third_check"]
 
+    def _inbound_card_codes(self):
+        return ['inbound_debit_card','inbound_credit_card']
+
+    def _get_name_from_number(self,number):
+            padding = 8
+            if len(str(number)) > padding:
+                padding = len(str(number))
+            return ('%%0%sd' % padding % number)
 # trash
