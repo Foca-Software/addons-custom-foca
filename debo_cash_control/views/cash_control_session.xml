@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- cash.control inherit form view -->
+    <record id="cash_control_session_form" model="ir.ui.view">
+        <field name="name">cash.control.session.inherit.view.form</field>
+        <field name="model">cash.control.session</field>
+        <field name="inherit_id" ref="cash_control.cash_control_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@id='cash_detail']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//div[@id='subtotal']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
