@@ -1,0 +1,144 @@
+[submodule "ingadhoc/account-financial-tools"]
+	url = https://github.com/ingadhoc/account-financial-tools.git
+	path = submodules/ingadhoc/account-financial-tools
+	branch = refs/heads/13.0
+[submodule "ingadhoc/account-invoicing"]
+	url = https://github.com/ingadhoc/account-invoicing.git
+	path = submodules/ingadhoc/account-invoicing
+	branch = refs/heads/13.0
+[submodule "ingadhoc/account-payment"]
+	url = https://github.com/ingadhoc/account-payment.git
+	path = submodules/ingadhoc/account-payment
+	branch = refs/heads/13.0
+[submodule "ingadhoc/aeroo_reports"]
+	url = https://github.com/ingadhoc/aeroo_reports.git
+	path = submodules/ingadhoc/aeroo_reports
+	branch = refs/heads/13.0
+[submodule "ingadhoc/argentina-sale"]
+	url = https://github.com/ingadhoc/argentina-sale.git
+	path = submodules/ingadhoc/argentina-sale
+	branch = refs/heads/13.0
+[submodule "ingadhoc/miscellaneous"]
+	url = https://github.com/ingadhoc/miscellaneous.git
+	path = submodules/ingadhoc/miscellaneous
+	branch = refs/heads/13.0
+[submodule "ingadhoc/odoo-argentina"]
+	url = https://github.com/ingadhoc/odoo-argentina.git
+	path = submodules/ingadhoc/odoo-argentina
+	branch = refs/heads/13.0
+[submodule "ingadhoc/odoo-argentina-ce"]
+	url = https://github.com/ingadhoc/odoo-argentina-ce.git
+	path = submodules/ingadhoc/odoo-argentina-ce
+	branch = refs/heads/13.0
+[submodule "ingadhoc/product"]
+	url = https://github.com/ingadhoc/product.git
+	path = submodules/ingadhoc/product
+	branch = refs/heads/13.0
+[submodule "ingadhoc/sale"]
+	url = https://github.com/ingadhoc/sale.git
+	path = submodules/ingadhoc/sale
+	branch = refs/heads/13.0
+[submodule "ingadhoc/stock"]
+	url = https://github.com/ingadhoc/stock.git
+	path = submodules/ingadhoc/stock
+	branch = refs/heads/13.0
+[submodule "ingadhoc/website"]
+	url = https://github.com/ingadhoc/website.git
+	path = submodules/ingadhoc/website
+	branch = refs/heads/13.0
+[submodule "OCA/account-analytic"]
+	url = https://github.com/OCA/account-analytic.git
+	path = submodules/OCA/account-analytic
+	branch = refs/heads/13.0
+[submodule "OCA/account-financial-reporting"]
+	url = https://github.com/OCA/account-financial-reporting.git
+	path = submodules/OCA/account-financial-reporting
+	branch = refs/heads/13.0
+[submodule "OCA/account-financial-tools"]
+	url = https://github.com/OCA/account-financial-tools.git
+	path = submodules/OCA/account-financial-tools
+	branch = refs/heads/13.0
+[submodule "OCA/account-reconcile"]
+	url = https://github.com/OCA/account-reconcile.git
+	path = submodules/OCA/account-reconcile
+	branch = refs/heads/13.0
+[submodule "OCA/bank-statement-import"]
+	url = https://github.com/OCA/bank-statement-import.git
+	path = submodules/OCA/bank-statement-import
+	branch = refs/heads/13.0
+[submodule "OCA/commission"]
+	url = https://github.com/OCA/commission.git
+	path = submodules/OCA/commission
+	branch = refs/heads/13.0
+[submodule "OCA/contract"]
+	url = https://github.com/OCA/contract.git
+	path = submodules/OCA/contract
+	branch = refs/heads/13.0
+[submodule "OCA/hr-expense"]
+	url = https://github.com/OCA/hr-expense.git
+	path = submodules/OCA/hr-expense
+	branch = refs/heads/13.0
+[submodule "OCA/mis-builder"]
+	url = https://github.com/OCA/mis-builder.git
+	path = submodules/OCA/mis-builder
+	branch = refs/heads/13.0
+[submodule "OCA/partner-contact"]
+	url = https://github.com/OCA/partner-contact.git
+	path = submodules/OCA/partner-contact
+	branch = refs/heads/13.0
+[submodule "OCA/product-variant"]
+	url = https://github.com/OCA/product-variant.git
+	path = submodules/OCA/product-variant
+	branch = refs/heads/13.0
+[submodule "OCA/queue"]
+	url = https://github.com/OCA/queue.git
+	path = submodules/OCA/queue
+	branch = refs/heads/13.0
+[submodule "calyx-servicios/third-party-apps"]
+	url = https://github.com/calyx-servicios/third-party-apps.git
+	path = submodules/calyx-servicios/third-party-apps
+	branch = refs/heads/13.0
+[submodule "OCA/reporting-engine"]
+	url = https://github.com/OCA/reporting-engine.git
+	path = submodules/OCA/reporting-engine
+	branch = refs/heads/13.0
+[submodule "OCA/sale-workflow"]
+	url = https://github.com/OCA/sale-workflow.git
+	path = submodules/OCA/sale-workflow
+	branch = refs/heads/13.0
+[submodule "OCA/server-auth"]
+	url = https://github.com/OCA/server-auth.git
+	path = submodules/OCA/server-auth
+	branch = refs/heads/13.0
+[submodule "OCA/server-brand"]
+	url = https://github.com/OCA/server-brand.git
+	path = submodules/OCA/server-brand
+	branch = refs/heads/13.0
+[submodule "OCA/server-tools"]
+	url = https://github.com/OCA/server-tools.git
+	path = submodules/OCA/server-tools
+	branch = refs/heads/13.0
+[submodule "OCA/server-ux"]
+	url = https://github.com/OCA/server-ux.git
+	path = submodules/OCA/server-ux
+	branch = refs/heads/13.0
+[submodule "OCA/web"]
+	url = https://github.com/OCA/web.git
+	path = submodules/OCA/web
+	branch = refs/heads/13.0
+[submodule "muk-it/muk-base"]
+	url = https://github.com/muk-it/muk_base.git
+	path = submodules/muk-it/muk-base
+	branch = refs/heads/13.0
+[submodule "muk-it/muk-web"]
+	url = https://github.com/muk-it/muk_web.git
+	path = submodules/muk-it/muk-web
+	branch = refs/heads/13.0
+[submodule "submodules/calyx-servicios/pos"]
+	path = submodules/calyx-servicios/pos
+	url = https://github.com/calyx-servicios/pos.git
+	branch = 13.0
+[submodule "submodules/ingadhoc/multi-store"]
+	path = submodules/ingadhoc/multi-store
+	url = https://github.com/ingadhoc/multi-store.git
+	branch = 13.0

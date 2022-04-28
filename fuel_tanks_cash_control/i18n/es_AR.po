@@ -124,7 +124,7 @@ msgstr "Surtidor"
 #. module: fuel_tanks_cash_control
 #: model_terms:ir.ui.view,arch_db:fuel_tanks_cash_control.cash_control_session_add_fuel_form
 msgid "Pump details"
-msgstr "Detalles de Surtidor"
+msgstr "Detalles de Surtidores"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_session__pump_ids

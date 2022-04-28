@@ -3,26 +3,26 @@
     <record id="cash_control_session_add_fuel_form" model="ir.ui.view">
         <field name="name">cash.control.session.form.inherit</field>
         <field name="model">cash.control.session</field>
-        <field name="inherit_id" ref="cash_control.cash_control_session_form"/>
+        <field name="inherit_id" ref="cash_control.cash_control_session_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_journal_ids']" position="after">
-                <field name="pump_ids" widget="many2many_tags"/>                
+                <field name="pump_ids" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}" />
             </xpath>
             <xpath expr="//notebook">
                 <page name="pumps" string="Pump details">
-                    <field name="fuel_move_ids" >
-                    <!-- TODO: find a way to show fields grouped by tank_id -->
+                    <field name="fuel_move_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                        <!-- TODO: find a way to show fields grouped by tank_id -->
                         <tree editable="bottom">
-                            <field name="tank_id" invisible="1"/>
-                            <field name="price"/>
-                            <field name="product_id"/>
-                            <field name="pump_id_debo"/>
-                            <field name="pump_code" colspan="1"/>
-                            <field name="initial_qty"/>
-                            <field name="final_qty"/>
-                            <field name="manual_qty"/>
-                            <field name="cubic_meters"/>
-                            <field name="amount"/>
+                            <field name="tank_id" invisible="1" />
+                            <field name="price" />
+                            <field name="product_id" />
+                            <field name="pump_id_debo" />
+                            <field name="pump_code" colspan="1" />
+                            <field name="initial_qty" />
+                            <field name="final_qty" />
+                            <field name="manual_qty" />
+                            <field name="cubic_meters" />
+                            <field name="amount" />
                         </tree>
                     </field>
                 </page>

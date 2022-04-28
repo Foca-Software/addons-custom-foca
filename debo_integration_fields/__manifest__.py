@@ -17,16 +17,11 @@
         "python": [],
         "bin": [],
     },
-    "depends": [
-        "base",
-        "account",
-        "contacts",
-        "product",
-        "sale",
-    ],
+    "depends": ["base", "account", "contacts", "product", "sale", "cash_control"],
     "data": [
+        "views/account_move.xml",
         "views/id_debo_views.xml",
-        # "views/res_company.xml",
         "views/product_pricelist_item.xml",
+        "views/sale_order.xml",
     ],
 }

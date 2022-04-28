@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cash_control_session_spreadsheet_user,access_cash_control_session_spreadsheet_user,model_cash_control_session_spreadsheet,base.group_user,1,0,0,0
+access_cash_control_session_spreadsheet_manager,access_cash_control_session_spreadsheet_manager,model_cash_control_session_spreadsheet,cash_control.administacion,1,1,1,1

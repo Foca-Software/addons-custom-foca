@@ -38,27 +38,8 @@ class ReceiveData(Controller):
 
     @route("/debocloud/create", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
-        _logger.warning(kwargs)
-        # # ---------------------------this won't be necessary once jwt is implemented----------------------------
-        # if "login" not in kwargs:
-        #     return {
-        #         "status": "ERROR",
-        #         "user_id": 0,
-        #         "message": "Credentials not found in request",
-        #     }
-        # login = kwargs["login"]["username"]
-        # password = kwargs["login"]["password"]
-        # try:
-        #     user_id = request.session.authenticate(
-        #         request.session.db, login, password
-        #     )  # TODO: use JWT instead
-        # except:
-        #     # Response.status = "401 Unauthorized"
-        #     return {"status": "Error", "message": "Wrong username or password"}
-        # # if not user_id:
-        # #     Response.status = "401 Unauthorized"
-        # # --------------------------------S----------------------------------------------------------------------
-        # _logger.warning(request.env.company)
+        _logger.info("Received data:")
+        _logger.info(kwargs)
         sent_user_id = kwargs.get('user_id', False)
         if not sent_user_id:
             return {
@@ -104,12 +85,33 @@ class ReceiveData(Controller):
             _logger.info(sale)
             # stock related methods
             try:
-                picking_ids = search_stock_picking(sale)
+                #TODO: CLEAN UP - method doesn't work
+                #picking_ids = search_stock_picking(sale)
+                
+                #---------------------- STOCK PICKING HANDLING --------------------
+                sale.action_confirm()
+                picking_ids = request.env['stock.picking'].with_user(1).search([('sale_id','=',sale.id)])
                 _logger.info(picking_ids)
+                unreserve_required = any(line.product_id.is_fuel for line in sale.order_line)
+                for picking in picking_ids:
+                    if unreserve_required:
+                        picking.do_unreserve()
+                    else:
+                        try:
+                            picking.action_assign()
+                            picking.button_validate()
+                            wiz = request.env['stock.immediate.transfer'].with_user(user_id).create({'pick_ids': [(4, picking.id)]})
+                            wiz.process()
+                        except Exception as e:
+                            _logger.error(e)
+                            continue #TODO: handle this better
+                            #this means that something failed while confirming the picking / stock move
+                            #odoo response to this has not been specified      
                 res["stock_picking_id"] = (
                     picking_ids[0].ids[0] if picking_ids else False
                 )  # should always be only one
-                sale.action_confirm()
+                #---------------------- STOCK PICKING HANDLING --------------------
+
             except Exception as e:
                 _logger.error(e)
                 res["status"] = "Error"
