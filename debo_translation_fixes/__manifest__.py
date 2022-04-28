@@ -14,14 +14,5 @@
     "development_status": "Beta",
     "application": False,
     "installable": True,
-    "depends": ["base","cash_control_extension"],
-    ### XML Data files
-    # 'data': [
-    #     'security/ir.model.access.csv',
-    #     'views/views.xml',
-    #     'views/templates.xml',
-    # ],
-    ###########################
-    # Delete all the commented lines after editing the module
-    ###########################
+    "depends": ["base", "cash_control_extension"],
 }
