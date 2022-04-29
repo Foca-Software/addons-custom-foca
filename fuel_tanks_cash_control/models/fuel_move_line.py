@@ -49,31 +49,10 @@ class FuelMoveLine(models.Model):
             stock_picking_vals = {
                 "company_id": self.env.user.company_id.id,
                 "origin": fuel_move.session_id.id_debo,
-<<<<<<< HEAD
-                "store_id": fuel_move.session_id.config_id.store_id.id
-                if fuel_move.session_id.config_id.store_id
-                else False,
-=======
->>>>>>> PR_fix_fuel_tanks_cash_control_store_id
                 "location_id": fuel_move.tank_id.id,
                 "location_dest_id": picking_type_id.default_location_dest_id.id,
                 "picking_type_id": picking_type_id.id,
             }
-<<<<<<< HEAD
-=======
-            # TODO: create module fuel_tanks_cash_control_multi_store to add this
-            try:
-                multi_store_fields = {
-                    "store_id": fuel_move.session_id.config_id.store_id.id
-                    if fuel_move.session_id.config_id.store_id
-                    else False,
-                }
-                if multi_store_fields:
-                    stock_picking_vals.update(multi_store_fields)
-            except:
-                pass
-            # --------------------------------------------------------------------
->>>>>>> PR_fix_fuel_tanks_cash_control_store_id
             stock_picking_id = stock_picking.create(stock_picking_vals)
             stock_vals = {
                 "name": f"{fuel_move.session_id.id_debo}/{fuel_move.pump_id.code}",
