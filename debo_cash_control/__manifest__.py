@@ -1,9 +1,9 @@
 # pylint: disable=missing-module-docstring,pointless-statement
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Debo Translation Fixes",
+    "name": "Debo Cash Control",
     "summary": """
-        Translation for several fields requested by Debo
+        Custom cash control views
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
@@ -14,5 +14,13 @@
     "development_status": "Beta",
     "application": False,
     "installable": True,
-    "depends": ["base", "cash_control_extension"],
+    "external_dependencies": {
+        "python": [],
+        "bin": [],
+    },
+    "depends": ["base", "cash_control", "cash_control_extension"],
+    'data': [
+        'views/cash_control_config.xml',
+        'views/cash_control_session.xml',
+    ],
 }

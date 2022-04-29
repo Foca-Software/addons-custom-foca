@@ -11,6 +11,16 @@
             </xpath>
         </field>
     </record>
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="session_id_debo" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
     <!-- sale.order inherit search view -->
     <record id="view_sales_order_filter" model="ir.ui.view">
         <field name="name">sale.order.inherit.view.search</field>

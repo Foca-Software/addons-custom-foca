@@ -1,14 +1,7 @@
-===========
-Module Name
-===========
+=================
+Debo Cash Control
+=================
 
-.. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   !! This file is intended to be in every module    !!
-   !! to explain why and how it works.               !!
-   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-.. User https://shields.io for badge creation.
 .. |badge1| image:: https://img.shields.io/badge/maturity-Stable-brightgreen
     :target: https://odoo-community.org/page/development-status
     :alt: Stable
@@ -21,38 +14,21 @@ Module Name
 
 |badge1| |badge2| |badge3|
 
-.. !!! Description must be max 2-3 paragraphs, and is required.
-
-TODO
+This module extends the functionality of Calyx Cash Control to change the look of Cash Control
+ to what Debo expects it to look like. Meaning custom translations and view changes.
+This module DOES NOT add any new functionality.
 
 **Table of contents**
 
 .. contents::
    :local:
 
-.. !!! Instalation: must only be present if there are very specific installation instructions, such as installing non-python dependencies.The audience is systems administrators. ] To install this module, you need to: !!!
-
-Install
-=======
-
-TODO
-
-.. !!! Configuration: This file is optional, it should explain how to configure the module before using it; it is aimed at advanced users. To configure this module, you need to:
-
-Configure
-=========
-
-TODO
-
 Usage
 =====
 
-TODO
-
-Known issues / Roadmap
-======================
-
-* Bugs or Roadmap
+With Developer mode on:
+1. Go to Settings > Translations > Languages
+2. Update translations with the "overwrite existing terms" option
 
 Bug Tracker
 ===========
@@ -72,9 +48,6 @@ Contributors
 
 * `Calyx Servicios S.A. <https://odoo.calyx-cloud.com.ar/>`_
   
-  * Federico Gregori
-  * Cristian Paradiso
-  * Gabriela Perez
   * Marco Oegg
 
 Maintainers

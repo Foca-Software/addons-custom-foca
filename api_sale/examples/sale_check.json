@@ -1,0 +1,30 @@
+{
+    "params": {
+        "user_id" : 12,
+        "move_type" : 101,
+        "payload": {
+            "company_id" : 1,
+            "header": {
+                "partner_id": 214,
+                "date_order": "27/04/2022"
+            },
+            "lines": [
+                {
+                    "product_id": 215,
+                    "product_uom_qty": 5
+                }
+            ],
+            "invoice_data":{
+                "journal_id": 10,
+                "l10n_latam_document_type_id": 6
+            },
+            "payment_data" :[{
+                "journal_id": 9,
+                "payment_method_id": 12,
+                "check_number": 118,
+                "check_date" : "27/04/2022",
+                "check_bank_id": 1
+            }]
+        }
+    }
+}
