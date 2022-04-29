@@ -1,0 +1,15 @@
+{
+    "python.linting.pylintPath": "${workspaceFolder}/venv/bin/pylint",
+
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_odoo",
+        "--disable=E0611,C0111,C8202,W7908,E0401,W0511,W7936,E0012"
+    ],
+
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/",
+        "${workspaceFolder}/odoo",
+        "${workspaceFolder}/odoo/addons"
+    ]
+}

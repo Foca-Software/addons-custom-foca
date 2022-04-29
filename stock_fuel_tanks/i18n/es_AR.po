@@ -1,0 +1,171 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_fuel_tanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-13 13:55+0000\n"
+"PO-Revision-Date: 2022-04-13 13:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,help:stock_fuel_tanks.field_stock_location__usage
+msgid ""
+"* Vendor Location: Virtual location representing the source location for products coming from your vendors\n"
+"* View: Virtual location used to create a hierarchical structures for your warehouse, aggregating its child locations ; can't directly contain products\n"
+"* Internal Location: Physical locations inside your own warehouses,\n"
+"* Customer Location: Virtual location representing the destination location for products sent to your customers\n"
+"* Inventory Loss: Virtual location serving as counterpart for inventory operations used to correct stock levels (Physical inventories)\n"
+"* Production: Virtual counterpart location for production operations: this location consumes the components and produces finished products\n"
+"* Transit Location: Counterpart location that should be used in inter-company or inter-warehouses operations"
+msgstr ""
+"* Ubicación del proveedor: ubicación virtual que representa la ubicación de origen de los productos que provienen de sus proveedores\n"
+"* Vista: ubicación virtual utilizada para crear estructuras jerárquicas para su almacén, agregando sus ubicaciones secundarias; no puede contener productos directamente\n"
+"* Ubicación interna: ubicaciones físicas dentro de sus propios almacenes,\n"
+"* Ubicación del cliente: ubicación virtual que representa la ubicación de destino de los productos enviados a sus clientes\n"
+"* Pérdida de inventario: ubicación virtual que sirve como contraparte para las operaciones de inventario utilizadas para corregir los niveles de existencias (inventarios físicos)\n"
+"* Producción: ubicación de contraparte virtual para operaciones de producción: esta ubicación consume los componentes y produce productos terminados\n"
+"* Ubicación de tránsito: ubicación de contraparte que debe usarse en operaciones entre empresas o entre almacenes"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__capacity
+msgid "Capacity"
+msgstr "Capacidad"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__code
+msgid "Code"
+msgstr "Código"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_product_product__is_fuel
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_product_template__is_fuel
+msgid "Fuel"
+msgstr "Es Combustible"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__id_debo
+msgid "ID debo"
+msgstr "ID DEBO"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields.selection,name:stock_fuel_tanks.selection__stock_location__usage__fuel_tank
+msgid "Internal - Fuel Tank"
+msgstr "Interna - Tanque de Combustible"
+
+#. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__is_fuel_tank
+msgid "Is a Fuel Tank"
+msgstr "Es un Tanque de Combustible"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__usage
+msgid "Location Type"
+msgstr "Tipo de ubicación"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_product_product
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__product_id
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimiento de productos (Movimiento de existencias)"
+
+#. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__pump_ids
+#: model:ir.ui.menu,name:stock_fuel_tanks.stock_pump_view_menu_act
+#: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.add_tank_info
+msgid "Pumps"
+msgstr "Surtidores"
+
+#. module: stock_fuel_tanks
+#: model:ir.model,name:stock_fuel_tanks.model_stock_pump
+msgid "Stock Pump"
+msgstr "Surtidores"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__tank_id
+#: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.stock_pump_view_search
+msgid "Tank"
+msgstr "Tanque"
+
+#. module: stock_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.add_tank_info
+msgid "Tank Info"
+msgstr "Información de Tanque"
+
+#. module: stock_fuel_tanks
+#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_move_line__pump_id
+msgid "pump"
+msgstr "Id Surtidor"
+
+#. module: stock_fuel_tanks
+#: model:ir.actions.act_window,name:stock_fuel_tanks.stock_pump_view_action
+msgid "stock.pump.action"
+msgstr "Surtidores"

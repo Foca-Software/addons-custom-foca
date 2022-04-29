@@ -1,0 +1,24 @@
+<odoo>
+    <record id="add_planilla_config" model="ir.ui.view">
+        <field name="name">cash.control.config.form</field>
+        <field name="model">cash.control.config</field>
+        <field name="inherit_id" ref="cash_control.cash_control_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_session_id']" position="after">
+                <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="FUCK_SHIT_FUCK" model="ir.ui.view">
+        <field name="name">cash.control.config.tree</field>
+        <field name="model">cash.control.config</field>
+        <field name="inherit_id" ref="cash_control.cash_control_config_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='current_session_id']" position="after">
+                <field name="id_debo"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

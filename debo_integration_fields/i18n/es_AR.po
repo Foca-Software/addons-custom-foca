@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_integration_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-26 13:43+0000\n"
+"PO-Revision-Date: 2022-04-26 13:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_cash_control_session
+msgid "Cash Control Session"
+msgstr "Sesión"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurar Ajustes"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: debo_integration_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.res_company_debo_cloud_config
+msgid "Debo Cloud Config"
+msgstr ""
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_config_settings__debo_base_url
+msgid "Debo Endpoint"
+msgstr ""
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_account_tax__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_product_category__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_product_pricelist__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_product_product__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_product_template__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_company__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__id_debo
+msgid "ID_DEBO"
+msgstr "ID DEBO"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_partner__id_debo_c
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__id_debo_c
+msgid "ID_DEBO Customer"
+msgstr "ID DEBO Cliente"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_partner__id_debo_p
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__id_debo_p
+msgid "ID_DEBO Supplier"
+msgstr "ID DEBO Proveedor"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos Contables"
+
+#. module: debo_integration_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.account_tax_form_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.account_tax_tree_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_pricelist_form_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_pricelist_tree_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_product_search_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_product_tree_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.res_users_form_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.res_users_tree_debo_fields
+msgid "Legacy Code"
+msgstr "Código Anterior"
+
+#. module: debo_integration_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.account_tax_search_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_pricelist_search_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.res_partner_search_debo_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.res_users_search_debo_fields
+msgid "Legacy code"
+msgstr "Código Anterior"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_product_pricelist
+msgid "Pricelist"
+msgstr "Tarifa"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_account_move__session_id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_cash_control_session__id_debo
+#: model:ir.model.fields,field_description:debo_integration_fields.field_sale_order__session_id_debo
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.view_account_invoice_filter
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.view_account_move_filter
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.view_sales_order_filter
+msgid "Spreadsheet"
+msgstr "Planilla"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: debo_integration_fields
+#: model_terms:ir.ui.view,arch_db:debo_integration_fields.product_product_form_debo_fields
+msgid "legacy_code"
+msgstr "Código Anterior"

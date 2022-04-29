@@ -1,0 +1,20 @@
+{
+    "params":{
+        "user_id" : 6,
+        "data": {
+            "cash_id": 10,
+            "amount" : 1000,
+            "fuel_moves" :[
+                {
+                    "pump_id" : 1,
+                    "price": 200,
+                    "initial_qty": 15515,
+                    "final_qty": 11515,
+                    "manual_qty": 1000,
+                    "cubic_meters": 3000,
+                    "amount": 600000
+                }
+            ]
+        }
+    }
+}

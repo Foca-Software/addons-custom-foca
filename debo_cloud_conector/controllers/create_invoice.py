@@ -38,6 +38,7 @@ class ReceiveData(Controller):
 
     @route("/debocloud/create", type="json", auth="none", methods=["POST"], csrf=False)
     def receive_data(self, **kwargs):
+        _logger.warning(kwargs)
         # ---------------------------this won't be necessary once jwt is implemented----------------------------
         if "login" not in kwargs:
             return {
@@ -47,16 +48,27 @@ class ReceiveData(Controller):
             }
         login = kwargs["login"]["username"]
         password = kwargs["login"]["password"]
-        user_id = request.session.authenticate(
-            request.session.db, login, password
-        )  # TODO: use JWT instead
-        if not user_id:
+        try:
+            user_id = request.session.authenticate(
+                request.session.db, login, password
+            )  # TODO: use JWT instead
+        except:
+            # Response.status = "401 Unauthorized"
             return {"status": "Error", "message": "Wrong username or password"}
-        # ------------------------------------------------------------------------------------------------------
+        # if not user_id:
+        #     Response.status = "401 Unauthorized"
+        # --------------------------------S----------------------------------------------------------------------
+        _logger.warning(request.env.company)
         payload = kwargs.get("payload", False)
         if not payload:
             return {"status": "Error", "message": "Payload not found"}
 
+        company_id = payload.get("company_id", False)
+        if not company_id:
+            return {"status": "Error", "message": "Company not found, or not valid"}
+        if company_id not in request.env.user.company_ids.ids:
+            return {"status": "Error", "message": "User access denied to Company"}
+        request.env.company = request.env["res.company"].browse(company_id)
         move_code = kwargs.get("move_type", False)
         if not move_code:
             return {"status": "Error", "message": "Move type not found"}
@@ -64,17 +76,18 @@ class ReceiveData(Controller):
         if move_code == DEBO_SALE_ORDER_CODE:
             missing_fields = check_required_fields(payload, move_code)
             if missing_fields:
+                user_id = request.session.logout()
                 return {
                     "status": "Error",
                     "message": "Missing fields: %s" % ",".join(missing_fields),
                 }
             res = create_sale_order(user_id, payload)
             if res["status"] == "error":
+                # Response.status = "400 Bad Request"
                 return res
             sale = res["sale_order_id"]
             res["sale_order_id"] = sale.id
             _logger.info(sale)
-            sale.action_confirm()
             # stock related methods
             try:
                 picking_ids = search_stock_picking(sale)
@@ -82,16 +95,21 @@ class ReceiveData(Controller):
                 res["stock_picking_id"] = (
                     picking_ids[0].ids[0] if picking_ids else False
                 )  # should always be only one
+                sale.action_confirm()
             except Exception as e:
                 _logger.error(e)
                 res["status"] = "Error"
-                res["message"] = "Error creating stock picking \n %s" % e.args
+                res["message"] = e.args
+                # sale.button_cancel()
+                # sale.unlink()
                 return res
             # invoice related methods
             try:
                 created_invoices = auto_create_invoice(sale)
                 for invoice in created_invoices:
                     invoice.write(payload["invoice_data"])
+                    # if not payload["invoice_data"].get("pay_now_journal_id", False):
+                    #     invoice.pay_now_journal_id = self._get_default_payment_journal()
                     invoice.action_post()
                 _logger.info(created_invoices)
                 res["invoice_ids"] = (
@@ -100,7 +118,9 @@ class ReceiveData(Controller):
             except Exception as e:
                 _logger.error(e)
                 res["status"] = "Error"
-                res["message"] = "Error creating invoice \n %s" % e.args
+                res["message"] = e.args
+                # picking_ids.unlink()
+                # sale.unlink()
                 return res
 
             return res
@@ -115,45 +135,92 @@ class ReceiveData(Controller):
             return create_invoice(user_id, payload)
 
         if move_code == DEBO_TEST_CODE:
-            res = request.env["account.move"].with_user(1).browse(333)
-            acc_pay_group_obj = request.env["account.payment.group"].with_user(1)
-            acc_payment_obj = request.env["account.payment"].with_user(1)
-            # _logger.info(res)
-            wizard = res.action_account_invoice_payment_group()
+            #get 'account.move' object
+            invoice_id = payload["payment_data"]["invoice_id"]
+            res = request.env["account.move"].with_user(user_id).browse(invoice_id)
+            _logger.info(res.invoice_line_ids)
+            #--------------------------------------------------------------------------
+            #create payment and payment group objects
+            acc_pay_group_obj = request.env["account.payment.group"].with_user(user_id)
+            acc_payment_obj = request.env["account.payment"].with_user(user_id)
+            #--------------------------------------------------------------------------
+            #execute 'register payment' button to get context values
+            wizard = res.with_context(
+                active_ids=[res.id],
+                active_model="account.move",
+            ).action_account_invoice_payment_group()
             context = wizard["context"]
-            _logger.info(acc_payment_obj.default_get(context))
-            # to_pay_move_lines = context['to_pay_move_line_ids']
+            _logger.info(context)
+            #--------------------------------------------------------------------------
+            #create payment group
+            to_pay_move_lines = context["to_pay_move_line_ids"]
+            payment_data = payload["payment_data"]
             apg_vals_list = {
-                "name": "yo le puse esto",
                 "partner_id": context["default_partner_id"],
                 "to_pay_move_line_ids": context["to_pay_move_line_ids"],
                 "company_id": context["default_company_id"],
+                "state": "draft",
+                "partner_type": "customer",
             }
-            payment_group = acc_pay_group_obj.create(apg_vals_list)
+            payment_group = acc_pay_group_obj.with_context(
+                active_ids=[res.id],
+                active_model="account.move"
+            ).create(apg_vals_list)
+            #--------------------------------------------------------------------------
+            #create payment
+            # TODO: if pay_now_journal_id is set, invoice_state would be 'paid' which
+            #       will throw an error.
+            # TODO: for payment in payment_data...
             ap_vals_list = {
-                "partner_id": payment_group.partner_id.id,
+                #inmutable fields
+                "partner_id": res.partner_id.id,
                 "payment_type": "inbound",
                 "partner_type": "customer",
                 "payment_group_id": payment_group.id,
-                "journal_id": res.journal_id.id,
-                "payment_method_id": payload["payment_data"]["method_id"],
                 "amount": acc_payment_obj._compute_payment_amount(
                     res, res.currency_id, res.journal_id, res.invoice_date
-                ),
+                ),  # TODO: receive amounts?
+                #payment_data dependant fields
+                "journal_id": payment_data["journal_id"],
+                "payment_method_id": payment_data["payment_method_id"],
                 "company_id": context["default_company_id"],
+                "card_id": payment_data["card_id"],
+                "instalment_id": payment_data["instalment_id"],
             }
-            _logger.info(ap_vals_list)
-            payment = acc_payment_obj.create(ap_vals_list)
+            payment_context = {
+                "active_ids": res.ids,
+                "active_model": "account.move",
+                "to_pay_move_line_ids": to_pay_move_lines,
+            }
+            payment_context.update(context)
+            payment = acc_payment_obj.with_context(payment_context).create(ap_vals_list)
+            payment_group = payment.payment_group_id
+
+            #payment group compute methods
+            payment_group._compute_payments_amount()
+            payment_group._compute_matched_amounts()
+            payment_group._compute_document_number()
+            payment_group._compute_matched_amount_untaxed()
+            payment_group._compute_move_lines()
+            # payment compute methods
             payment._onchange_partner_id()
-            payment._onchange_journal()
+            payment._compute_reconciled_invoice_ids()
+
+            payment.post()
+            payment_group.post()
             return {
-                "res": res,
-                "wizard": wizard,
-                "payment_group": payment_group,
-                "payment" : payment,
+                "res": res.read(),
+                # "wizard": wizard,
+                "payment_group": payment_group.read(),
+                "payment": payment.read(),
             }
 
-        return {"status": "Error", "message": "Move type not found"}
+    def _get_default_payment_journal(self, company_id: int) -> int:
+        return (
+            request.env["account.journal"]
+            .search([("type", "=", "cash"), ("company_id", "=", company_id)], limit=1)
+            .id
+        )
 
 
 # trash

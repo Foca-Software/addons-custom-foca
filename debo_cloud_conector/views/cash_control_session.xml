@@ -1,0 +1,12 @@
+<odoo>
+    <record id="add_planilla_session" model="ir.ui.view">
+        <field name="name">cash.control.session.form</field>
+        <field name="model">cash.control.session</field>
+        <field name="inherit_id" ref="cash_control.cash_control_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

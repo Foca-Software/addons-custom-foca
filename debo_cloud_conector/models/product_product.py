@@ -1,8 +1,8 @@
-from attr import fields_dict
 from odoo import models, fields, api, _
 from odoo.tools.profiler import profile
 from odoo.exceptions import Warning
 from datetime import datetime
+import base64
 import json
 import logging
 import requests
@@ -12,6 +12,9 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    id_debo = fields.Char(string="ID Debo")
+
+    @api.depends('lst_price', 'taxes_id')
     def _calculate_PreVen(self, lst_price: float, taxes_id: list) -> float:
         percent = 0
         fixed = 0
@@ -21,7 +24,7 @@ class ProductProduct(models.Model):
             else:
                 fixed += tax.amount
         percent *= 0.01
-        return lst_price * (1 + percent) + fixed
+        return lst_price / (1 + percent) - fixed
 
     def _calculate_taxes(self, taxes) -> list:
         necessary_tax_fields = [
@@ -29,8 +32,21 @@ class ProductProduct(models.Model):
             "name",
             "amount",
             "amount_type",
+            "id_debo",
         ]
         return taxes.read(necessary_tax_fields)
+
+    def _calculate_category(self) -> list or 0:
+        necessary_category_fields = [
+            "id",
+            "name",
+            "id_debo",
+        ]
+        try:
+            return self.categ_id.read(necessary_category_fields)[0]
+        except Exception as e:
+            _logger.error(e)
+            return 0
 
     def _calculate_bom_fields(self) -> dict:
         dictionary = {}
@@ -49,27 +65,31 @@ class ProductProduct(models.Model):
         dictionary["CLA"] = 5 if is_ingredient else 0
         return dictionary
 
+    def decode_img(self):
+        if self.image_512:
+            return self.image_512.decode("utf8")
+        else:
+            return ""
     # @profile
     def get_debo_fields(self) -> dict:
         Taxes = self._calculate_taxes(self.taxes_id)
-        PreVen = self._calculate_PreVen(self.lst_price, self.taxes_id)
+        PreNet = self._calculate_PreVen(self.lst_price, self.taxes_id)
         debo_like_fields = {
             "DetArt": self.name,
-            "Categ": self.categ_id.ids,
-            "Costo": self.standard_price,
-            "PreNet": self.lst_price,
+            "Categ": self._calculate_category(),
+            "Costo": self.standard_price or 0,
+            "PreNet": round(PreNet,2),
             "Taxes": Taxes,
-            "UniVen": self.uom_id.ids,
+            "UniVen": self.uom_id.ids[0] if len(self.uom_id.ids) > 0 else 0,
             "UltAct": datetime.strftime(self.write_date, "%d/%m/%Y"),
-            "CodPro": self.seller_ids.ids,
+            "CodPro": self.seller_ids.ids[0] if len(self.seller_ids.ids) > 0 else 0,
             "ExiDep": self.qty_available,
-            "PreVen": PreVen,
+            "PreVen": self.lst_price or 0,
             "TIP": self.type,
             "ESS": 1 if self.type == "service" else 0,
             "NHA": 0 if self.active else 1,
-            "DET_LAR": self.display_name,
+            "DET_LAR": self.display_name or "",
             "IMP_IMP_INT": 1 if len(Taxes) > 0 else 0,
-            "ID_DEBO_CLOUD": self.id,
             "LISPSD": self.pricelist_id.read(),
             "E_HD": "",
             "C_HD": "",
@@ -77,9 +97,13 @@ class ProductProduct(models.Model):
             "C_HD1": "",
             "E_HD2": "",
             "C_HD2": "",
+            "CODBAR" : self.barcode or "",
+            "IMAGEN" : self.decode_img(),
+            "ID_DEBO_CLOUD": self.id,
+            "ID_CLIENTE_DEBO" : self.env.company.id,
+            "id_debo": self.id_debo,
         }
         debo_like_fields.update(self._calculate_bom_fields())
-        _logger.warn(json.dumps(debo_like_fields))
         return debo_like_fields
 
     def send_debo_fields(self, method="create"):
@@ -87,8 +111,10 @@ class ProductProduct(models.Model):
         # url = self.env['debo.config'].search([('model_id','=',)], limit=1).url
         method_endpoints = {
             'create' : '/guardarProducto',
-            'write' : '',
+            'write' : '/guardarProducto',
         }
+        if self._context.get('import_file',False):
+            return False
         try:
             headers = {"Authorization" : "none",
                     "Content-Type" : "application/json",
@@ -104,25 +130,36 @@ class ProductProduct(models.Model):
                 verify=True
             )
         except Exception as e:
+            _logger.error(e)
             raise Warning(e)
         try:
             response = r.text
             _logger.info(response)
         except Exception as e:
+            _logger.error(e)
             raise Warning(e.args)
 
         return True
 
-
+    @api.model
     def create(self,vals_list):
         res = super().create(vals_list)
         try:
-            res.send_debo_fields()
+            res.send_debo_fields('create')
         except Exception as e:
-            return e.args
+            _logger.error(e.args)
+            raise Warning("Error sending data to DEBO, please try again later")
         return res
 
-
+    def write(self, vals_list):
+        res = super().write(vals_list)
+        _logger.info(res)
+        if res:
+            try:
+                self.send_debo_fields('write')
+            except Exception as e:
+                return e.args
+        return res
 # unused
 
 # def _necessary_fields(self) -> list:
