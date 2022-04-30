@@ -22,8 +22,15 @@
                         <h1 class="mt0">
                             <field name="name" readonly="True" />
                         </h1>
-                        <field name="cash_control_session_id" readonly="True" />
-                        <field name="company_id" groups="base.group_multi_company" />
+                        <p style="margin-bottom: 0;">
+                            <field name="session_config_name" readonly="True" />
+                        </p>
+                        <p style="margin-bottom: 0;">
+                            <field name="session_id" readonly="True" />
+                        </p>
+                        <p style="margin-bottom: 0;">
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </p>
                     </div>
                     <group>
                         <group id="header_left_group">
@@ -32,11 +39,13 @@
                         </group>
                         <group id="header_right_group">
                             <field name="company_currency_id" invisible="1" />
-                            <field name="session_balance_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                            <field name="session_balance_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                            <field name="cash_amount_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                            <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                        </group>
+                        <group id="header_left_group_2">
+                            <field name="session_user_ids" widget="many2many_tags" />
                         </group>
                     </group>
-                    <separator />
                     <div id="spreadsheets">
                         <div class="card">
                             <div class="card-header" id="paymentMethods">
@@ -49,217 +58,221 @@
                             <div id="collapsePaymentMethods" class="collapse show" aria-labelledby="paymentMethods" data-parent="#spreadsheets">
                                 <div class="card-body">
                                     <div class="container-fluid">
-                                        <div class="row d-flex justify-content-center">
-                                            <table class="table table-bordered mr-5" style="float: left; width:30%; table-layout:fixed">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="width: 60%;">Cash</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
+                                        <div class="row d-flex justify-content-around">
+                                            <!-- TODO: Request for User Interface when clicking the buttons -->
+                                            <table class="table" style="float: left; width: fit-content; height: fit-content; margin-top: auto; margin-left: 1%;">
                                                 <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <strong>Cash Balance Start</strong>
-                                                        </td>
-                                                        <td>
-                                                            <field name="cash_amount_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Sales</strong>
-                                                        </td>
-                                                        <td>
-                                                            <field name="cash_amount_sales" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        <td style="border-top: 0px;">
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Partial withdrawals">
+                                                                <span class="fa fa-hand-lizard-o"></span>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <strong>Refund Notes</strong>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit cards payments in one installment.">
+                                                                <span class="fa fa-credit-card"></span>
+                                                            </button>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td>
-                                                            [WIP] Missing examples
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Checks">
+                                                                <span class="fa fa-indent"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Other Dispatches">
+                                                                <span class="fa fa-long-arrow-left"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit Cards">
+                                                                <span class="fa fa-credit-card-alt"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="In and Out Vouchers">
+                                                                <span class="fa fa-refresh"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Complement Invoices">
+                                                                <span class="fa fa-file-text"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Other Sales">
+                                                                <span class="fa fa-file-text-o"></span>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-
-                                            <table class="table table-bordered mr-5" style="float: left; width:30%">
+                                            <table class="table table-bordered" style="float: left; width:50%; margin-left: 3%; border: 2px solid !important">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" style="width: 60%;">Bank</th>
-                                                        <th scope="col">Amount</th>
+                                                        <th scope="col" style="width: 40%;">Submission</th>
+                                                        <th scope="col">Actual</th>
+                                                        <th scope="col">Partial</th>
+                                                        <th scope="col">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing explanation
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Should I use the information on the 'Transfers' tab?
-                                                        </td>
-                                                        <td>
-                                                            Or just payments using a Bank type of journal?
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table class="table table-bordered" style="float: left; width:30%">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="width: 60%;">Cards</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="row d-flex justify-content-center">
-                                            <table class="table table-bordered mr-5" style="float: left; width:30%">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="width: 60%;">Checks</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table class="table table-bordered mr-5" style="float: left; width:30%">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="width: 60%;">Partial Withdrawals</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Data</strong>
-                                                        </td>
-                                                        <td>
-                                                            [WIP] Missing examples
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table class="table table-bordered" style="float: left; width:30%">
-                                                <!-- Placeholder -->
-                                            </table>
-                                        </div>
-                                        <div class="row d-flex justify-content-start">
-                                            <table class="table table-bordered" style="float: left; width:30%; margin-left: 3%; border: 2px solid !important">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="width: 60%;">Summary</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
+                                                        <td style="background-color: #dfe4ff;">
                                                             <strong>Cash</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
-                                                    </tr>
-
-                                                    <tr>
+                                                        <td></td>
                                                         <td>
-                                                            <strong>Bank</strong>
-                                                        </td>
-                                                        <td>
-                                                            $ 0,00
+                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <strong>Cards</strong>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Expenses</strong>
                                                         </td>
                                                         <td>
-                                                            $ 0,00
+                                                            <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <!-- TODO: Make editable through button -->
                                                             <strong>Checks</strong>
                                                         </td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
+                                                        <td></td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <strong>Partial Withdrawals</strong>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Advanced Payment</strong>
                                                         </td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <!-- TODO: Make editable through button -->
+                                                            <strong>Cards</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>In Vouchers</strong>
+                                                        </td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Out vouchers</strong> <!-- Get info to check if "Out vouchers" is a proper name. -->
+                                                        </td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Shop combo sales</strong>
+                                                        </td>
+                                                        <td>
+                                                            $ 0,00
+                                                        </td>
+                                                        <td></td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div class="row d-flex justify-content-start">
-                                            <table class="table table-bordered" style="float: left; width:30%; margin-left: 3%; border: 2px solid !important">
-                                                <tr>
-                                                    <td scope="col" style="width: 60%;">
-                                                        <strong>Total</strong>
-                                                    </td>
-                                                    <td>
-                                                        <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                                                    </td>
-                                                </tr>
+                                            <table class="table table-bordered" style="float: left; width: fit-content; height: fit-content; margin-left: 3%; margin-top: auto; border: 2px solid !important">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Checking Account (I)</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="checking_account_invoices_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Checking Account (D)</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="checking_account_dispatches_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Total To Submit</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_to_submit" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Submited Total</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="submited_total" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background-color: #dfe4ff;">
+                                                            <strong>Difference</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="session_difference" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -296,6 +309,11 @@
                         </div>
                     </div>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -307,12 +325,12 @@
             <tree string="Cash Control Session Spreadsheets">
                 <field name="company_currency_id" invisible="1" />
                 <field name="name" />
-                <field name="cash_control_session_id" />
+                <field name="session_id" />
                 <field name="session_date_start" />
                 <field name="session_date_end" />
                 <field name="state" />
-                <field name="session_balance_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                <field name="session_balance_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                <field name="cash_amount_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" force_save="1" />
+                <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
             </tree>
         </field>
     </record>

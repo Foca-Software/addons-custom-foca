@@ -1,26 +1,17 @@
-from odoo import models
+from odoo import models, _
 from odoo.exceptions import UserError
 
 
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
-    def get_cash_sales_amount(self):
-        """
-        Return the total amount of sales in cash in the cash control session.
-        """
-        self.ensure_one()
-        return sum(
-            [line.amount for line in self.payment_ids if line.journal_id.type == "cash"]
-        )
-
-    def _create_cash_control_session_spreadsheet(self, Spreadsheets):
-        cash_amount_sales = self.get_cash_sales_amount()
-        return Spreadsheets.create(
+    def _create_cash_control_session_spreadsheet(self, spreadsheets):
+        return spreadsheets.create(
             {
-                "cash_control_session_id": self.id,
+                "session_id": self.id,
                 "cash_amount_start": self.statement_balance_start,
-                "cash_amount_sales": cash_amount_sales,
+                "cash_amount_end": self.statement_balance_end_real,
+                "checking_account_invoices_amount": self.checking_account_invoices_amount,
             }
         )
 
@@ -32,13 +23,13 @@ class CashControlSession(models.Model):
         self.ensure_one()
 
         if not self.id_debo:
-            raise UserError("Cash control session must have an id_debo")
+            raise UserError(_("Cash control session must have an id_debo"))
 
-        Spreadsheets = self.env["cash.control.session.spreadsheet"]
+        spreadsheets = self.env["cash.control.session.spreadsheet"]
 
-        spreadsheet = Spreadsheets.search([("cash_control_session_id", "=", self.id)])
+        spreadsheet = spreadsheets.search([("session_id", "=", self.id)])
         if not spreadsheet:
-            spreadsheet = self._create_cash_control_session_spreadsheet(Spreadsheets)
+            spreadsheet = self._create_cash_control_session_spreadsheet(spreadsheets)
 
         if self.state == "closed":
             self.update({"state": "spreadsheet_control"})

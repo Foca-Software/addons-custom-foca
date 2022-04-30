@@ -137,8 +137,8 @@ msgstr "Cerrar planilla de la sesión"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
-msgid "Close Spreadsheet"
-msgstr "Planilla de cierre"
+msgid "<p>Close Spreadsheet</p>"
+msgstr "<p>Planilla de Cierre de Turnos</p>"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__company_id
@@ -254,22 +254,22 @@ msgstr "Monto de crédito"
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_balance_end
 msgid "Session Balance End"
-msgstr "Saldo de caja final"
+msgstr "Cambio entregado"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_balance_start
 msgid "Session Balance Start"
-msgstr "Saldo de caja inicial"
+msgstr "Cambio recibido"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_date_end
-msgid "Session Date End"
-msgstr "Fecha de cierre de caja"
+msgid "Session End"
+msgstr "Cierre de caja"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_date_start
-msgid "Session Date Start"
-msgstr "Fecha de apertura de caja"
+msgid "Session Start"
+msgstr "Apertura de caja"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_cash_control_session_spreadsheet
