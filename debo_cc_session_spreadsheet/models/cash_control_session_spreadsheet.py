@@ -3,6 +3,38 @@ import json
 from odoo import fields, models, api, _
 
 
+def add_to_product_list(products: dict, name: str, line: models.Model) -> dict:
+    """
+    Add a product to the dict list of products.
+    :param products: dict of products
+    :param name: name of the product
+    :param line: sale.order.line record
+    :return: dict of products updated
+    """
+    invoice_status = line.order_id.invoice_status
+
+    if products.get(name):
+        if invoice_status == "to invoice":
+            products[name]["product_qty_acc_check"] += line.product_uom_qty
+            products[name]["product_total_acc_check"] += line.price_total
+        if invoice_status == "invoiced":
+            products[name]["product_qty"] += line.product_uom_qty
+            products[name]["product_total"] += line.price_total
+    else:
+        if invoice_status == "to invoice":
+            products[name] = {
+                "product_qty_acc_check": line.product_uom_qty,
+                "product_total_acc_check": line.price_total,
+            }
+        if invoice_status == "invoiced":
+            products[name] = {
+                "product_qty": line.product_uom_qty,
+                "product_total": line.price_total,
+            }
+
+    return products
+
+
 class CashControlSessionSpreadsheet(models.Model):
     _name = "cash.control.session.spreadsheet"
     _description = "Cash Control Session Spreadsheet"
@@ -204,33 +236,28 @@ class CashControlSessionSpreadsheet(models.Model):
 
     @api.model
     def get_session_product_sales_list(self, spreadsheet_id):
+        # TODO: This can be done better.
+        # A text field with the json data should exist, to avoid the user to
+        # query the db everytime the tables are loaded, just in create and
+        # data change moments.
         session = (
             self.env["cash.control.session.spreadsheet"]
             .search([("id", "=", spreadsheet_id)])
             .mapped("session_id")
         )
-
         if session:
-            res = []
-            lines = (
-                session.mapped("payment_ids")
-                .mapped("reconciled_invoice_ids")
-                .mapped("invoice_line_ids")
-                .filtered(lambda l: l.product_id.is_fuel == False)
-            )
-
+            res = {
+                "products": {},
+                "fuels": {},
+            }
+            products = res["products"]
+            fuels = res["fuels"]
+            lines = session.mapped("sale_order_ids").mapped("order_line")
             for line in lines:
-                res.append(
-                    {
-                        "invoice_id": line.move_id.id,
-                        "invoice_line_id": line.id,
-                        "invoice": line.move_id.name,
-                        "product": line.product_id.name,
-                        "quantity": line.quantity,
-                        "price_unit": line.price_unit,
-                        "price_total": line.price_total,
-                    }
-                )
+                name = line.product_id.name
+                if line.product_id.is_fuel:
+                    fuels = add_to_product_list(fuels, name, line)
+                else:
+                    products = add_to_product_list(products, name, line)
             return json.dumps(res)
-
         return False
