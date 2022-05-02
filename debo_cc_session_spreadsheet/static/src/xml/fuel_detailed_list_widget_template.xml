@@ -1,0 +1,49 @@
+<template id="template" xml:space="preserve">
+    <t t-name="debo_cc_session_spreadsheet.fuel_detailed_list_widget_template">
+        <div class="o_spreadsheet_fuel_detailed_list_data_root">
+            <style>
+                .products-table {
+                    table-layout: fixed;
+                }
+                
+                .table-bordered.products-table thead th {
+                    border: 1px solid #88a6c3;
+                }
+
+                .products-table thead {
+                    background-color: #dfe4ff;
+                    font-weight: bold;
+                }
+
+                .products-table th {
+                    text-align: center;
+                }
+
+                .totals-row td {
+                    background-color: #dfe4ff;
+                    font-weight: bold;
+                    border: 1.1px solid #88a6c3;
+                }
+            </style>
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-start">
+                    <table class="table table-bordered products-table">
+                        <thead>
+                            <tr class="products-title">
+                                <th scope="col">Product</th>
+                                <th scope="col">ID Debo</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Initial</th>
+                                <th scope="col">Final</th>
+                                <th scope="col">Manual</th>
+                                <th scope="col">Lts/m³</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fuelsDetailedTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

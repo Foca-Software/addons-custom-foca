@@ -35,6 +35,33 @@ def add_to_product_list(products: dict, name: str, line: models.Model) -> dict:
     return products
 
 
+def add_to_fuel_list(fuels: dict, name: str, line: models.Model) -> dict:
+    """
+    Add a product to the dict list of products.
+    :param fuels: dict of fuels detailed
+    :param name: name of the fuel
+    :param line: fuel.move.line record
+    :return: dict of fuels detailed updated
+    """
+    vals = {
+        "price": line.price,
+        "id_debo": line.pump_id_debo,
+        "code": line.pump_code,
+        "initial_qty": line.initial_qty,
+        "final_qty": line.final_qty,
+        "manual_qty": line.manual_qty,
+        "cubic_meters": line.cubic_meters,
+        "amount": line.amount,
+    }
+
+    if not fuels.get(name):
+        fuels[name] = []
+
+    fuels[name].append(vals)
+
+    return fuels
+
+
 class CashControlSessionSpreadsheet(models.Model):
     _name = "cash.control.session.spreadsheet"
     _description = "Cash Control Session Spreadsheet"
@@ -68,6 +95,24 @@ class CashControlSessionSpreadsheet(models.Model):
         related="company_id.currency_id", readonly=True
     )
 
+    def action_spreadsheet_validate(self):
+        """
+        Button action to validate the cash control session spreadsheet
+        and close the cash control session.
+        """
+        self.ensure_one()
+        self.update({"state": "validated"})
+        self.session_id.update({"state": "final_close"})
+
+    def action_spreadsheet_draft(self):
+        """
+        Button action to back the cash control session spreadsheet
+        to 'draft' state and the cash control session to 'spreadsheet_control'.
+        """
+        self.ensure_one()
+        self.update({"state": "draft"})
+        self.session_id.update({"state": "spreadsheet_control"})
+
     # Cash Control Session fields
     ##
     session_id = fields.Many2one(
@@ -99,6 +144,18 @@ class CashControlSessionSpreadsheet(models.Model):
     session_user_ids = fields.Many2many(
         related="session_id.user_ids",
         string="Session Users",
+        readonly=True,
+    )
+
+    session_pump_ids = fields.Many2many(
+        related="session_id.pump_ids",
+        string="Session Pumps",
+        readonly=True,
+    )
+
+    session_payment_journal_ids = fields.Many2many(
+        related="session_id.payment_journal_ids",
+        string="Session Payment Methods",
         readonly=True,
     )
 
@@ -239,7 +296,7 @@ class CashControlSessionSpreadsheet(models.Model):
         # TODO: This can be done better.
         # A text field with the json data should exist, to avoid the user to
         # query the db everytime the tables are loaded, just in create and
-        # data change moments.
+        # data change moments. Also this will be needed for reports.
         session = (
             self.env["cash.control.session.spreadsheet"]
             .search([("id", "=", spreadsheet_id)])
@@ -259,5 +316,31 @@ class CashControlSessionSpreadsheet(models.Model):
                     fuels = add_to_product_list(fuels, name, line)
                 else:
                     products = add_to_product_list(products, name, line)
+            return json.dumps(res)
+        return False
+
+    ## Products Widgets
+    fuel_detailed_list_widget = fields.Char(help="To show the fuel detailed list.")
+
+    @api.model
+    def get_session_fuel_detailed_list(self, spreadsheet_id):
+        # TODO: This can be done better.
+        # A text field with the json data should exist, to avoid the user to
+        # query the db everytime the tables are loaded, just in create and
+        # data change moments. Also this will be needed for reports.
+        session = (
+            self.env["cash.control.session.spreadsheet"]
+            .search([("id", "=", spreadsheet_id)])
+            .mapped("session_id")
+        )
+        if session:
+            res = {
+                "fuels": {},
+            }
+            fuels = res["fuels"]
+            lines = session.mapped("fuel_move_ids")
+            for line in lines:
+                name = line.product_id.name
+                fuels = add_to_fuel_list(fuels, name, line)
             return json.dumps(res)
         return False

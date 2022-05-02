@@ -6,12 +6,16 @@
         <field name="model">cash.control.session.spreadsheet</field>
         <field name="arch" type="xml">
             <form string="Cash Control Session Spreadsheet">
+                <!-- TODO: Add all styles attrs into <style> tag properties -->
                 <style>
                     .o_form_view .o_field_widget {
                         margin-bottom: 0px;
                     }
                 </style>
                 <header>
+                    <!-- TODO: These buttons should require some permission group -->
+                    <button name="action_spreadsheet_validate" string="Validate Spreadsheet" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['validated'])]}" />
+                    <button name="action_spreadsheet_draft" string="Spreadsheet to Draft" type="object" attrs="{'invisible': [('state', 'in', ['draft'])]}" />
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -39,23 +43,31 @@
                         </group>
                         <group id="header_right_group">
                             <field name="company_currency_id" invisible="1" />
-                            <field name="cash_amount_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                            <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                            <field name="cash_amount_start" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
+                            <field name="cash_amount_end" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                         </group>
                         <group id="header_left_group_2">
                             <field name="session_user_ids" widget="many2many_tags" />
+                            <field name="session_pump_ids" widget="many2many_tags" />
+                        </group>
+                        <group id="header_right_group_2">
+                            <field name="session_payment_journal_ids" widget="many2many_tags" />
                         </group>
                     </group>
+
+                    <!-- Spreadsheet groups -->
                     <div id="spreadsheets">
+
+                        <!-- Submissions Spreadsheet -->
                         <div class="card">
-                            <div class="card-header" id="paymentMethods">
+                            <div class="card-header" id="submissions">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePaymentMethods" aria-expanded="true" aria-controls="collapsePaymentMethods">
-                                Payment methods
-                              </button>
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSubmissions" aria-expanded="true" aria-controls="collapseSubmissions">
+                                        Submissions
+                                    </button>
                                 </h5>
                             </div>
-                            <div id="collapsePaymentMethods" class="collapse show" aria-labelledby="paymentMethods" data-parent="#spreadsheets">
+                            <div id="collapseSubmissions" class="collapse show" aria-labelledby="submissions" data-parent="#spreadsheets">
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="row d-flex justify-content-around">
@@ -71,7 +83,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit cards payments in one installment.">
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit Cards Payments in One Installment">
                                                                 <span class="fa fa-credit-card"></span>
                                                             </button>
                                                         </td>
@@ -135,7 +147,7 @@
                                                             <strong>Cash</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
                                                         <td></td>
                                                         <td>
@@ -147,7 +159,7 @@
                                                             <strong>Expenses</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                            <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
                                                         <td></td>
                                                         <td>
@@ -245,7 +257,7 @@
                                                             <strong>Checking Account (D)</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="checking_account_dispatches_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                            <field name="checking_account_dispatches_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -279,6 +291,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Products Sales Spreadsheet -->
                         <div class="card">
                             <div class="card-header" id="productSales">
                                 <h5 class="mb-0">
@@ -289,10 +303,13 @@
                             </div>
                             <div id="collapseProductSales" class="collapse o_spreadsheet_product_list_data" aria-labelledby="productSales" data-parent="#spreadsheets">
                                 <div class="card-body">
+                                    <!-- spreadsheet_product_list_data renders the table in spreadsheet_product_sales_list.js using product_sales_list_widget_template.xml -->
                                     <field name="product_list_widget" widget="spreadsheet_product_list_data" />
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Fuel Sales Detailed Spreadsheet -->
                         <div class="card">
                             <div class="card-header" id="pumpsSales">
                                 <h5 class="mb-0">
@@ -303,12 +320,15 @@
                             </div>
                             <div id="collapsePumpsSales" class="collapse" aria-labelledby="pumpsSales" data-parent="#spreadsheets">
                                 <div class="card-body">
-                                    [WIP] Missing examples
+                                    <!-- spreadsheet_fuel_detailed_list renders the table in spreadsheet_fuel_detailed_list.js using fuel_detailed_list_widget_template.xml -->
+                                    <field name="fuel_detailed_list_widget" widget="spreadsheet_fuel_detailed_list" />
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </sheet>
+                <!-- Chatter - Added specifically for tracking values -->
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
                     <field name="activity_ids" widget="mail_activity" />

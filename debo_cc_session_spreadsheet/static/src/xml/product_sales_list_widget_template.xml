@@ -27,7 +27,7 @@
             </style>
             <div class="container-fluid">
                 <div class="row d-flex justify-content-start">
-                    <table class="table table-bordered mt-5 products-table">
+                    <table class="table table-bordered products-table">
                         <thead>
                             <tr class="products-title">
                                 <th colspan="5">Products</th>
@@ -35,7 +35,7 @@
                             <tr class="products-title">
                                 <th colspan="1"></th>
                                 <th colspan="2">Checking Account</th>
-                                <th colspan="2">Cash Payment</th>
+                                <th colspan="2">One Installment</th>
                             </tr>
                             <tr class="products-title">
                                 <th scope="col">Product</th>
@@ -55,7 +55,7 @@
                             <tr class="products-title">
                                 <th colspan="1"></th>
                                 <th colspan="2">Checking Account</th>
-                                <th colspan="2">Cash Payment</th>
+                                <th colspan="2">One Installment</th>
                             </tr>
                             <tr class="products-title">
                                 <th scope="col">Product</th>

@@ -11,7 +11,6 @@ class CashControlSession(models.Model):
                 "session_id": self.id,
                 "cash_amount_start": self.statement_balance_start,
                 "cash_amount_end": self.statement_balance_end_real,
-                "checking_account_invoices_amount": self.checking_account_invoices_amount,
             }
         )
 
