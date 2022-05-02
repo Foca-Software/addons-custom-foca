@@ -28,7 +28,10 @@ odoo.define(
                         <td colspan="8" class="font-weight-bold">${fuel}</td>
                     </tr>`
                 );
+                let [qty, total] = [0, 0];
                 data.fuels[fuel].forEach((pump) => {
+                    qty += pump.cubic_meters || 0;
+                    total += pump.amount || 0;
                     fuelDetailed.insertAdjacentHTML(
                         "beforeend",
                         `<tr>
@@ -47,6 +50,14 @@ odoo.define(
                         </tr>`
                     );
                 });
+                fuelDetailed.insertAdjacentHTML(
+                    "beforeend",
+                    `<tr class="text-center totals-fuel-row">
+                        <td colspan="6" class="text-right">Total</td>
+                        <td class="text-center">${qty.toFixed(2)}</td>
+                        <td class="text-center">${formant_currency(total)}</td>
+                    </tr>`
+                );
             }
         };
 

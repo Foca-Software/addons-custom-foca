@@ -26,6 +26,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "wizard/cc_spreadsheet_partial_withdrawals_wizard.xml",
         "views/cash_control_session_views.xml",
         "views/cash_control_session_spreadsheet_assets.xml",
         "views/cash_control_session_spreadsheet_views.xml",

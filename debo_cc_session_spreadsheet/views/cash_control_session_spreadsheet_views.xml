@@ -76,14 +76,14 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="border-top: 0px;">
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Partial withdrawals">
+                                                            <button name="%(action_spreadsheet_partial_withdrawals_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Partial withdrawals">
                                                                 <span class="fa fa-hand-lizard-o"></span>
                                                             </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit Cards Payments in One Installment">
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Cards Payments in One Installment">
                                                                 <span class="fa fa-credit-card"></span>
                                                             </button>
                                                         </td>
@@ -104,7 +104,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit Cards">
+                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit/Debit Cards">
                                                                 <span class="fa fa-credit-card-alt"></span>
                                                             </button>
                                                         </td>
