@@ -24,6 +24,13 @@
                     font-weight: bold;
                     border: 1.1px solid #88a6c3;
                 }
+
+                .totals-fuel-row td {
+                    background-color: #e7e8ed;
+                    font-weight: bold;
+                    border: 1.1px solid #818589;
+                }
+
             </style>
             <div class="container-fluid">
                 <div class="row d-flex justify-content-start">

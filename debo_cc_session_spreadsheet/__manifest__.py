@@ -10,7 +10,7 @@
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Sales",
-    "version": "13.0.0.0.3",
+    "version": "13.0.0.0.4",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
@@ -26,6 +26,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "wizard/cc_spreadsheet_partial_withdrawals_wizard.xml",
         "views/cash_control_session_views.xml",
         "views/cash_control_session_spreadsheet_assets.xml",
         "views/cash_control_session_spreadsheet_views.xml",
