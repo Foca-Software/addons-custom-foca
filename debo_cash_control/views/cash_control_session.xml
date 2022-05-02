@@ -12,6 +12,13 @@
             <xpath expr="//div[@id='subtotal']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
             </xpath>
+            <xpath expr="//page[@name='orders']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='orders']" position="after">
+                <xpath expr="//page[@name='invoices']" position="move">
+                </xpath>
+            </xpath>
         </field>
     </record>
 </odoo>
