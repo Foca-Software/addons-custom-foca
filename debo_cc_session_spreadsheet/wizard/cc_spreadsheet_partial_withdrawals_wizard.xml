@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_partial_withdrawals_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Partial Withdrawals Wizard</field>
+        <field name="model">cc.spreadsheet.partial.withdrawals.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Partial Withdrawals">
+                <group>
+                    <field name="session_transfer_ids" nolabel="1" required="1" readonly="1" string="Product" type="many2many">
+                        <tree>
+                            <field name="date" />
+                            <field name="ref" />
+                            <field name="amount" />
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_partial_withdrawals_wizard" name="Partial Withdrawals" res_model="cc.spreadsheet.partial.withdrawals.wizard" view_mode="form" target="new" />
+
+</odoo> 
