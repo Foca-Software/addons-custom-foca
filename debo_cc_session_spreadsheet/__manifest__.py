@@ -14,8 +14,16 @@
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
-    "depends": ["web", "debo_integration_fields", "debo_cc_session_states"],
-    "qweb": ["static/src/xml/product_sales_list_widget_template.xml"],
+    "depends": [
+        "web",
+        "debo_integration_fields",
+        "debo_cc_session_states",
+        "fuel_tanks_cash_control",
+    ],
+    "qweb": [
+        "static/src/xml/product_sales_list_widget_template.xml",
+        "static/src/xml/fuel_detailed_list_widget_template.xml",
+    ],
     "data": [
         "security/ir.model.access.csv",
         "views/cash_control_session_views.xml",

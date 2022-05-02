@@ -1,19 +1,71 @@
 <template id="template" xml:space="preserve">
     <t t-name="debo_cc_session_spreadsheet.product_sales_list_widget_template">
         <div class="o_spreadsheet_product_list_data_root">
+            <style>
+                .products-table {
+                    table-layout: fixed;
+                }
+                
+                .table-bordered.products-table thead th {
+                    border: 1px solid #88a6c3;
+                }
+
+                .products-table thead {
+                    background-color: #dfe4ff;
+                    font-weight: bold;
+                }
+
+                .products-table th {
+                    text-align: center;
+                }
+
+                .totals-row td {
+                    background-color: #dfe4ff;
+                    font-weight: bold;
+                    border: 1.1px solid #88a6c3;
+                }
+            </style>
             <div class="container-fluid">
                 <div class="row d-flex justify-content-start">
-                    <table class="table table-bordered" style="table-layout:fixed">
+                    <table class="table table-bordered products-table">
                         <thead>
-                            <tr>
-                                <th scope="col">Invoice</th>
+                            <tr class="products-title">
+                                <th colspan="5">Products</th>
+                            </tr>
+                            <tr class="products-title">
+                                <th colspan="1"></th>
+                                <th colspan="2">Checking Account</th>
+                                <th colspan="2">One Installment</th>
+                            </tr>
+                            <tr class="products-title">
                                 <th scope="col">Product</th>
                                 <th scope="col">Quantity</th>
-                                <th scope="col">Unit Price</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Quantity</th>
                                 <th scope="col">Amount</th>
                             </tr>
                         </thead>
-                        <tbody id="productSalesList"></tbody>
+                        <tbody id="productsTable"></tbody>
+                    </table>
+                    <table class="table table-bordered mt-5 products-table">
+                        <thead>
+                            <tr class="products-title">
+                                <th colspan="5">Fuels</th>
+                            </tr>
+                            <tr class="products-title">
+                                <th colspan="1"></th>
+                                <th colspan="2">Checking Account</th>
+                                <th colspan="2">One Installment</th>
+                            </tr>
+                            <tr class="products-title">
+                                <th scope="col">Product</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fuelProductsTable"></tbody>
                     </table>
                 </div>
             </div>

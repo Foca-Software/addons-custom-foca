@@ -5,11 +5,63 @@ odoo.define(
 
         require("web.dom_ready");
         const ajax = require("web.ajax");
-        const Widget = require("web.AbstractField");
         const registry = require("web.field_registry");
+        const Widget = require("web.AbstractField");
 
-        const getProductSalesList = (spreadsheetId) => {
-            const tableBody = document.querySelector("#productSalesList");
+        const formant_currency = (value) => {
+            const formatter = new Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+            });
+            if (value === undefined) {
+                return "";
+            }
+            return formatter.format(value);
+        };
+
+        const create_table_content = (data, table_body) => {
+            let [qty_acc_check, total_acc_check, qty, total] = [0, 0, 0, 0];
+            for (const product in data) {
+                const row = data[product];
+                qty_acc_check += row.product_qty_acc_check || 0;
+                total_acc_check += row.product_total_acc_check || 0;
+                qty += row.product_qty || 0;
+                total += row.product_total || 0;
+                table_body.insertAdjacentHTML(
+                    "afterbegin",
+                    `<tr>
+                        <td>${product}</td>
+                        <td class="text-center">
+                            ${row.product_qty_acc_check ?? ""}
+                        </td>
+                        <td class="text-center">
+                            ${formant_currency(row.product_total_acc_check)}
+                        </td>
+                        <td class="text-center">
+                            ${row.product_qty ?? ""}
+                        </td>
+                        <td class="text-center">
+                            ${formant_currency(row.product_total)}
+                        </td>
+                    </tr>`
+                );
+            }
+            table_body.insertAdjacentHTML(
+                "beforeend",
+                `<tr class="text-center totals-row">
+                    <td>Total</td>
+                    <td>${qty_acc_check}</td>
+                    <td>${formant_currency(total_acc_check)}</td>
+                    <td>${qty}</td>
+                    <td>${formant_currency(total)}</td>
+                </tr>`
+            );
+        };
+
+        const getProducts = (spreadsheetId) => {
+            const products = document.querySelector("#productsTable");
+            const fuelProducts = document.querySelector("#fuelProductsTable");
+
             ajax.rpc(
                 "/web/dataset/call_kw/cash.control.session.spreadsheet/get_session_product_sales_list",
                 {
@@ -20,27 +72,16 @@ odoo.define(
                 }
             ).then((response) => {
                 if (response) {
-                    const list = JSON.parse(response);
-                    tableBody.innerHTML = "";
-                    list.forEach((row) => {
-                        document
-                            .querySelector("#productSalesList")
-                            .insertAdjacentHTML(
-                                "afterbegin",
-                                `<tr>
-                                    <td>${row.invoice}</td>
-                                    <td>${row.product}</td>
-                                    <td>${row.quantity}</td>
-                                    <td>$ ${row.price_unit},00</td>
-                                    <td>$ ${row.price_total},00</td>
-                                </tr>`
-                            );
-                    });
+                    const data = JSON.parse(response);
+                    products.innerHTML = "";
+                    fuelProducts.innerHTML = "";
+                    create_table_content(data.products, products);
+                    create_table_content(data.fuels, fuelProducts);
                 }
             });
         };
 
-        const SpreadsheetProductSalesList = Widget.extend({
+        const SpreadsheetProducts = Widget.extend({
             template:
                 "debo_cc_session_spreadsheet.product_sales_list_widget_template",
 
@@ -69,8 +110,9 @@ odoo.define(
                         });
                     });
                 };
-                await waitForElm("#productSalesList");
-                getProductSalesList(this.record.res_id);
+                await waitForElm("#productsTable");
+                await waitForElm("#fuelProductsTable");
+                getProducts(this.record.res_id);
             },
 
             isSet() {
@@ -78,9 +120,6 @@ odoo.define(
             },
         });
 
-        registry.add(
-            "spreadsheet_product_list_data",
-            SpreadsheetProductSalesList
-        );
+        registry.add("spreadsheet_product_list_data", SpreadsheetProducts);
     }
 );
