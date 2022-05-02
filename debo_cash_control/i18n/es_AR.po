@@ -89,3 +89,9 @@ msgstr "Planillas"
 #: model_terms:ir.ui.view,arch_db:cash_control_extension.cash_control_session_add_transfer_tree
 msgid "Transfers"
 msgstr "Rendiciones Parciales"
+
+#. module: cash_control_extension
+#: model:ir.model.fields,field_description:cash_control_extension.field_cash_control_session__invoice_ids
+#: model_terms:ir.ui.view,arch_db:cash_control_extension.cash_control_session_add_transfer_tree
+msgid "Invoices"
+msgstr "Ventas"
