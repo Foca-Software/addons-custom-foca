@@ -19,17 +19,17 @@ odoo.define(
             return formatter.format(value);
         };
 
-        const create_table_content = (data, table_body) => {
+        const create_fuels_table_content = (data) => {
+            const fuelDetailed = document.querySelector("#fuelsDetailedTable");
             for (const fuel in data.fuels) {
-                console.log(fuel);
-                table_body.insertAdjacentHTML(
+                fuelDetailed.insertAdjacentHTML(
                     "beforeend",
                     `<tr>
                         <td colspan="8" class="font-weight-bold">${fuel}</td>
                     </tr>`
                 );
                 data.fuels[fuel].forEach((pump) => {
-                    table_body.insertAdjacentHTML(
+                    fuelDetailed.insertAdjacentHTML(
                         "beforeend",
                         `<tr>
                             <td class="text-center">
@@ -51,8 +51,6 @@ odoo.define(
         };
 
         const getFuels = (spreadsheetId) => {
-            const fuelDetailed = document.querySelector("#fuelsDetailedTable");
-
             ajax.rpc(
                 "/web/dataset/call_kw/cash.control.session.spreadsheet/get_session_fuel_detailed_list",
                 {
@@ -64,8 +62,7 @@ odoo.define(
             ).then((response) => {
                 if (response) {
                     const data = JSON.parse(response);
-                    fuelDetailed.innerHTML = "";
-                    create_table_content(data, fuelDetailed);
+                    create_fuels_table_content(data);
                 }
             });
         };
