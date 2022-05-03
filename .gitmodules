@@ -142,3 +142,11 @@
 	path = submodules/ingadhoc/multi-store
 	url = https://github.com/ingadhoc/multi-store.git
 	branch = 13.0
+[submodule "submodules/calyx-servicios/l10n-ar"]
+	path = submodules/calyx-servicios/l10n-ar
+	url = https://github.com/calyx-servicios/l10n-ar.git
+	branch = 13.0
+[submodule "submodules/OCA/dms"]
+	path = submodules/OCA/dms
+	url = https://github.com/OCA/dms.git
+	branch = 13.0
