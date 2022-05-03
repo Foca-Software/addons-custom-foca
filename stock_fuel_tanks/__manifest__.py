@@ -21,12 +21,13 @@
         "base",
         "stock",
         "product",
+        "sale",
     ],
     "data": [
         "security/ir.model.access.csv",
         "views/product_template.xml",
         "views/stock_location.xml",
-        # "views/stock_picking.xml",
+        "views/sale_order.xml",
         "views/stock_pump.xml",
     ],
 }
