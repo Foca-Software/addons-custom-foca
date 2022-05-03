@@ -84,8 +84,8 @@ class FuelMoveLine(models.Model):
             _logger.info(stock_picking_id.name)
             _logger.info(stock_move.name)
             #confirm move
-            stock_picking_id.action_assign()
-            stock_picking_id.button_validate()
-            wiz = self.env['stock.immediate.transfer'].create({'pick_ids': [(4, stock_picking_id.id)]})
-            wiz.process()
+            # stock_picking_id.action_assign()
+            # stock_picking_id.button_validate()
+            # wiz = self.env['stock.immediate.transfer'].create({'pick_ids': [(4, stock_picking_id.id)]})
+            # wiz.process()
 
