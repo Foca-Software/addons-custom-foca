@@ -37,6 +37,8 @@ class FuelMoveLine(models.Model):
         stock_picking = self.env["stock.picking"]
         picking_type = self.env["stock.picking.type"]
         for fuel_move in self:
+            if fuel_move.cubic_meters == 0:
+                continue
             picking_type_id = picking_type.search(
                 [
                     ("default_location_src_id", "=", fuel_move.tank_id.id),
