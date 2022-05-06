@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- cash.control.session inherit tree view -->
+    <record id="cash_control_session_add_fuel_form" model="ir.ui.view">
+        <field name="name">cash.control.session.inherit.view.tree</field>
+        <field name="model">cash.control.session</field>
+        <field name="inherit_id" ref="fuel_tanks_cash_control.cash_control_session_add_fuel_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='product_id']" position="after">
+                <!-- Add your fields here -->
+                <field name="pump_id_debo" />
+            </xpath>
+            <xpath expr="//page[@name='pumps']" positin="inside">
+                <button name="action_test_button" type="object" string="TEST"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

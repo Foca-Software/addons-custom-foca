@@ -6,7 +6,6 @@
         <field name="model">stock.pump</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="id_debo"/>
                 <field name="code"/>
                 <field name="name"/>
                 <field name="description"/>

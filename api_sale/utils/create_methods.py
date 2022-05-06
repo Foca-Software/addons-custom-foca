@@ -230,6 +230,7 @@ def create_sale_order(user_id: int, data: dict) -> dict:
             new_line.write({
                 "product_uom_qty": line.get("product_uom_qty", False) or new_line.product_uom_qty,
                 "price_unit": line.get("price_unit", False) or new_line.price_unit,
+                "pump_id" : line.get("pump_id", False),
             })
     except Exception as e:
         _logger.error(e.args)

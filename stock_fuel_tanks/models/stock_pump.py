@@ -13,7 +13,3 @@ class StockPump(models.Model):
     description = fields.Char(string="Description")
     tank_id = fields.Many2one(comodel_name='stock.location', string='Tank', domain="[('is_fuel_tank','=',True)]")
     product_id = fields.Many2one(related="tank_id.product_id", string='Product')
-    
-
-    #this should be in another module but for simplicity it's here
-    id_debo = fields.Char(string="ID debo")

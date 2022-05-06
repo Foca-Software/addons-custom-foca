@@ -1,5 +1,4 @@
 import string
-from odoo.addons.account.models.account_payment import account_payment
 
 # from typing import Dict
 from odoo.exceptions import AccessError

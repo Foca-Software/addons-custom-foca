@@ -15,7 +15,39 @@ class CashControlSession(models.Model):
         string="Fuel Movements",
     )
 
-    # to be handled by api_cashbox_integration__________________________________________
+    fuel_stock_picking_ids = fields.One2many(
+        string="Fuel Stock Pickings",
+        comodel_name="stock.picking",
+        inverse_name="cash_control_session_id",
+        domain="[('is_fuel_picking','=',True)]",
+    )
+
+    # fuel_stock_picking_ids = fields.Many2many(
+    #     string="Fuel Stock Pickings",
+    #     comodel_name="stock.picking",
+    #     compute="_compute_fuel_stock_picking_ids",
+    # )
+    # fuel_stock_move_ids = fields.Many2many(
+    #     comodel_name="stock.move",
+    #     string="Fuel Stock Moves",
+    #     compute="_compute_fuel_stock_move_ids",
+    # )
+
+    # @api.depends("pump_ids")
+    # def _compute_fuel_stock_picking_ids(self):
+    #     for session in self:
+    #         session.fuel_stock_picking_ids = False
+    #         fuel_pickings = self.env["stock.picking"].search(
+    #             [("cash_control_session_id", "=", self.id),]
+    #         )
+    #         if fuel_pickings:
+    #             session.fuel_stock_picking_ids = [(6,0,fuel_pickings.ids)]
+
+    # @api.depends("pump_ids")
+    # def _compute_fuel_stock_move_ids(self):
+    #     pass
+
+    # to be executed on cashbox opening__________________________________________
     @api.depends("pump_ids")
     def create_fuel_move_lines(self):
         """
@@ -58,12 +90,5 @@ class CashControlSession(models.Model):
                 _logger.error(e)
                 return False
         return True
-
-    def create_stock_moves(self):
-        """
-        Creates stock moves for the fuel moves
-        """
-        for session in self:
-            session.fuel_move_ids.create_stock_moves()
 
     # __________________________________________________________________________________
