@@ -6,9 +6,7 @@
         <field name="model">stock.pump</field>
         <field name="inherit_id" ref="stock_fuel_tanks.stock_pump_view_tree"/>
         <field name="arch" type="xml">
-            <!-- Add your xpath here -->
             <xpath expr="//field[@name='code']" position="before">
-                <!-- Add your fields here -->
                 <field name="id_debo"/>
             </xpath>
         </field>

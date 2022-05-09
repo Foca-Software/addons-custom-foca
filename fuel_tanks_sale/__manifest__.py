@@ -14,14 +14,8 @@
     "development_status": "Alpha",
     "application": False,
     "installable": True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
     "depends": ["base","sale", "stock_fuel_tanks","sale_stock"],
-    ## XML Data files
     'data': [
-        # 'security/ir.model.access.csv',
         'views/sale_order.xml',
         'views/stock_picking.xml',
     ],

@@ -7,7 +7,6 @@ class StockPicking(models.Model):
     pump_id = fields.Many2one(
         comodel_name="stock.pump",
         string="Pump",
-        # compute="_compute_pump_id",
         related = "sale_id.pump_id",
         store=True,
     )

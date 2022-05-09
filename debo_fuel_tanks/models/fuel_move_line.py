@@ -103,7 +103,7 @@ class FuelMoveLine(models.Model):
                 "location_dest_id": picking_type_id.default_location_dest_id.id
                 or customer_loc,
             }
-            stock_picking_vals.update(fuel_move._location_vals(picking_type_id))
+
             # TODO: create module fuel_tanks_cash_control_multi_store to add this
             try:
                 multi_store_fields = {
@@ -116,6 +116,7 @@ class FuelMoveLine(models.Model):
             except:
                 pass
             # --------------------------------------------------------------------
+            
             stock_picking_id = stock_picking.create(stock_picking_vals)
             stock_vals = {
                 "name": f"{fuel_move.session_id.id_debo}/{fuel_move.pump_id.code}",

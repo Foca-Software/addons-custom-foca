@@ -8,5 +8,3 @@ class SaleOrderLine(models.Model):
         comodel_name="stock.pump", string="Pump",
         domain="[('product_id', '=', product_id)]",
     )
-
-    # Esto deberia venir en el json de ventas
