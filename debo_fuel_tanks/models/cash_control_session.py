@@ -12,14 +12,15 @@ class CashControlSession(models.Model):
         """
         Returns the total amount of fuel moves for the current session and pump
         """
-        return self.env["stock.move"].read_group(
+        move = self.env["stock.move"].read_group(
             domain=[
                 ("picking_id", "in", self.fuel_stock_picking_ids.ids),
                 ("picking_id.pump_id", "=", pump_id),
             ],
             fields=["product_uom_qty"],
             groupby=["product_id"],
-        )[0]["product_uom_qty"]
+        )
+        return move[0]["product_uom_qty"]
 
     def action_test_button(self):
         _logger.warning(self._current_session_pump_moves_total(8))
