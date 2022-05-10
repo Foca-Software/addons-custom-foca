@@ -9,9 +9,10 @@
              "date_order":"29/04/2022"
           },
           "eventual_customer":{
-              "name":"Maria Silva de Alegria",
+              "name":"Leo Messi",
               "vat" : "20350040170",
-              "afip_responsability": 6
+              "afip_responsiblity": 1,
+              "document_type" : 2 
           },
           "lines":[
              {
