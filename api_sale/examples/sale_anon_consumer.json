@@ -1,0 +1,26 @@
+{
+    "params":{
+       "user_id":18,
+       "move_type":101,
+       "payload":{
+          "company_id":1,
+          "header":{
+             "id_debo":0,
+             "date_order":"29/04/2022"
+          },
+          "lines":[
+             {
+                "product_id": 215,
+                "pump_id" : 9,
+                "product_uom_qty":5,
+                "price_unit":219
+             }
+          ],
+          "invoice_data":{
+             "journal_id":10,
+             "l10n_latam_document_type_id":2,
+             "pay_now_journal_id":6
+          }
+       }
+    }
+ }
