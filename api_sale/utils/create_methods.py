@@ -187,7 +187,7 @@ def create_sale_order(user_id: int, data: dict) -> dict:
     except AccessError as e:
         _logger.error(e.args)
         return {"sale_order_id": 0, "status": "error", "error": e.args}
-    sale_data = data.get("header", False)
+    sale_data = data.get("header")
     if not sale_data:
         return {"sale_order_id": 0, "status": "error", "error": "No data found"}
     try:
@@ -196,7 +196,7 @@ def create_sale_order(user_id: int, data: dict) -> dict:
         date_order = datetime.strptime(sale_data["date_order"], DEBO_DATE_FORMAT)
         sale_order = sale_obj.create(
             {
-                "partner_id": sale_data.get("partner_id", False),
+                "partner_id": sale_data.get("partner_id"),
                 "date_order": date_order or datetime.now(),
                 "state": "draft",
             }
@@ -206,18 +206,18 @@ def create_sale_order(user_id: int, data: dict) -> dict:
         
         sale_order.write({
             # "partner_id": 120,
-            # "partner_invoice_id": False, #sale_data.get("partner_invoice_id", False), #or sale_order_id.partner_invoice_id.id,
-            # "partner_shipping_id": sale_data.get("partner_shipping_id", False), #or sale_order_id.partner_shipping_id.id,
-            # "pricelist_id": sale_data.get("pricelist_id", False), #or sale_order_id.pricelist_id.id,
+            # "partner_invoice_id": False, #sale_data.get("partner_invoice_id"), #or sale_order_id.partner_invoice_id.id,
+            # "partner_shipping_id": sale_data.get("partner_shipping_id"), #or sale_order_id.partner_shipping_id.id,
+            # "pricelist_id": sale_data.get("pricelist_id"), #or sale_order_id.pricelist_id.id,
         })
     except Exception as e:
         _logger.error(e.args)
         return {"sale_order_id": 0, "status": "error", "error": e.args}
     try:
         sale_order.with_context(
-            partner_id=sale_data.get("partner_id", False)
+            partner_id=sale_data.get("partner_id")
         ).onchange_partner_id()
-        if not data.get("lines", False):
+        if not data.get("lines"):
             return {"sale_order_id": 0, "status": "error", "error": "No lines found"}
         for line in data["lines"]:
             new_line = sale_line_obj.create(
@@ -228,8 +228,9 @@ def create_sale_order(user_id: int, data: dict) -> dict:
             )
             new_line.product_id_change()
             new_line.write({
-                "product_uom_qty": line.get("product_uom_qty", False) or new_line.product_uom_qty,
-                "price_unit": line.get("price_unit", False) or new_line.price_unit,
+                "product_uom_qty": line.get("product_uom_qty") or new_line.product_uom_qty,
+                "price_unit": line.get("price_unit") or new_line.price_unit,
+                "pump_id" : line.get("pump_id"),
             })
     except Exception as e:
         _logger.error(e.args)

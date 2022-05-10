@@ -7,8 +7,6 @@ _logger = logging.getLogger(__name__)
 class StockLocation(models.Model):
     _inherit = "stock.location"
 
-    usage = fields.Selection(selection_add=[("fuel_tank", "Internal - Fuel Tank")])
-
     is_fuel_tank = fields.Boolean(string="Is a Fuel Tank")
     capacity = fields.Float(string="Capacity")
     product_id = fields.Many2one(

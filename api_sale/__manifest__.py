@@ -20,6 +20,7 @@
     "depends": [
         "base",
         "cash_control",
+        "debo_fuel_tanks",
     ],
     "data": [
     ],

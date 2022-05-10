@@ -20,8 +20,9 @@
     "depends": [
         "base",
         "stock_fuel_tanks",
-        "debo_integration_fields",
+        "fuel_tanks_sale",
+        "debo_integration_fields",#TODO: Remove dependency
         "cash_control_extension",
     ],
-    "data": ["security/ir.model.access.csv", "views/cash_control_session.xml"],
+    "data": ["security/ir.model.access.csv", "views/cash_control_session.xml",],
 }

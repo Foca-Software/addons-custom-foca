@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- stock.pump inherit tree view -->
+    <record id="stock_pump_view_tree" model="ir.ui.view">
+        <field name="name">stock.pump.inherit.view.tree</field>
+        <field name="model">stock.pump</field>
+        <field name="inherit_id" ref="stock_fuel_tanks.stock_pump_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="before">
+                <field name="id_debo"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
