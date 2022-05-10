@@ -98,7 +98,7 @@ def check_required_fields(data: dict, move_type: int) -> list or False:
     # move_type = str(move_type)
     required_fields = {
         101: [
-            "partner_id",
+            # "partner_id",
             # "partner_shipping_id",
             # "partner_invoice_id",
             "date_order",
