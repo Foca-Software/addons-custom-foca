@@ -326,15 +326,20 @@ class ReceiveData(Controller):
         """
         if self._is_eventual_customer(data):
             partner_obj = request.env['res.partner'].with_user(1)
-            vals = self._eventual_customer_data(data["eventual_customer"])
+            vals = self._eventual_customer_data(data["eventual_customer"], partner_obj)
             eventual_customer = partner_obj.create_eventual(vals)
             return eventual_customer.id
         return self._anon_consumer_id().id
 
-    def _eventual_customer_data(self, data:dict) -> dict:
+    def _eventual_customer_data(self, data:dict, partner_obj:object) -> dict:
+        afip_responsiblity = data.get("afip_responsiblity")
+        responsiblity_id = partner_obj.eventual_afip_identification_type(afip_responsiblity)
+        doc_type = data.get("document_type")
+        doc_type_id = partner_obj.eventual_document_type(doc_type)
         eventual_partner_data = {
             "name": data.get("name"), #mandatory
-            "l10n_latam_identification_type_id" : data.get("afip_responsability"), #mandatory
+            "l10n_ar_afip_responsibility_type_id" : responsiblity_id, #mandatory
+            "l10n_latam_identification_type_id" : doc_type_id, #mandatory
             "vat": data.get("vat"), #mandatory
             "street": data.get("street"), #optional
             "street2": data.get("street2"), #optional
