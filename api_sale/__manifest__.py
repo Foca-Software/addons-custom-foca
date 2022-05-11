@@ -20,6 +20,7 @@
     "depends": [
         "base",
         "cash_control",
+        "debo_integration_fields",
     ],
     "data": [
     ],

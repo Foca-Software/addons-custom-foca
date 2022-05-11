@@ -14,14 +14,3 @@
         </field>
     </record>
 </odoo>
-
-    <!-- <record id="add_test_button" model="ir.ui.view">
-        <field name="name">res.partner.form</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='property_product_pricelist']" position="after">
-                <button name="test_button" string="Test Button" type="object" class="oe_highlight"/>
-            </xpath>
-        </field>
-    </record> -->
