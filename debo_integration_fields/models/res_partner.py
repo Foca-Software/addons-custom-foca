@@ -9,3 +9,4 @@ class ResPartner(models.Model):
 
     id_debo_p = fields.Char(string="ID_DEBO Supplier")
     id_debo_c = fields.Char(string="ID_DEBO Customer")
+    eventual_customer = fields.Boolean(string="Eventual Customer", default=False)
