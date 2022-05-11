@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="cash_control_session_id"/>
-                <field name="session_id_debo"/>
+                <field name="cash_control_session_id" invisible="1"/>
+                <field name="session_id_debo" invisible="1"/>
             </xpath>
         </field>
     </record>
