@@ -41,6 +41,12 @@ msgid "Planilla"
 msgstr ""
 
 #. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.stock_move_line_view_search
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.view_move_search
+msgid "Spreadsheet"
+msgstr "Planilla"
+
+#. module: debo_fuel_tanks
 #: model:ir.model,name:debo_fuel_tanks.model_stock_pump
 msgid "Stock Pump"
 msgstr "Surtidores"

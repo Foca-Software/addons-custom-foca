@@ -8,4 +8,5 @@ class StockPicking(models.Model):
         comodel_name="cash.control.session",
         string="Cash Control Session",
         related="sale_id.cash_control_session_id",
+        store=True
     )

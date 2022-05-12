@@ -16,7 +16,10 @@
     "installable": True,
     "depends": ["base", "fuel_tanks_sale", "fuel_tanks_cash_control"],
     "data": [
-        "views/stock_pump_views.xml",
         "views/cash_control_session.xml",
+        "views/sale_order.xml",
+        "views/stock_move.xml",
+        "views/stock_picking.xml",
+        "views/stock_pump_views.xml",
     ],
 }

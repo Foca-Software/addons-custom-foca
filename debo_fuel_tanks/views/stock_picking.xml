@@ -6,9 +6,8 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='pump_id']" position="after">
-                <field name="sale_id"/>
-                <field name="cash_control_session_id"/>
+            <xpath expr="//field[@name='pump_id']" position="before">
+                <field name="session_id_debo"/>
             </xpath>
         </field>
     </record>
