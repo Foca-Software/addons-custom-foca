@@ -8,8 +8,6 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    eventual_customer = fields.Boolean(string="Eventual Customer", default=False)
-
     @api.model
     def create_eventual(self, vals: dict) -> object:
         """
@@ -18,7 +16,8 @@ class ResPartner(models.Model):
         """
         cfa = self.env.ref("l10n_ar.par_cfa")
         eventual_customer = cfa.copy()
-        eventual_customer.write(vals)
+        vals.update({"eventual_customer" : True})
+        eventual_customer.update(vals)
         return eventual_customer
 
     def eventual_document_type(self, code: int = 0) -> int:

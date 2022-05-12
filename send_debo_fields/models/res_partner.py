@@ -12,14 +12,11 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    #esto no deberia estar aca... no deberia estar directamente...
+    #TODO: id_debo shouldn't exist, deletion of this field should be discussed
+    # it was replaced by id_debo_c/id_debo_p
     id_debo = fields.Char(string="ID_DEBO")
 
     is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
-    
-    # def _default_last_update_debo(self):
-    #     if not self.last_update_debo:
-    #         return self.write_date - datetime.timedelta(days=1)
 
     last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
     
@@ -29,12 +26,6 @@ class ResPartner(models.Model):
                 record.is_up_to_date = False
             else:
                 record.is_up_to_date = True
-
-    def test_button(self):
-        return data_sender.send_debo_fields(
-                data=self._get_debo_fields(),
-                endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
-            )
 
     def _format_vat(self, vat: str) -> str:
         if not vat:
@@ -153,9 +144,9 @@ class ResPartner(models.Model):
 
     def write(self, vals_list):
         res = super().write(vals_list)
-        if res:
+        if res and not self.eventual_customer:
             try:
-                up_to_date = sent_to_debo = data_sender.send_debo_fields(
+                up_to_date = data_sender.send_debo_fields(
                     data=self._get_debo_fields(),
                     endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
                 )
