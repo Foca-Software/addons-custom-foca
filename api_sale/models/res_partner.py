@@ -17,7 +17,7 @@ class ResPartner(models.Model):
         cfa = self.env.ref("l10n_ar.par_cfa")
         eventual_customer = cfa.copy()
         vals.update({"eventual_customer" : True})
-        eventual_customer.update(vals)
+        eventual_customer.write(vals)
         return eventual_customer
 
     def eventual_document_type(self, code: int = 0) -> int:
