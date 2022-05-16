@@ -6,10 +6,10 @@
         <field name="inherit_id" ref="cash_control.cash_control_session_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_journal_ids']" position="after">
-                <field name="pump_ids" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="pump_ids" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')],'invisible':['&amp;',('state','!=','draft'),('pump_ids','=',[])]}" />
             </xpath>
             <xpath expr="//notebook">
-                <page name="pumps" string="Pump details">
+                <page name="pumps" string="Pump details" attrs="{'invisible':[('pump_ids','=',[])]}">
                     <field name="fuel_move_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
                         <!-- TODO: find a way to show fields grouped by tank_id -->
                         <tree editable="bottom">
