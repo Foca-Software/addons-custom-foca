@@ -2,8 +2,8 @@
     "params":{
        "user_id":18,
        "move_type":101,
+       "company_id":1,
        "payload":{
-          "company_id":1,
           "header":{
              "id_debo":0,
              "date_order":"29/04/2022"

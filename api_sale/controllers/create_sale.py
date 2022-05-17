@@ -1,32 +1,15 @@
-import string
-
-# from typing import Dict
-from odoo.exceptions import AccessError
-from odoo.http import request, route, Controller, Response
-
-# from odoo import fields, http
-
-from datetime import datetime
+from odoo.http import request, route, Controller
 import logging
 
 from ..utils.create_methods import (
-    auto_create_invoice,
-    create_invoice,
-    create_sale_order,
     check_required_fields,
-    search_stock_picking,
-    DEBO_DATE_FORMAT,
+    create_payments_from_invoices,
+    create_sale_order,
+    confirm_or_unreserve_orders,
+    create_invoices_from_sale,
 )
 
 _logger = logging.getLogger(__name__)
-
-MOVE_TYPE_DICT = {
-    "102": "out_invoice",
-    "out_refund": "out_refund",
-    "in_invoice": "in_invoice",
-    "in_refund": "in_refund",
-    "101": "sale_order",
-}
 
 DEBO_SALE_ORDER_CODE = 101
 DEBO_INVOICE_CODE = 102
@@ -36,89 +19,116 @@ DEBO_TEST_CODE = 103
 class ReceiveData(Controller):
     _name = "debocloud.create.sale"
 
-    @route("/debocloud/create/sale", type="json", auth="none", methods=["POST"], csrf=False)
+    @route(
+        "/debocloud/create/sale", type="json", auth="none", methods=["POST"], csrf=False
+    )
     def receive_data(self, **kwargs):
-        _logger.info("Received data:")
-        _logger.info(kwargs)
-        sent_user_id = kwargs.get('user_id', False)
-        if not sent_user_id:
-            return {
-                "status": "ERROR",
-                "user_id": 0,
-                "message": "Credentials not found in request",
-            }
-        user_id = request.env['res.users'].sudo().search([('id','=',sent_user_id)])
+        data = kwargs
+        self._check_general_request_format(data)
+        sent_user_id = data["user_id"]
+        user_id = request.env["res.users"].sudo().search([("id", "=", sent_user_id)])
         request.env.user = user_id
-        _logger.info(user_id)
-        _logger.info(request.env.user)
-        # request.env.company = user_id.company_id
-        payload = kwargs.get("payload", False)
-        if not payload:
-            return {"status": "Error", "message": "Payload not found"}
+        request.env.company = request.env["res.company"].browse(data["company_id"])
+        payload = data["payload"]
+        res = {"status": "SUCCESS"}
 
-        company_id = payload.get("company_id", False)
-        _logger.info(company_id)
-        _logger.info(request.env.company)
-        if not company_id:
-            return {"status": "Error", "message": "Company not found, or not valid"}
-        if company_id not in request.env.user.company_ids.ids:
-            return {"status": "Error", "message": "User access denied to Company"}
-        request.env.company = request.env["res.company"].browse(company_id)
-        move_code = kwargs.get("move_type", False)
-        if not move_code:
-            return {"status": "Error", "message": "Move type not found"}
-
-        if move_code == DEBO_SALE_ORDER_CODE:
-            missing_fields = check_required_fields(payload, move_code)
-            if missing_fields:
-                return {
-                    "status": "Error",
-                    "message": "Missing fields: %s" % ",".join(missing_fields),
-                }
+        
+        self._check_sale_request_format(payload)
+        try:
             if self._is_anon_consumer(payload):
-                try:
-                    payload["header"]["partner_id"] = self._get_partner_id(payload)
-                except Exception as e:
-                    _logger.error(e)
-                    return {
-                    "status": "Error",
-                    "message": f"Error creating eventual customer: {e}",
-                    }
-            res = {}
-            try:
-                sale_orders = create_sale_order(user_id, payload)
-                res["status"] = "SUCCESS"
-                res["sale_order_ids"] = sale_orders
-            except Exception as e:
-                _logger.error(e)
-            return res
-            if res["status"] == "error":
-                # Response.status = "400 Bad Request"
-                return res
-            sale = res["sale_order_id"]
-            res["sale_order_id"] = sale.id
-            _logger.info(sale)
+                payload["header"]["partner_id"] = self._get_partner_id(payload)
+        except Exception as e:
+            _logger.error(e)
+            return self._return_error("eventual")
+        try:
+            sale_orders = create_sale_order(user_id, payload)
+            _logger.info(f"Sale Order {sale_orders.ids} created")
+            res["sale_order_ids"] = sale_orders.ids
+        except Exception as e:
+            # TODO: cancel/archive failed orders
+            _logger.error(e)
+            return self._return_error("sale", e.args)
+        try:
+            sale_orders.action_confirm()
+            picking_ids = confirm_or_unreserve_orders(sale_orders, user_id)
+            _logger.info(f"Pickings {picking_ids.ids} confirmed or unreserved")
+            res["picking_ids"] = picking_ids.ids
+        except Exception as e:
+            # TODO: cancel/archive failed pickings
+            _logger.error(e)
+            return self._return_error("picking", e.args)
+        try:
+            invoice_data = payload["invoice_data"]
+            invoice_id = create_invoices_from_sale(sale_orders, invoice_data)
+            _logger.info(f"Invoice {invoice_id.id} created")
+            res["invoice_id"] = invoice_id.id
+        except Exception as e:
+            # TODO: cancel/archive failed invoices
+            _logger.error(e)
+            return self._return_error("invoice", e.args)
+        try:
+            invoice_id.action_post()
+            payment_data = payload.get("payment_data")
+            if self._payment_required(invoice_id, payment_data):
+                payment = create_payments_from_invoices(
+                    invoice_id, payment_data, user_id
+                )
+                _logger.info(f"Payment {payment.ids} created")
+                res["payment_id"] = payment.ids
+            else:
+                # should we generate cash payments too?
+                res["payment"] = "payment made in cash"
+        except Exception as e:
+            # TODO: cancel/archive failed payments
+            _logger.error(e)
+            return self._return_error("payment", e.args)
+        return res
 
-    def _get_default_payment_journal(self, company_id: int) -> int:
-        return (
-            request.env["account.journal"]
-            .search([("type", "=", "cash"), ("company_id", "=", company_id)], limit=1)
-            .id
-        )
+    def _payment_required(self, invoice: object, payment_data: dict) -> bool:
+        invoice_is_paid = invoice.invoice_payment_state == "paid"
+        return payment_data or not invoice_is_paid
 
-    def _inbound_check_codes(self):
-        return ["received_third_check"]
+    def _return_error(self, reason: str = "other", info: str = "") -> dict:
+        reasons = {
+            "other": "other",
+            "missing user": "Credentials not found in request",
+            "missing payload": "Payload not found",
+            "missing company": "Company not found, or not valid",
+            "missing code": "Move type not found",
+            "fields": "Missing fields",
+            "eventual": "Error creating eventual customer",
+            "header": "Header not found in request",
+            "lines": "Lines not found in request",
+            "sale": "Error creating sale orders",
+            "picking": "Error creating picking",
+            "invoice": "Error creating invoice",
+            "payment": "Error creating payment",
+        }
+        error = {
+            "status": "ERROR",
+            "message": f"{reasons[reason]}.{info}",
+        }
+        return error
 
-    def _inbound_card_codes(self):
-        return ['inbound_debit_card','inbound_credit_card']
+    def _check_general_request_format(self, data: dict) -> bool:
+        sent_user_id = data.get("user_id")
+        if not sent_user_id:
+            return self._return_error("missing user")
+        payload = data.get("payload")
+        if not payload:
+            return self._return_error("missing payload")
+        company_id = payload.get("company_id")
+        if not company_id:
+            return self._return_error("missing company")
+        return True
 
-    def _get_name_from_number(self,number):
-            padding = 8
-            if len(str(number)) > padding:
-                padding = len(str(number))
-            return ('%%0%sd' % padding % number)
+    def _check_sale_request_format(self, data: dict) -> dict:
+        if not data.get("header"):
+            return self._return_error("header")
+        if not data.get("lines"):
+            return self._return_error("lines")
 
-    def _is_anon_consumer(self,data:dict) -> bool:
+    def _is_anon_consumer(self, data: dict) -> bool:
         """
         return True if "id_debo" is in header and not partner_id
         """
@@ -129,42 +139,54 @@ class ReceiveData(Controller):
         partner_id = header.get("partner_id")
         return id_debo == 0 and not partner_id
 
-    def _is_eventual_customer(self, data:dict)-> bool:
+    def _is_eventual_customer(self, data: dict) -> bool:
         return data.get("eventual_customer")
 
     def _anon_consumer_id(self) -> object:
         return request.env.ref("l10n_ar.par_cfa")
 
-    def _get_partner_id(self, data:dict) -> int:
+    def _get_partner_id(self, data: dict) -> int:
         """
+        Returns returning eventual customer partner id
+        or
         Returns new eventual customer partner id
         or
         Returns 'consumidor final anonimo' id
         """
         if self._is_eventual_customer(data):
-            partner_obj = request.env['res.partner'].with_user(1)
-            vals = self._eventual_customer_data(data["eventual_customer"], partner_obj)
+            eventual_data = data["eventual_customer"]
+            partner_obj = request.env["res.partner"].with_user(2)
+            returning_eventual = self._get_partner_by_vat(
+                partner_obj, eventual_data["vat"]
+            )
+            if returning_eventual:
+                return returning_eventual.id
+            vals = self._eventual_customer_data(partner_obj, eventual_data)
             eventual_customer = partner_obj.create_eventual(vals)
             return eventual_customer.id
         return self._anon_consumer_id().id
 
-    def _eventual_customer_data(self, data:dict, partner_obj:object) -> dict:
+    def _get_partner_by_vat(self, partner_obj, vat: str) -> int:
+        partner_id = partner_obj.search([("vat", "=", vat)], limit=1)
+        return partner_id
+
+    def _eventual_customer_data(self, partner_obj: object, data: dict) -> dict:
         afip_responsiblity = data.get("afip_responsiblity")
-        responsiblity_id = partner_obj.eventual_afip_identification_type(afip_responsiblity)
+        responsiblity_id = partner_obj.eventual_afip_identification_type(
+            afip_responsiblity
+        )
         doc_type = data.get("document_type")
         doc_type_id = partner_obj.eventual_document_type(doc_type)
         eventual_partner_data = {
-            "name": data.get("name"), #mandatory
-            "l10n_ar_afip_responsibility_type_id" : responsiblity_id, #mandatory
-            "l10n_latam_identification_type_id" : doc_type_id, #mandatory
-            "vat": data.get("vat"), #mandatory
-            "street": data.get("street"), #optional
-            "street2": data.get("street2"), #optional
-            "city": data.get("city"), #optional
-            "zip": data.get("zip"), #optional
-            "country_id": data.get("country_id"), #optional
-            "state_id": data.get("state_id"), #optional
+            "name": data.get("name"),  # mandatory
+            "l10n_ar_afip_responsibility_type_id": responsiblity_id,  # mandatory
+            "l10n_latam_identification_type_id": doc_type_id,  # mandatory
+            "vat": data.get("vat"),  # mandatory
+            "street": data.get("street"),  # optional
+            "street2": data.get("street2"),  # optional
+            "city": data.get("city"),  # optional
+            "zip": data.get("zip"),  # optional
+            "country_id": data.get("country_id"),  # optional
+            "state_id": data.get("state_id"),  # optional
         }
         return eventual_partner_data
-
-# trash

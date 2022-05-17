@@ -2,8 +2,8 @@
     "params": {
         "user_id" : 12,
         "move_type" : 101,
+        "company_id" : 1,
         "payload": {
-            "company_id" : 1,
             "header": {
                 "partner_id": 214,
                 "date_order": "27/04/2022"
