@@ -1,7 +1,6 @@
 {
     "params":{
        "user_id":18,
-       "move_type":101,
        "company_id":1,
        "payload":{
           "header":{
