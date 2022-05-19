@@ -1,9 +1,8 @@
 {
     "params":{
        "user_id":18,
-       "move_type":101,
+       "company_id":1,
        "payload":{
-          "company_id":1,
           "header":{
              "id_debo":0,
              "date_order":"29/04/2022"
@@ -26,20 +25,8 @@
              "journal_id":10,
              "l10n_latam_document_type_id":2,
              "pay_now_journal_id":6
-          },
-          "note":"",
-          "payment_data":[
-             {
-                "journal_id":16,
-                "payment_method_id":4,
-                "amount":657,
-                "card_id":2,
-                "instalment_id":1,
-                "card_number":0,
-                "lot_number":34565,
-                "ticket_number":"23-1345555"
-             }
-          ]
+          }
        }
     }
  }
+ 
