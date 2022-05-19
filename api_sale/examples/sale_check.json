@@ -21,7 +21,7 @@
                 "journal_id": 9,
                 "payment_method_id": 12,
                 "check_number": 118,
-                "check_date" : "27/04/2022",
+                "check_issue_date" : "27/04/2022",
                 "check_bank_id": 1
             }]
         }

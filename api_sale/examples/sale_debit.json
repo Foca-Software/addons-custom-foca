@@ -21,7 +21,10 @@
                 "journal_id": 10,
                 "payment_method_id": 4,
                 "card_id" : 1,
-                "instalment_id" : 1
+                "instalment_id" : 1,
+                "card_number" : "0118-9998-8199-9119",
+                "ticket_number" : "8899814",
+                "lot_number" : "48"
             }]
         }
     }
