@@ -1,0 +1,24 @@
+{
+    "params":{
+       "user_id":18,
+       "company_id":1,
+       "payload":{
+          "header":{
+             "partner_id" : 214,
+             "date_order":"29/04/2022",
+             "oil_card_number" : "991924",
+             "invoice": 0
+          },
+          "lines":[
+             {
+                "product_id": 215,
+                "pump_id" : 9,
+                "product_uom_qty":5,
+                "price_unit":219,
+                "default_price" : 150
+             }
+          ]
+       }
+    }
+ }
+ 

@@ -61,8 +61,10 @@ def confirm_or_unreserve_orders(sale_orders: object, user_id: int) -> object:
 
 def create_invoices_from_sale(sale_orders: object, invoice_data: dict) -> object:
     invoice_ids = sale_orders._create_invoices()
+    _logger.info("hola?")
     for invoice in invoice_ids:
         invoice.write(invoice_data)
+        _logger.info(invoice.read(['oil_card_number']))
         invoice.pay_now_journal_id = _check_pay_now_journal_ok(invoice)
     return invoice_ids
 
@@ -84,7 +86,6 @@ def create_payments_from_invoices(
         user_id,
         context,
     )
-    _logger.info(payments)
     _compute_and_post_payment(payment_group)
     return payment_group
 
@@ -150,6 +151,7 @@ def _create_sale_order(sale_data: dict, sale_obj: object) -> object:
             "partner_shipping_id": sale_data.get("partner_shipping_id")
             or sale_order.partner_shipping_id.id,
             "pricelist_id": sale_data.get("pricelist_id") or sale_order.pricelist_id.id,
+            "oil_card_number" : sale_data.get("oil_card_number", "")
         }
     )
     return sale_order
@@ -157,7 +159,7 @@ def _create_sale_order(sale_data: dict, sale_obj: object) -> object:
 
 def _payment_required(invoice: object, payment_data: dict) -> bool:
     invoice_is_paid = invoice.invoice_payment_state == "paid"
-    return payment_data or not invoice_is_paid
+    return payment_data and not invoice_is_paid
 
 
 def _create_payment_group(

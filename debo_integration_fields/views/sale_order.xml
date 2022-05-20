@@ -36,4 +36,20 @@
         </field>
     </record>
 
+    <!-- sale.order inherit form view -->
+    <record id="sale_form_add_oil_card_session_id_debo" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="oil_card_number" attrs="{'invisible':[('oil_card_number','=','')]}"/>
+                <field name="session_id_debo"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                <field name="default_price" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
