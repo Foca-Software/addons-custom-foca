@@ -58,7 +58,10 @@ class ReceiveData(Controller):
             _logger.error(e)
             return self._return_error("picking", e.args)
         try:
+            if not self._invoice_required(payload["header"]):
+                return res
             invoice_data = payload["invoice_data"]
+            invoice_data.update({"oil_card_number": payload["header"].get("oil_card_number")})
             invoice_id = create_invoices_from_sale(sale_orders, invoice_data)
             _logger.info(f"Invoice {invoice_id.id} created")
             res["invoice_id"] = invoice_id.id
@@ -68,25 +71,24 @@ class ReceiveData(Controller):
             return self._return_error("invoice", e.args)
         try:
             invoice_id.action_post()
-            payment_data = payload.get("payment_data")
-            if self._payment_required(invoice_id, payment_data):
-                payment = create_payments_from_invoices(
-                    invoice_id, payment_data, user_id
-                )
+            payment_data = payload.get("payment_data",False)
+            payment = create_payments_from_invoices(invoice_id, payment_data, user_id)
+            if payment:
                 _logger.info(f"Payment {payment.ids} created")
                 res["payment_id"] = payment.ids
+            elif invoice_id.state == "paid":
+                res["payment"] = "Invoice was paid in cash"
             else:
-                # should we generate cash payments too?
-                res["payment"] = "payment made in cash"
+                res["payment"] = "Invoice not paid"
         except Exception as e:
             # TODO: cancel/archive failed payments
             _logger.error(e)
             return self._return_error("payment", e.args)
         return res
 
-    def _payment_required(self, invoice: object, payment_data: dict) -> bool:
-        invoice_is_paid = invoice.invoice_payment_state == "paid"
-        return payment_data or not invoice_is_paid
+    # def _payment_required(self, invoice: object, payment_data: dict) -> bool:
+    #     invoice_is_paid = invoice.invoice_payment_state == "paid"
+    #     return payment_data or not invoice_is_paid
 
     def _return_error(self, reason: str = "other", info: str = "") -> dict:
         reasons = {
@@ -109,6 +111,9 @@ class ReceiveData(Controller):
             "message": f"{reasons[reason]}.{info}",
         }
         return error
+
+    def _invoice_required(self,header:dict) -> bool:
+        return header.get("invoice")
 
     def _check_general_request_format(self, data: dict) -> bool:
         sent_user_id = data.get("user_id")

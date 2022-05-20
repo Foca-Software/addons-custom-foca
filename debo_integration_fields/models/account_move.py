@@ -9,3 +9,5 @@ class AccountMove(models.Model):
         related="cash_control_session_id.id_debo",
         store=True,
     )
+
+    oil_card_number = fields.Char(string="Oil Card Number",)
