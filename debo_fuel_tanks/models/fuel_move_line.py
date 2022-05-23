@@ -99,11 +99,10 @@ class FuelMoveLine(models.Model):
                 "company_id": self.env.user.company_id.id,
                 "origin": fuel_move.session_id.id_debo,
                 "picking_type_id": picking_type_id.id,
-                "location_id": self.tank_id.id,
+                "location_id": fuel_move.tank_id.id,
                 "location_dest_id": picking_type_id.default_location_dest_id.id
                 or customer_loc,
             }
-
             # TODO: create module fuel_tanks_cash_control_multi_store to add this
             try:
                 multi_store_fields = {

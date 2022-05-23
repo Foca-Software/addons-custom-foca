@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -32,11 +33,9 @@ class CashControlSession(models.Model):
         ctx['statement_id'] = self.statement_id.id
         ctx['pos_session_id'] = self.id
         ctx['default_pos_id'] = self.config_id.id
-        _logger.error(ctx)
         open_dict = {
             'cashbox_lines_ids' : [(0, 0, {'number': number, 'coin_value': coin_value, 'subtotal': subtotal})],
         }
-        _logger.warning(open_dict)
         wiz = self.env['account.bank.statement.cashbox'].with_context(ctx).create(open_dict)
         wiz._validate_cashbox()
         return wiz

@@ -46,7 +46,6 @@ class CloseSession(Controller):
                 coin_value=data.get("amount", False), balance="close"
             )
             fuel_lines = data.get('fuel_moves', False)
-            _logger.warning(fuel_lines)
             if fuel_lines:
                 session_id = cash_box.current_session_id
                 session_id._api_edit_fuel_lines(fuel_lines)
