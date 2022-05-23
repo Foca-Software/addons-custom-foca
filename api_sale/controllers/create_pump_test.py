@@ -1,4 +1,3 @@
-from cgitb import reset
 from odoo.http import request, route, Controller
 import logging
 
