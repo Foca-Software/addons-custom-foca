@@ -115,7 +115,7 @@ def _create_stock_picking(
     stock_picking_vals = {
         "company_id": company_id,
         "origin": origin,
-        "cash_control_session_id" : _get_cc_session_id(planilla),
+        "cash_control_session_id" : _get_cc_session_id(planilla).id,
         "is_other_oil_sale_move" : True,
         "picking_type_id": picking_type_id.id,
         "location_id": source,
@@ -128,10 +128,17 @@ def _create_stock_picking(
 
 
 def _get_cc_session_id(planilla:str) -> models.Model:
+    """gets cash.control.session id through the session's id_debo
+
+    Args:
+        planilla (str): number of session's id_debo aka 'planilla
+
+    Returns:
+        models.Model: cash.control.session
+    """
     cc_obj = request.env['cash.control.session'].with_user(ADMIN_ID)
     session_id = cc_obj.search([("id_debo",'=',planilla),('state','=','opened')])
-    _logger.info(session_id.id)
-    return session_id.id
+    return session_id
 
 def _create_move_lines(data: list, picking: models.Model) -> models.Model:
     """Create move lines
@@ -193,7 +200,7 @@ def _stock_vals(line: dict, name: str) -> dict:
 
 
 def _needed_picking_fields() -> list:
-    """fields needed in main JSON request for it to work
+    """fields needed in main JSON request for endpoint to work
 
     Returns:
         list: list of needed fields
