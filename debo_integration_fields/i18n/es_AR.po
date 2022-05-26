@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-26 13:43+0000\n"
-"PO-Revision-Date: 2022-04-26 13:43+0000\n"
+"POT-Creation-Date: 2022-05-24 11:18+0000\n"
+"PO-Revision-Date: 2022-05-24 11:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_res_bank
+msgid "Bank"
+msgstr "Banco"
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_cash_control_session
@@ -46,6 +51,22 @@ msgid "Debo Endpoint"
 msgstr ""
 
 #. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_sale_order_line__default_price
+msgid "Default Product Price"
+msgstr "Producto por defecto"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_partner__eventual_customer
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__eventual_customer
+msgid "Eventual Customer"
+msgstr "Cliente Eventual"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_res_bank__id_debo
+msgid "ID DEBO"
+msgstr ""
+
+#. module: debo_integration_fields
 #: model:ir.model.fields,field_description:debo_integration_fields.field_account_tax__id_debo
 #: model:ir.model.fields,field_description:debo_integration_fields.field_product_category__id_debo
 #: model:ir.model.fields,field_description:debo_integration_fields.field_product_pricelist__id_debo
@@ -67,6 +88,11 @@ msgstr "ID DEBO Cliente"
 #: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__id_debo_p
 msgid "ID_DEBO Supplier"
 msgstr "ID DEBO Proveedor"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_stock_picking__is_other_oil_sale_move
+msgid "Is other Oil Card move"
+msgstr "Es un mov. de Tarj Petrolera"
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_account_move
@@ -94,6 +120,13 @@ msgid "Legacy code"
 msgstr "Código Anterior"
 
 #. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_account_move__oil_card_number
+#: model:ir.model.fields,field_description:debo_integration_fields.field_sale_order__oil_card_number
+#: model:ir.model.fields,field_description:debo_integration_fields.field_stock_picking__oil_card_number
+msgid "Oil Card Number"
+msgstr "Número Tarjeta Petrolera"
+
+#. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_product_pricelist
 msgid "Pricelist"
 msgstr "Tarifa"
@@ -119,6 +152,11 @@ msgid "Sales Order"
 msgstr "Pedido de venta"
 
 #. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: debo_integration_fields
 #: model:ir.model.fields,field_description:debo_integration_fields.field_account_move__session_id_debo
 #: model:ir.model.fields,field_description:debo_integration_fields.field_cash_control_session__id_debo
 #: model:ir.model.fields,field_description:debo_integration_fields.field_sale_order__session_id_debo
@@ -132,6 +170,11 @@ msgstr "Planilla"
 #: model:ir.model,name:debo_integration_fields.model_account_tax
 msgid "Tax"
 msgstr "Impuesto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_res_users
