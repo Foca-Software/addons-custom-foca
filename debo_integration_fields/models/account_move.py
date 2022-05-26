@@ -10,4 +10,16 @@ class AccountMove(models.Model):
         store=True,
     )
 
-    oil_card_number = fields.Char(string="Oil Card Number",)
+    oil_card_number = fields.Char(
+        string="Oil Card Number",
+    )
+
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    session_id_debo = fields.Char(
+        string="Spreadsheet",
+        related="move_id.session_id_debo",
+        store=True,
+    )
