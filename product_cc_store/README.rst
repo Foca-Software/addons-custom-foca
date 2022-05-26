@@ -1,6 +1,6 @@
-===========
-Module Name
-===========
+==================================
+Product - Cash Control Multi Store
+==================================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    !! This file is intended to be in every module    !!
@@ -23,7 +23,7 @@ Module Name
 
 .. !!! Description must be max 2-3 paragraphs, and is required.
 
-This module extends the functionality of ... to support ... and to allow you to ...
+This module extends the functionality of Cash Control Multi Store to support Products to be assigned to different Cash Boxes and
 
 **Table of contents**
 
@@ -31,28 +31,6 @@ This module extends the functionality of ... to support ... and to allow you to 
    :local:
 
 .. !!! Instalation: must only be present if there are very specific installation instructions, such as installing non-python dependencies.The audience is systems administrators. ] To install this module, you need to: !!!
-
-Install
-=======
-
-Do this ...
-
-.. !!! Configuration: This file is optional, it should explain how to configure the module before using it; it is aimed at advanced users. To configure this module, you need to:
-
-Configure
-=========
-
-Go to ...
-
-Usage
-=====
-
-1. Go to ...
-
-Known issues / Roadmap
-======================
-
-* Bugs or Roadmap
 
 Bug Tracker
 ===========
@@ -72,9 +50,6 @@ Contributors
 
 * `Calyx Servicios S.A. <https://odoo.calyx-cloud.com.ar/>`_
   
-  * Federico Gregori
-  * Cristian Paradiso
-  * Gabriela Perez
   * Marco Oegg
 
 Maintainers
