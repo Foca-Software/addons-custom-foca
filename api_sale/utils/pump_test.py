@@ -25,6 +25,7 @@ def _get_sale_data() -> str:
     sale_data = {
         "partner_id": _get_pump_test_partner_id(),
         "date_order": datetime.now(),
+        "debo_transaction_type" : "pump_test"
     }
     return sale_data
 
@@ -33,6 +34,7 @@ def create_invoice_from_sale(sale_order: object) -> object:
     invoice_ids = sale_order._create_invoices()
     for invoice in invoice_ids:
         invoice.journal_id = _get_pump_test_journal_id()
+        invoice.debo_transaction_type = "pump_test"
         remove_taxes(invoice)
     return invoice_ids
 
