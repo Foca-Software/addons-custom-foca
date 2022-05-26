@@ -10,8 +10,10 @@ class AccountMove(models.Model):
         store=True,
     )
 
-    oil_card_number = fields.Char(string="Oil Card Number",)
-
+    oil_card_number = fields.Char(
+        string="Oil Card Number",
+    )
+    
     debo_transaction_type = fields.Selection(
         string="Transaction Type",
         selection=[
@@ -19,5 +21,15 @@ class AccountMove(models.Model):
             ("other_dispatch", "Other Dispatch"),
             ("pump_test", "Pump Test"),
         ],
-        default = "standard"
+        default="standard"
+    )
+
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    session_id_debo = fields.Char(
+        string="Spreadsheet",
+        related="move_id.session_id_debo",
+        store=True,
     )
