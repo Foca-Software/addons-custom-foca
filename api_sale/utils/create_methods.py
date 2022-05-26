@@ -1,5 +1,5 @@
 from odoo.http import request
-from odoo import fields, http, api
+from odoo import models,fields, http, api
 from datetime import datetime
 import logging
 from odoo.exceptions import AccessError, ValidationError
@@ -38,9 +38,11 @@ def confirm_or_unreserve_orders(sale_orders: object, user_id: int) -> object:
         .search([("sale_id", "in", sale_orders.ids)])
     )
     for picking in picking_ids:
+        _update_oil_card_number(picking)
         unreserve_required = any(line.product_id.is_fuel for line in picking.move_lines)
         if unreserve_required:
             picking.do_unreserve()
+            
         else:
             try:
                 picking.action_assign()
@@ -58,6 +60,9 @@ def confirm_or_unreserve_orders(sale_orders: object, user_id: int) -> object:
                 # odoo response to this has not been specified
     return picking_ids
 
+def _update_oil_card_number(picking: models.Model) -> bool:
+    picking.is_other_oil_sale_move = True
+    picking.oil_card_number = picking.sale_id.oil_card_number
 
 def create_invoices_from_sale(sale_orders: object, invoice_data: dict) -> object:
     invoice_ids = sale_orders._create_invoices()

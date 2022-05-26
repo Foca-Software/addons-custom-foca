@@ -9,6 +9,7 @@
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field name="cash_control_session_id" invisible="1"/>
                 <field name="session_id_debo" invisible="1"/>
+                <field name="debo_transaction_type"/>
             </xpath>
         </field>
     </record>

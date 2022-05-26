@@ -12,6 +12,28 @@
             <xpath expr="//page[@name='pumps']" positin="inside">
                 <button name="action_test_button" type="object" string="TEST"/>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+            <page string="Other Dispatchs" name="other_dispatch">
+                    <field name="other_dispatch_line_ids">
+                        <tree>
+                            <field name="order_id" string="Move Number"/>
+                            <field name="name"/>
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Pump Tests" name="pump_tests">
+                    <field name="pump_test_line_ids">
+                        <tree>
+                            <field name="order_id" string="Move Number"/>
+                            <field name="name"/>
+                            <field name="product_uom_qty"/>
+                            <field name="product_uom"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -55,11 +55,13 @@ msgstr ""
 msgid "Default Product Price"
 msgstr "Precio del Producto por Defecto"
 
+
 #. module: debo_integration_fields
 #: model:ir.model.fields,field_description:debo_integration_fields.field_res_partner__eventual_customer
 #: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__eventual_customer
 msgid "Eventual Customer"
 msgstr "Cliente eventual"
+
 
 #. module: debo_integration_fields
 #: model:ir.model.fields,field_description:debo_integration_fields.field_res_bank__id_debo
@@ -88,6 +90,11 @@ msgstr "ID DEBO Cliente"
 #: model:ir.model.fields,field_description:debo_integration_fields.field_res_users__id_debo_p
 msgid "ID_DEBO Supplier"
 msgstr "ID DEBO Proveedor"
+
+#. module: debo_integration_fields
+#: model:ir.model.fields,field_description:debo_integration_fields.field_stock_picking__is_other_oil_sale_move
+msgid "Is other Oil Card move"
+msgstr "Es un mov. de Tarj Petrolera"
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_account_move
@@ -122,8 +129,10 @@ msgstr "Código Anterior"
 #. module: debo_integration_fields
 #: model:ir.model.fields,field_description:debo_integration_fields.field_account_move__oil_card_number
 #: model:ir.model.fields,field_description:debo_integration_fields.field_sale_order__oil_card_number
+#: model:ir.model.fields,field_description:debo_integration_fields.field_stock_picking__oil_card_number
 msgid "Oil Card Number"
 msgstr "Numero de Tarjeta Petrolera"
+
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_product_pricelist
@@ -171,6 +180,11 @@ msgstr "Planilla"
 #: model:ir.model,name:debo_integration_fields.model_account_tax
 msgid "Tax"
 msgstr "Impuesto"
+
+#. module: debo_integration_fields
+#: model:ir.model,name:debo_integration_fields.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
 
 #. module: debo_integration_fields
 #: model:ir.model,name:debo_integration_fields.model_res_users

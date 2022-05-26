@@ -30,8 +30,6 @@ class ReceiveData(Controller):
             check_request_format(data)
             check_lines_format(data["lines"])
             picking_id = create_oil_card_move(data)
-            picking_id.write({"cash_control_session_id" : _get_cc_session_id(data["planilla"]),})
-            _logger.info(picking_id.read(['cash_control_session_id','is_other_oil_sale_move']))
             confirm_stock_moves(picking_id)
             res["picking_id"] = picking_id.name
         except Exception as e:

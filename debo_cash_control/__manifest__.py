@@ -18,7 +18,7 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base", "cash_control", "cash_control_extension"],
+    "depends": ["base", "cash_control", "cash_control_extension", "fuel_tanks_cash_control","api_sale"],
     'data': [
         'views/cash_control_config.xml',
         'views/cash_control_session.xml',
