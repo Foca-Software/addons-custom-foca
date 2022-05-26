@@ -11,3 +11,13 @@ class AccountMove(models.Model):
     )
 
     oil_card_number = fields.Char(string="Oil Card Number",)
+
+    debo_transaction_type = fields.Selection(
+        string="Transaction Type",
+        selection=[
+            ("standard", "Standard"),
+            ("other_dispatch", "Other Dispatch"),
+            ("pump_test", "Pump Test"),
+        ],
+        default = "standard"
+    )
