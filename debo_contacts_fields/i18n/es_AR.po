@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_contacts_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-27 13:43+0000\n"
+"PO-Revision-Date: 2022-05-27 13:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__billing_type
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__billing_type
+msgid "Billing Type"
+msgstr "Tipo de facturación"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__block_self_account
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__block_self_account
+msgid "Block Self Account"
+msgstr "Bloqueo de Cuenta Propia"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__checking_account
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__checking_account
+msgid "Checking Account"
+msgstr "Cuenta Corriente"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__client_observations
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__client_observations
+msgid "Client Observations"
+msgstr "Observaciones del Cliente"
+
+#. module: debo_contacts_fields
+#: model:ir.model,name:debo_contacts_fields.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__billing_type__1
+msgid "FT"
+msgstr "FT"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__ft_re_notifications
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__ft_re_notifications
+msgid "FT/RE Notifications"
+msgstr "Notificacioens FT/RE"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__group_account
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__group_account
+msgid "Group Account"
+msgstr "Cuenta Grupal"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__ignore_auto_block
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__ignore_auto_block
+msgid "Ignore Auto Block"
+msgstr "Ignorar Bloqueo Automático"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__lot_service_exception
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__lot_service_exception
+msgid "Lot Service Exception"
+msgstr "Excepción de Servicio de Playa"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__group_account__2
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__sector_control__2
+msgid "No"
+msgstr "No"
+
+#. module: debo_contacts_fields
+#: model_terms:ir.ui.view,arch_db:debo_contacts_fields.form_add_debo_fields
+msgid "Other Configurations"
+msgstr "Otras Configuraciones"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__pump
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__pump
+msgid "Pump"
+msgstr "Surtidor"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__pump_number
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__pump_number
+msgid "Pump Number"
+msgstr "Número de Surtidor"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__billing_type__2
+msgid "RE"
+msgstr "RE"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__sector_control
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__sector_control
+msgid "Sector Control"
+msgstr "Control Sectores"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_partner__used_voucher_list
+#: model:ir.model.fields,field_description:debo_contacts_fields.field_res_users__used_voucher_list
+msgid "Used Voucher List"
+msgstr "Imprimir Lista de Vales Usados"
+
+#. module: debo_contacts_fields
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__group_account__1
+#: model:ir.model.fields.selection,name:debo_contacts_fields.selection__res_partner__sector_control__1
+msgid "Yes"
+msgstr "Yes"
