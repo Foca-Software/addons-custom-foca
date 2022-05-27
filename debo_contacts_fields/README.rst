@@ -15,15 +15,15 @@ Debo Contacts Fields
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-calyx--servicios%2Fcalyx-lightgray.png?logo=github
-    :target: https://github.com/calyx-servicios/calyx.git
-    :alt: calyx-servicios/calyx.git
+.. |badge3| image:: https://img.shields.io/badge/github-Foca--Software%2Faddons--custom--foca-lightgray.png?logo=github
+    :target: https://github.com/Foca-Software/addons-custom-foca
+    :alt: github.com/Foca-Software/addons-custom-foca
 
 |badge1| |badge2| |badge3|
 
 .. !!! Description must be max 2-3 paragraphs, and is required.
 
-This module extends the functionality of the Contacts Module with the creation of a new notebook page called "Other Configurations" when a new contact is created/updated.
+This module extends the functionality of the Contacts Module with the creation of a new notebook page called "Other Configurations" when a new contact is created.
 
 **Table of contents**
 
@@ -34,11 +34,8 @@ This module extends the functionality of the Contacts Module with the creation o
 
 Install
 =======
-
 Do this:
     * Install the module.
-
-
 
 Authors
 ~~~~~~~
@@ -64,4 +61,4 @@ This module is maintained by Calyx Servicios S.A.
 CALYX SERVICIOS S.A. is part of the PGK Consultores economic group, member of an important global network, a world organization.
 The PGK Consultores group is one of the 20 largest consultant-studios in Argentina with nearly 300 professionals.
 
-This module is part of the `Calyx <https://github.com/calyx-servicios/calyx.git>`_ project on GitHub.
+This module is part of the `Odoo Foca <https://github.com/Foca-Software/addons-custom-foca>`_ project on GitHub.
