@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="form_add_debo_fields" model="ir.ui.view">
+        <field name="name">res.partner.simplified.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='geo_location']" position="after">
+                <page name="other_confs" string="Other Configurations">
+                    <group>   
+                        <group>
+                            <field name="pump"/>
+                            <field name="pump_number" attrs="{'invisible': [('pump','=',False)]}"/>
+                            <field name="checking_account"/>
+                            <field name="sector_control" attrs="{'invisible': [('checking_account','=','0')]}"/>
+                            <field name="billing_type" attrs="{'invisible': [('checking_account','=','0')]}"/>
+                        </group>
+                        <group>
+
+                            <field name="block_self_account"/>
+                            <field name="used_voucher_list"/>
+                            <field name="ignore_auto_block"/>
+                            <field name="lot_service_exception"/>
+                        </group>
+                        <group>
+                            <field name="group_account"/>
+                            <field name="ft_re_notifications"/>
+                            <field name="client_observations"/>    
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
