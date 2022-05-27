@@ -12,8 +12,8 @@
                             <field name="pump"/>
                             <field name="pump_number" attrs="{'invisible': [('pump','=',False)]}"/>
                             <field name="checking_account"/>
-                            <field name="sector_control" attrs="{'invisible': [('checking_account','=',False)]}"/>
-                            <field name="billing_type" attrs="{'invisible': [('checking_account','=',False)]}"/>
+                            <field name="sector_control" attrs="{'invisible': [('checking_account','=','0')]}"/>
+                            <field name="billing_type" attrs="{'invisible': [('checking_account','=','0')]}"/>
                         </group>
                         <group>
 

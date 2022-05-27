@@ -6,8 +6,10 @@ class PartnerNewFields(models.Model):
 
     pump = fields.Boolean()
     pump_number = fields.Char()
-    checking_account = fields.Boolean(required=True,
-                                        default=False)
+    checking_account = fields.Selection(selection=[("1","Yes"),
+                                                ("0", "No")],
+                                        required=True,
+                                        default="0")
 
     billing_type = fields.Selection(selection=[("1","FT"),
                                                 ("2","RE")],
@@ -21,6 +23,7 @@ class PartnerNewFields(models.Model):
 
     sector_control = fields.Selection(selection=[("1","Yes"),
                                                 ("0", "No")],
+                                                required=True,
                                                 copy=False)
 
     block_self_account = fields.Boolean()
