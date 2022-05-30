@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-13 13:56+0000\n"
-"PO-Revision-Date: 2022-04-13 13:56+0000\n"
+"POT-Creation-Date: 2022-05-30 12:38+0000\n"
+"PO-Revision-Date: 2022-05-30 12:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,25 @@ msgid "Amount"
 msgstr "Importe"
 
 #. module: fuel_tanks_cash_control
+#: model:ir.model,name:fuel_tanks_cash_control.model_cash_control_config
+msgid "Cash Control Config"
+msgstr "Control de Turnos"
+
+#. module: fuel_tanks_cash_control
 #: model:ir.model,name:fuel_tanks_cash_control.model_cash_control_session
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_picking__cash_control_session_id
 msgid "Cash Control Session"
 msgstr "Sesión"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_session__config_is_shop
+msgid "Cashbox is Shop"
+msgstr "Es una caja de Tienda"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_session__config_sells_fuel
+msgid "Cashbox sells Fuel"
+msgstr "Vende Combustible"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__pump_code
@@ -66,19 +82,29 @@ msgid "Fuel Movements"
 msgstr "Movimientos de Combustible"
 
 #. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_session__fuel_stock_picking_ids
+msgid "Fuel Stock Pickings"
+msgstr "Movimiento de Stock de combustible"
+
+#. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__id
 msgid "ID"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
-#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__pump_id_debo
-msgid "ID DEBO"
-msgstr "ID DEBO"
-
-#. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__initial_qty
 msgid "Initial Quantity"
 msgstr "Inicial"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__is_fuel_cashbox
+msgid "Is Fuel Cashbox"
+msgstr "Es una caja de Playa"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__is_shop_cashbox
+msgid "Is Shop Cashbox"
+msgstr "Es una caja de Tienda"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line____last_update
@@ -99,12 +125,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__manual_qty
 msgid "Manual Quantity"
 msgstr "Manual"
-
-#. module: fuel_tanks_cash_control
-#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_session__id_debo
-#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__id_debo
-msgid "Planilla"
-msgstr "Planilla"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__price
@@ -133,10 +153,27 @@ msgstr "Surtidores"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__session_id
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_move__cash_control_session_id
 msgid "Session"
 msgstr "Sesión"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model,name:fuel_tanks_cash_control.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__tank_id
 msgid "Tank"
 msgstr "Tanque"
+
+#. module: fuel_tanks_cash_control
+#: code:addons/fuel_tanks_cash_control/models/cash_control_session.py:0
+#, python-format
+msgid "That cashbox cannot have pumps associated"
+msgstr "Esa caja no puede tener Surtidores asociados"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model,name:fuel_tanks_cash_control.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"

@@ -13,7 +13,7 @@
                 <button name="action_test_button" type="object" string="TEST"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
-            <page string="Other Dispatchs" name="other_dispatch">
+            <page string="Other Dispatchs" name="other_dispatch" attrs="{'invisible':[('config_sells_fuel','=',False)]}">
                     <field name="other_dispatch_line_ids">
                         <tree>
                             <field name="order_id" string="Move Number"/>
@@ -23,7 +23,7 @@
                         </tree>
                     </field>
                 </page>
-                <page string="Pump Tests" name="pump_tests">
+                <page string="Pump Tests" name="pump_tests" attrs="{'invisible':[('config_sells_fuel','=',False)]}">
                     <field name="pump_test_line_ids">
                         <tree>
                             <field name="order_id" string="Move Number"/>
