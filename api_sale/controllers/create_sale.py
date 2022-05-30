@@ -20,7 +20,7 @@ class ReceiveData(Controller):
     _name = "debocloud.create.sale"
 
     @route(
-        "/debocloud/create/sale", type="json", auth="jwt_debo_pos", methods=["POST"], csrf=False
+        "/debocloud/create/sale", type="json", auth="none", methods=["POST"], csrf=False # To enable JWT: auth="jwt_debo_pos"
     )
     def receive_data(self, **kwargs):
         data = kwargs
