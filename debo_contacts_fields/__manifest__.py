@@ -15,7 +15,7 @@
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
-    "depends": ["base", "contacts",],
+    "depends": ["base", "contacts","send_debo_fields"],
 
     'data': [
         'views/partner_views_inherit.xml',
