@@ -1,4 +1,6 @@
-from odoo import models, fields, api, _
+from xml.dom import ValidationErr
+from odoo import models, fields, api,_
+from odoo.exceptions import ValidationError
 
 import logging
 
@@ -7,6 +9,9 @@ _logger = logging.getLogger(__name__)
 
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
+
+    config_sells_fuel = fields.Boolean(related="config_id.is_fuel_cashbox", string="Cashbox sells Fuel")
+    config_is_shop = fields.Boolean(related="config_id.is_shop_cashbox", string="Cashbox is Shop")
 
     pump_ids = fields.Many2many(comodel_name="stock.pump", string="Pumps")
     fuel_move_ids = fields.One2many(
@@ -21,6 +26,12 @@ class CashControlSession(models.Model):
         inverse_name="cash_control_session_id",
         domain="[('is_fuel_picking','=',True)]",
     )
+
+    @api.constrains("pump_ids")
+    def _check_pump_ids(self):
+        for session in self:
+            if not session.config_sells_fuel and session.pump_ids:
+                raise ValidationError(_("That cashbox cannot have pumps associated"))
 
     # to be executed on cashbox opening__________________________________________
     @api.depends("pump_ids")

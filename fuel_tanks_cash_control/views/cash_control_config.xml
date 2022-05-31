@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="cash_control_config_add_fuel_form" model="ir.ui.view">
+        <field name="name">cash.control.config.form.inherit</field>
+        <field name="model">cash.control.config</field>
+        <field name="inherit_id" ref="cash_control.cash_control_config_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="is_fuel_cashbox"/>
+                <field name="is_shop_cashbox"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

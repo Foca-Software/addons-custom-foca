@@ -26,6 +26,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/cash_control_config.xml",
         "views/cash_control_session.xml",
         "views/stock_picking.xml",
     ],
