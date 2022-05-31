@@ -6,6 +6,7 @@ class PartnerNewFields(models.Model):
 
     pump = fields.Boolean()
     pump_number = fields.Char()
+
     checking_account = fields.Selection(
         selection=[("1", "Yes"), ("0", "No")],
         required=True,
