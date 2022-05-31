@@ -6,7 +6,7 @@ import requests
 _logger = logging.getLogger(__name__)
 
 
-class DataSender:
+class DataSender():
 
     def _debo_date_format(self):
         return "%d/%m/%Y"
