@@ -23,7 +23,6 @@ class PartnerNewFields(models.Model):
 
     sector_control = fields.Selection(selection=[("1","Yes"),
                                                 ("0", "No")],
-                                                required=True,
                                                 copy=False)
 
     block_self_account = fields.Boolean()
