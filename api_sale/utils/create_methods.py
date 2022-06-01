@@ -312,6 +312,8 @@ def _inbound_card_codes():
 
 def _get_name_from_number(number):
     padding = 8
+    if not number:
+        return ""
     if len(str(number)) > padding:
         padding = len(str(number))
     return "%%0%sd" % padding % number
