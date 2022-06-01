@@ -161,8 +161,6 @@ class CashControlSessionSpreadsheet(models.Model):
 
     # Spreadsheet values
     ## Cash
-    # TODO: Add a base automation task that updates
-    # the session values when a spreadsheet value changes.
     cash_amount_start = fields.Monetary(
         currency_field="company_currency_id",
         tracking=True,
@@ -173,7 +171,14 @@ class CashControlSessionSpreadsheet(models.Model):
         tracking=True,
     )
 
+    @api.depends("session_id.transfer_ids")
+    def _compute_cash(self):
+        for record in self:
+            record.update({"cash": sum(self.session_id.mapped("transfer_ids.amount"))})
+
     cash = fields.Monetary(
+        compute=_compute_cash,
+        store=True,
         currency_field="company_currency_id",
         tracking=True,
     )

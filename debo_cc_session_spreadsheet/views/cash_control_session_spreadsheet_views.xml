@@ -147,11 +147,11 @@
                                                             <strong>Cash</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
+                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
                                                         <td></td>
                                                         <td>
-                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
+                                                            <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
                                                     </tr>
                                                     <tr>
