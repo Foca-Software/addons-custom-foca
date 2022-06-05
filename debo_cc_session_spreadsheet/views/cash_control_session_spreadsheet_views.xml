@@ -6,10 +6,15 @@
         <field name="model">cash.control.session.spreadsheet</field>
         <field name="arch" type="xml">
             <form string="Cash Control Session Spreadsheet">
-                <!-- TODO: Add all styles attrs into <style> tag properties -->
                 <style>
                     .o_form_view .o_field_widget {
                         margin-bottom: 0px;
+                    }
+                    .background-default {
+                        background-color: #dfe4ff;
+                    }
+                    tr td.total-row {
+                        border-top: 1.5px solid black;
                     }
                 </style>
                 <header>
@@ -26,13 +31,13 @@
                         <h1 class="mt0">
                             <field name="name" readonly="True" />
                         </h1>
-                        <p style="margin-bottom: 0;">
+                        <p class="mb0">
                             <field name="session_config_name" readonly="True" />
                         </p>
-                        <p style="margin-bottom: 0;">
+                        <p class="mb0">
                             <field name="session_id" readonly="True" />
                         </p>
-                        <p style="margin-bottom: 0;">
+                        <p class="mb0">
                             <field name="company_id" groups="base.group_multi_company" />
                         </p>
                     </div>
@@ -71,6 +76,10 @@
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="row d-flex justify-content-around">
+                                            <field name="total_fuel_sales" invisible="1" />
+                                            <field name="total_other_dispatches" invisible="1" />
+                                            <field name="total_sales_no_oil_products" invisible="1" />
+                                            <field name="total_sales" invisible="1" />
                                             <!-- TODO: Request for User Interface when clicking the buttons -->
                                             <table class="table" style="float: left; width: fit-content; height: fit-content; margin-top: auto; margin-left: 1%;">
                                                 <tbody>
@@ -83,28 +92,28 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Cards Payments in One Installment">
+                                                            <button name="%(action_spreadsheet_oil_card_invoices_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Oil Cards Invoices in One Installment">
                                                                 <span class="fa fa-credit-card"></span>
                                                             </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Checks">
+                                                            <button name="%(action_spreadsheet_checks_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Checks">
                                                                 <span class="fa fa-indent"></span>
                                                             </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Other Dispatches">
+                                                            <button name="%(action_spreadsheet_other_dispatches_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Other Dispatches">
                                                                 <span class="fa fa-long-arrow-left"></span>
                                                             </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Credit/Debit Cards">
+                                                            <button name="%(action_spreadsheet_cards_details_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Credit/Debit Cards">
                                                                 <span class="fa fa-credit-card-alt"></span>
                                                             </button>
                                                         </td>
@@ -125,7 +134,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Other Sales">
+                                                            <button name="%(action_spreadsheet_other_sales_oil_companies_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Other Sales - Oil Companies">
                                                                 <span class="fa fa-file-text-o"></span>
                                                             </button>
                                                         </td>
@@ -143,99 +152,97 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Cash</strong>
                                                         </td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
-                                                        <td></td>
                                                         <td>
                                                             <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Expenses</strong>
                                                         </td>
                                                         <td>
                                                             <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
-                                                            <!-- TODO: Make editable through button -->
+                                                        <td class="background-default">
                                                             <strong>Checks</strong>
                                                         </td>
+                                                        <td>$ 0,00</td>
                                                         <td>
-                                                            $ 0,00
+                                                            <field name="checks_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
-                                                        <td></td>
                                                         <td>
-                                                            $ 0,00
+                                                            <field name="checks_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Advanced Payment</strong>
                                                         </td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
-                                                            <!-- TODO: Make editable through button -->
+                                                        <td class="background-default">
                                                             <strong>Cards</strong>
                                                         </td>
                                                         <td>
                                                             <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>In Vouchers</strong>
                                                         </td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
-                                                            <strong>Out vouchers</strong> <!-- Get info to check if "Out vouchers" is a proper name. -->
+                                                        <td class="background-default">
+                                                            <strong>Out vouchers</strong>
                                                         </td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Shop combo sales</strong>
                                                         </td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td></td>
+                                                        <td>$ 0,00</td>
                                                         <td>
                                                             $ 0,00
                                                         </td>
@@ -245,7 +252,43 @@
                                             <table class="table table-bordered" style="float: left; width: fit-content; height: fit-content; margin-left: 3%; margin-top: auto; border: 2px solid !important">
                                                 <tbody>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
+                                                            <strong>Total Sales - Fuel</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_fuel_sales" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="background-default">
+                                                            <strong>Total Sales - No Fuel Products</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_sales_no_oil_products" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="background-default">
+                                                            <strong>Total Other Dispatches</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_other_dispatches" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="background-default total-row">
+                                                            <strong>Total Sales</strong>
+                                                        </td>
+                                                        <td class="total-row">
+                                                            <field name="total_sales" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-bordered" style="float: left; width: fit-content; height: fit-content; margin-left: 3%; margin-top: auto; border: 2px solid !important">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="background-default">
                                                             <strong>Checking Account (I)</strong>
                                                         </td>
                                                         <td>
@@ -253,23 +296,15 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Checking Account (D)</strong>
                                                         </td>
                                                         <td>
-                                                            <field name="checking_account_dispatches_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
+                                                            <field name="sale_orders_not_invoiced_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
-                                                            <strong>Total To Submit</strong>
-                                                        </td>
-                                                        <td>
-                                                            <field name="total_to_submit" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
                                                             <strong>Submited Total</strong>
                                                         </td>
                                                         <td>
@@ -277,7 +312,15 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="background-color: #dfe4ff;">
+                                                        <td class="background-default">
+                                                            <strong>Total To Submit</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_to_submit" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="background-default" style="background-color: beige;">
                                                             <strong>Difference</strong>
                                                         </td>
                                                         <td>

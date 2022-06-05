@@ -10,7 +10,7 @@
                 <field name="session_bank_statement_id" invisible="1" />
                 <field name="session_state" invisible="1" />
                 <group>
-                    <field name="session_transfer_ids" nolabel="1" required="1" string="Product" type="many2many" context="{'default_ref': session_config_id_name, 'default_statement_id': session_bank_statement_id}" attrs="{'readonly': [('session_state', '=', 'validated')]}">
+                    <field name="session_transfer_ids" nolabel="1" required="1" string="Partial Withdrawals" type="many2many" context="{'default_ref': session_config_id_name, 'default_statement_id': session_bank_statement_id}" attrs="{'readonly': [('session_state', '=', 'validated')]}">
                         <tree>
                             <field name="date" />
                             <field name="ref" />

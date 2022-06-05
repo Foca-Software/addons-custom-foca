@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_oil_card_invoices_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Oil Card Invoices Wizard</field>
+        <field name="model">cc.spreadsheet.oil.card.invoices.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Oil Card Invoices">
+                <group>
+                    <field name="session_oil_card_invoice_ids" nolabel="1" required="1" readonly="1" string="Oil Card Invoices" type="many2many" />
+                </group>
+                <footer>
+                    <button name="confirm_oil_card_invoices" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_oil_card_invoices_wizard" name="Oil Card Invoices" res_model="cc.spreadsheet.oil.card.invoices.wizard" view_mode="form" target="new" />
+
+</odoo> 

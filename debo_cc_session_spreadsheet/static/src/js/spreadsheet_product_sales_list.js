@@ -8,6 +8,11 @@ odoo.define(
         const registry = require("web.field_registry");
         const Widget = require("web.AbstractField");
 
+        Number.prototype.round = function (n) {
+            const d = Math.pow(10, n);
+            return Math.round((this + Number.EPSILON) * d) / d;
+        };
+
         const formant_currency = (value) => {
             const formatter = new Intl.NumberFormat("es-AR", {
                 style: "currency",
@@ -50,9 +55,9 @@ odoo.define(
                 "beforeend",
                 `<tr class="text-center totals-row">
                     <td>Total</td>
-                    <td>${qty_acc_check}</td>
+                    <td>${qty_acc_check.round(4)}</td>
                     <td>${formant_currency(total_acc_check)}</td>
-                    <td>${qty}</td>
+                    <td>${qty.round(4)}</td>
                     <td>${formant_currency(total)}</td>
                 </tr>`
             );

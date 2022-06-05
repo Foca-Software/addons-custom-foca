@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_checks_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Checks Wizard</field>
+        <field name="model">cc.spreadsheet.checks.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Checks">
+                <group>
+                    <field name="session_check_ids" nolabel="1" required="1" readonly="1" string="Checks" type="many2many">
+                        <tree>
+                            <field name="issue_date" />
+                            <field name="number" />
+                            <field name="bank_id" />
+                            <field name="owner_name" />
+                            <field name="payment_date" />
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="confirm_checks" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_checks_wizard" name="Checks" res_model="cc.spreadsheet.checks.wizard" view_mode="form" target="new" />
+
+</odoo> 

@@ -76,9 +76,14 @@ class CashControlSpreadsheetPartialWithdrawalsWizard(models.TransientModel):
         session_id = spreadsheet_id.session_id
 
         # Update withdrawal lines
-        session_id.transfer_ids.filtered(
+        for transfer in session_id.transfer_ids.filtered(
             lambda t: t.id not in self.session_transfer_ids.ids
-        ).unlink()
+        ):
+            statement = transfer.statement_id
+            statement.write({"state": "open"})
+            transfer.button_cancel_reconciliation()
+            transfer.unlink()
+            statement.write({"state": "confirm"})
 
         # Update cash amount
         spreadsheet_id._compute_cash()
