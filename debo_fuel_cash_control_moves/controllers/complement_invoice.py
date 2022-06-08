@@ -12,16 +12,6 @@ DEBO_DATE_FORMAT = "%d/%m/%Y"
 ADMIN_ID = 2
 
 
-def _demo_data():
-    return {
-        "planilla": "10938",
-        "orig_journal_id": 6,
-        "dest_journal_id": 16,
-        "amount": 1500,
-        "lot_number": 1100501,
-    }
-
-
 class ComplementInvoice(Controller):
     _name = "debocloud.create.complement.invoice"
 
@@ -34,23 +24,44 @@ class ComplementInvoice(Controller):
     )
     def receive_data(self, **kwargs):
         try:
-            data = kwargs or _demo_data()
+            data = kwargs
             request.env.user = ADMIN_ID
-
-            res = {"status": "SUCCESS", "invoice": "placeholder"}
+            self.check_missing_fields(data)
+            invoice_id = self.create_complement_invoice(data)
+            invoice_id.post()
+            res = {"status": "SUCCESS", "invoice": invoice_id.name}
             return res
 
         except Exception as e:
-            _logger.error(f"F... {','.join([arg for arg in e.args])}")
-            return {"status": "ERROR"}
+            return {"status": "ERROR", "message": e.args[0]}
+
+    def check_missing_fields(self, data: dict) -> bool:
+        missing_fields = any(field not in data.keys() for field in self._needed_fields())
+        missing_line_fields = any(
+            field not in line.keys()
+            for field in self._needed_line_fields()
+            for line in data.get("lines", [])
+        )
+        if missing_fields or missing_line_fields:
+            raise ValidationError("Missing needed fields in request")
+        return True
 
     def _needed_fields(self) -> list:
         return [
+            "company_id",
             "planilla",
-            "orig_journal_id",
-            "dest_journal_id",
+            "journal_id",
+            "pay_now_journal_id",
             "amount",
-            "lot_number",
+            "l10n_latam_document_type_id",
+            "lines",
+        ]
+
+    def _needed_line_fields(self) -> list:
+        return [
+            "product_id",
+            "quantity",
+            "price_unit",
         ]
 
     def _get_session_id(self, planilla: str) -> models.Model:
@@ -71,63 +82,47 @@ class ComplementInvoice(Controller):
             raise ValidationError(_("Session not found"))
         return session_id
 
-    def create_invoice(user_id: int, data: dict) -> dict:
+    def create_complement_invoice(self, data: dict) -> dict:
         try:
             account_obj = request.env["account.move"].with_user(ADMIN_ID)
-            move_line_obj = request.env["account.move.line"].with_user(ADMIN_ID)
-            invoice_data = data["header"]
-            invoice_id = account_obj.create(
-                {
-                    "partner_id": invoice_data["partner_id"],  # auto?
-                    "partner_shipping_id": invoice_data[
-                        "partner_shipping_id"
-                    ],  # compute?
-                    "ref": invoice_data.get("ref"),
-                    "invoice_date": datetime.strptime(
-                        invoice_data["invoice_date"], DEBO_DATE_FORMAT
-                    ),
-                    "journal_id": invoice_data.get("journal_id"),
-                    # "l10n_latam_document_type_id": _get_doc_type_id(),
-                    "company_id": invoice_data.get("company_id"),
-                    # "currency_id": invoice_data["currency_id"], #compute
-                    # not sent in the data
-                    "type": "out_invoice",
-                    "state": "draft",
-                }
-            )
-            for line in data["invoice_line_ids"]:
-                invoice_id.invoice_line_ids = [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": line["product_id"],
-                            "name": line["name"],
-                            "account_id": line["account_id"],
-                            "quantity": line["quantity"],
-                            "product_uom_id": line["product_uom_id"],
-                            "price_unit": line["price_unit"],
-                            "tax_ids": [(6, 0, [line["tax_ids"]])],
-                            "exclude_from_invoice_tab": False,
-                        },
-                    )
-                ]
-        except ValueError as e:
-            _logger.error(e.args)
-            return {
-                "invoice_id": invoice_id.id,
-                "status": "error",
-                "message": "Error creating invoice",
-            }
+            invoice_data = data
+            invoice_id = account_obj.create(self._get_invoice_vals(invoice_data))
+            lines = self._add_invoice_lines(invoice_id, data["lines"])
+            return invoice_id
+        except Exception as e:
+            msg = f"{','.join([arg for arg in e.args])}"
+            _logger.error(msg)
+            raise ValidationError(msg)
 
-        return {
-            "invoice_id": invoice_id.id,
-            "status": "success",
-            "message": "Invoice created successfully",
+    def _get_invoice_vals(self, data: dict) -> dict:
+        partner_id = self._get_partner_id(data)
+        company_id = self._get_company_id(data["company_id"])
+        session_id = self._get_session_id(data["planilla"])
+        invoice_date = (
+            datetime.strptime(data["invoice_date"], DEBO_DATE_FORMAT)
+            if data.get("invoice_date")
+            else datetime.today().strftime("%Y-%m-%d")
+        )
+        invoice_vals = {
+            "partner_id": partner_id,
+            "partner_shipping_id": partner_id,
+            "ref": data.get("ref", ""),
+            "invoice_date": invoice_date,
+            "journal_id": data["journal_id"],
+            "l10n_latam_document_type_id": data["l10n_latam_document_type_id"],
+            "company_id": company_id.id,
+            "currency_id": company_id.currency_id.id,
+            "cash_control_session_id": session_id.id,
+            "pay_now_journal_id": data["pay_now_journal_id"],
+            "invoice_user_id" : session_id.user_id,
+            # not sent in the data
+            "type": "out_invoice",
+            "debo_transaction_type": "complement",
+            "state": "draft",
         }
+        return invoice_vals
 
-    def _get_line_value_ids(self, line: dict) -> dict:
-        product_obj = request.env["product.product"].with_user(ADMIN_ID)
+    def _get_line_vals(self, product_obj: models.Model, line: dict) -> dict:
         product_id = product_obj.browse(line["product_id"])
         account_id = product_id.categ_id.property_account_income_categ_id
         return {
@@ -141,5 +136,24 @@ class ComplementInvoice(Controller):
             "exclude_from_invoice_tab": False,
         }
 
-    def _create_invoice_lines(self, data: dict) -> models.Model:
-        pass
+    def _add_invoice_lines(self, invoice_id: models.Model, data: dict) -> models.Model:
+        product_obj = request.env["product.product"].with_user(ADMIN_ID)
+        for line in data:
+            invoice_id.invoice_line_ids = [
+                (
+                    0,
+                    0,
+                    self._get_line_vals(product_obj, line),
+                )
+            ]
+        return invoice_id.invoice_line_ids
+
+    def _get_partner_id(self, data) -> models.Model:
+        return data.get("partner_id", False) or self._anon_consumer_id().id
+        # return request.env.ref("debo_fuel_cash_control_moves.debo_complement_invoice_partner")
+
+    def _anon_consumer_id(self) -> object:
+        return request.env.ref("l10n_ar.par_cfa")
+
+    def _get_company_id(self, company_id: int) -> models.Model:
+        return request.env["res.company"].with_user(ADMIN_ID).browse(company_id)
