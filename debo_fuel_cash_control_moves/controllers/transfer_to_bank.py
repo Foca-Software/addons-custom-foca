@@ -20,16 +20,6 @@ DEBO_DATE_FORMAT = "%d/%m/%Y"
 ADMIN_ID = 2
 
 
-def _demo_data():
-    return {
-        "planilla": "10938",
-        "orig_journal_id": 6,
-        "dest_journal_id": 16,
-        "amount": 1500,
-        "lot_number": 1100501,
-    }
-
-
 class TransferToBank(Controller):
     _name = "debocloud.create.transfer.to.bank"
 
@@ -42,7 +32,7 @@ class TransferToBank(Controller):
     )
     def receive_data(self, **kwargs):
         try:
-            data = kwargs or _demo_data()
+            data = kwargs
             request.env.user = ADMIN_ID
             # request.env.company = data.get("company_id")
             transfer = self.transfer_to_bank(data)
@@ -51,10 +41,10 @@ class TransferToBank(Controller):
             return res
 
         except Exception as e:
-            _logger.error(f"F... {','.join([arg for arg in e.args])}")
+            _logger.error(e.args[0])
             return {"status": "ERROR"}
 
-    def _needed_fields() -> list:
+    def _needed_fields(self) -> list:
         return [
             "planilla",
             "orig_journal_id",
@@ -91,15 +81,16 @@ class TransferToBank(Controller):
             models.Model: account.payment
         """
         dest_journal_id = data['dest_journal_id']
-        payment_method = self._get_bank_payment_method(int(dest_journal_id))
+        orig_journal_id = data['orig_journal_id']
+        payment_method = self._get_bank_payment_method(int(orig_journal_id))
         session_id = self._get_session_id(data["planilla"])
-        amount = self.compute_amount(session_id,dest_journal_id,amount)
+        amount = self.compute_amount(session_id,dest_journal_id,data['amount'])
         vals = {
             "cash_control_session_id": session_id.id,
             "communication": data.get("lot_number"),
-            "journal_id": data["orig_journal_id"],
+            "journal_id": orig_journal_id,
             "destination_journal_id": dest_journal_id,
-            "amount": data["amount"],
+            "amount": amount,
             "payment_date": datetime.strptime(data["date"], DEBO_DATE_FORMAT) if data.get("date")
             else datetime.today().strftime("%Y-%m-%d"),
             "payment_type": "transfer",
