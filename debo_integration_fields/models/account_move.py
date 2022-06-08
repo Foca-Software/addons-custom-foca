@@ -20,6 +20,7 @@ class AccountMove(models.Model):
             ("standard", "Standard"),
             ("other_dispatch", "Other Dispatch"),
             ("pump_test", "Pump Test"),
+            ("complement","Complement")
         ],
         default="standard"
     )
