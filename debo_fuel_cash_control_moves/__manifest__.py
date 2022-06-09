@@ -14,11 +14,9 @@
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
-    "depends": ["base","debo_cash_control","debo_fuel_tanks"],
+    "depends": ["base","debo_cash_control","debo_fuel_tanks","account_check"],
     ### XML Data files
-    # 'data': [
-    #     'security/ir.model.access.csv',
-    #     'views/views.xml',
-    #     'views/templates.xml',
-    # ],
+    'data': [
+        'wizards/res_config_settings.xml'
+    ],
 }

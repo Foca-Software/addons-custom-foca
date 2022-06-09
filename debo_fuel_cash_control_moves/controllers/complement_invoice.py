@@ -6,8 +6,6 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-# TODO: create new partner like other dispatch / pump_test?
-# DEBO_TRANSFER_PARTNER = request.env.ref("debo_lot_crud?")
 DEBO_DATE_FORMAT = "%d/%m/%Y"
 ADMIN_ID = 2
 
@@ -36,7 +34,20 @@ class ComplementInvoice(Controller):
             return {"status": "ERROR", "message": e.args[0]}
 
     def check_missing_fields(self, data: dict) -> bool:
-        missing_fields = any(field not in data.keys() for field in self._needed_fields())
+        """Handles requests with not enough data
+
+        Args:
+            data (dict): JSON request
+
+        Raises:
+            ValidationError: Missing needed fields in request
+
+        Returns:
+            bool: True
+        """
+        missing_fields = any(
+            field not in data.keys() for field in self._needed_fields()
+        )
         missing_line_fields = any(
             field not in line.keys()
             for field in self._needed_line_fields()
@@ -82,7 +93,18 @@ class ComplementInvoice(Controller):
             raise ValidationError(_("Session not found"))
         return session_id
 
-    def create_complement_invoice(self, data: dict) -> dict:
+    def create_complement_invoice(self, data: dict) -> models.Model:
+        """Create a client invoice with debo_transaction_type = 'complement'
+
+        Args:
+            data (dict): JSON request
+
+        Raises:
+            ValidationError: Non specific error while creation
+
+        Returns:
+            models.Model: account.move
+        """
         try:
             account_obj = request.env["account.move"].with_user(ADMIN_ID)
             invoice_data = data
@@ -95,6 +117,14 @@ class ComplementInvoice(Controller):
             raise ValidationError(msg)
 
     def _get_invoice_vals(self, data: dict) -> dict:
+        """process JSON request and creates 'vals' for invoice creation
+
+        Args:
+            data (dict): JSON request
+
+        Returns:
+            dict: Proper values for invoice creation
+        """
         partner_id = self._get_partner_id(data)
         company_id = self._get_company_id(data["company_id"])
         session_id = self._get_session_id(data["planilla"])
@@ -114,7 +144,7 @@ class ComplementInvoice(Controller):
             "currency_id": company_id.currency_id.id,
             "cash_control_session_id": session_id.id,
             "pay_now_journal_id": data["pay_now_journal_id"],
-            "invoice_user_id" : session_id.user_id,
+            "invoice_user_id": session_id.user_id,
             # not sent in the data
             "type": "out_invoice",
             "debo_transaction_type": "complement",
@@ -123,6 +153,15 @@ class ComplementInvoice(Controller):
         return invoice_vals
 
     def _get_line_vals(self, product_obj: models.Model, line: dict) -> dict:
+        """process each line in JSON request 'lines' list
+
+        Args:
+            product_obj (models.Model): product.product
+            line (dict): a value in lines list
+
+        Returns:
+            dict: proper vals to add as invoice_line_ids
+        """
         product_id = product_obj.browse(line["product_id"])
         account_id = product_id.categ_id.property_account_income_categ_id
         return {
@@ -137,6 +176,15 @@ class ComplementInvoice(Controller):
         }
 
     def _add_invoice_lines(self, invoice_id: models.Model, data: dict) -> models.Model:
+        """Add lines to invoice
+
+        Args:
+            invoice_id (models.Model): account.move
+            data (dict): JSON request
+
+        Returns:
+            models.Model: account.move
+        """
         product_obj = request.env["product.product"].with_user(ADMIN_ID)
         for line in data:
             invoice_id.invoice_line_ids = [
@@ -148,9 +196,16 @@ class ComplementInvoice(Controller):
             ]
         return invoice_id.invoice_line_ids
 
-    def _get_partner_id(self, data) -> models.Model:
+    def _get_partner_id(self, data:dict) -> int:
+        """process JSON request to return a proper partner_id
+
+        Args:
+            data (dict): JSON request
+
+        Returns:
+            int: partner id
+        """
         return data.get("partner_id", False) or self._anon_consumer_id().id
-        # return request.env.ref("debo_fuel_cash_control_moves.debo_complement_invoice_partner")
 
     def _anon_consumer_id(self) -> object:
         return request.env.ref("l10n_ar.par_cfa")

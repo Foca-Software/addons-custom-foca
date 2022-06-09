@@ -28,11 +28,11 @@ demo_data = {
 }
 
 
-class TransferCheck(Controller):
-    _name = "debocloud.create.transfer.check"
+class RegisterCheck(Controller):
+    _name = "debocloud.create.register.check"
 
     @route(
-        "/debocloud/create/transfer_check",
+        "/debocloud/create/register_check",
         type="json",
         auth="none",
         methods=["POST"],
@@ -43,7 +43,7 @@ class TransferCheck(Controller):
             data = kwargs or demo_data()
             request.env.user = ADMIN_ID
             # self.check_missing_fields(data)
-            transfer_id = self.transfer_to_bank(data)
+            transfer_id = self.register_check(data)
             check_ids = self.add_checks_to_transfer(transfer_id, data["checks"])
             # invoice_id.post()
             res = {"status": "SUCCESS", "transfer": transfer_id.name}
@@ -105,7 +105,7 @@ class TransferCheck(Controller):
             raise ValidationError(_("Session not found"))
         return session_id
 
-    def transfer_to_bank(self, data: dict) -> models.Model:
+    def register_check(self, data: dict) -> models.Model:
         """Create transfer type payment from cash type journal to bank type journal
 
         Args:
