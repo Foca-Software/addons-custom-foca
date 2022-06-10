@@ -144,11 +144,7 @@ class ComplementInvoice(Controller):
             "pay_now_journal_id": data["pay_now_journal_id"],
             "invoice_user_id": session_id.user_id,
             "ref": data.get("ref", ""),
-<<<<<<< HEAD
             "name" : data.get("name", "/"),
-=======
-            "name": data.get("name", "/"),
->>>>>>> develop
             # not sent in the data
             "type": "out_invoice",
             "debo_transaction_type": "complement",
