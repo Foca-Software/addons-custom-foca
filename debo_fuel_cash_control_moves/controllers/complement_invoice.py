@@ -63,7 +63,6 @@ class ComplementInvoice(Controller):
             "planilla",
             "journal_id",
             "pay_now_journal_id",
-            "amount",
             "l10n_latam_document_type_id",
             "lines",
         ]
