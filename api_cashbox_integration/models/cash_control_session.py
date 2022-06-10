@@ -6,8 +6,12 @@ _logger = logging.getLogger(__name__)
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
+    has_final_cash_transfer = fields.Boolean()
 
+    is_confirmed_in_debo_pos = fields.Boolean()
     
+    change_delivered = fields.Float(digits=(16,2),help="Amount of money left for next session")
+
     def _api_add_user(self, user_id):
         try:
             self.write({"user_ids" : [(4, user_id)]})

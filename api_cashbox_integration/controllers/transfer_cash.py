@@ -1,10 +1,13 @@
-from odoo.exceptions import AccessError
+from odoo.exceptions import ValidationError
 from odoo.http import request, route, Controller, Response
-
+from odoo.models import Model
+from odoo import _
 from datetime import datetime
 import logging
 
 _logger = logging.getLogger(__name__)
+
+ADMIN_ID = 2
 
 
 class TransferCash(Controller):
@@ -59,10 +62,18 @@ class TransferCash(Controller):
                 .create({})
             )
             transfer_number = data.get("transfer_number", False)
-            transfer_ref = (
-                f"{cashbox_id.name}:{cashbox_id.current_session_id.id_debo}-{transfer_number}"
+            transfer_ref = f"{cashbox_id.name}:{cashbox_id.current_session_id.id_debo}-{transfer_number}"
+            session_id = self._get_session_id(data.get("planilla"))
+            transfer_movement = transfer_wizard.api_transfer_cash(
+                ref=transfer_ref, session_id=session_id
             )
-            transfer_movement = transfer_wizard.api_transfer_cash(ref=transfer_ref)
+            transfer_movement.write(
+                {
+                    "is_last_session_transfer": data.get(
+                        "is_last_session_transfer", False
+                    )
+                }
+            )
             _logger.info(transfer_movement)
             return {
                 "status": "SUCCESS",
@@ -102,6 +113,24 @@ class TransferCash(Controller):
         )
         _logger.info(cashbox_id)
         return cashbox_id
+
+    def _get_session_id(self, planilla: str) -> Model:
+        """gets cash_control_session object search by id_debo ('planilla')
+
+        Args:
+            planilla (str): id_debo, sent in request data
+
+        Raises:
+            ValidationError: no session_id was found
+
+        Returns:
+            models.Model: cash.control.session
+        """
+        session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
+        session_id = session_obj.search([("id_debo", "=", planilla)], limit=1)
+        if not session_id:
+            raise ValidationError(_("Session not found"))
+        return session_id
 
     def _return_error(self, error_type: str, info: str = False) -> dict:
         messages = {

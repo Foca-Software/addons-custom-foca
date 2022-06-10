@@ -8,14 +8,29 @@ _logger = logging.getLogger(__name__)
 class CashControlTransferCash(models.Model):
     _inherit = "cash.control.transfer.cash"
 
-    def action_transfer(self, ref: str = False):
-        close_orig = False
-        orig_st = self.env["account.bank.statement"].search(
-            [("journal_id", "=", self.orig_journal_id.id), ("state", "=", "open")],
-            limit=1,
-            order="id desc",
-        )
+    is_last_session_transfer = fields.Boolean()
 
+    @api.onchange("is_last_session_transfer")
+    def _onchange_is_last_session_transfer(self):
+        session_id = self.orig_statement_line_id.statement_id.cash_control_session_id
+        _logger.info("esto es el onchange")
+        _logger.info(session_id)
+        session_id.update({"has_final_cash_transfer": True})
+
+    def action_transfer(self, ref: str = False, session_id: models.Model = False):
+        close_orig = False
+        if session_id:
+            orig_st = self.env["account.bank.statement"].search(
+                [("journal_id", "=", self.orig_journal_id.id), ('cash_control_session_id','=',session_id.id)],
+                limit=1,
+                order="id desc",
+            )
+        else:
+            orig_st = self.env["account.bank.statement"].search(
+                [("journal_id", "=", self.orig_journal_id.id), ("state", "=", "open")],
+                limit=1,
+                order="id desc",
+            )
         if len(orig_st) == 0:
             orig_st = (
                 self.env["account.bank.statement"]

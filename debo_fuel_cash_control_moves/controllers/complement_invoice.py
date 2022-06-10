@@ -63,7 +63,6 @@ class ComplementInvoice(Controller):
             "planilla",
             "journal_id",
             "pay_now_journal_id",
-            "amount",
             "l10n_latam_document_type_id",
             "lines",
         ]
@@ -136,7 +135,6 @@ class ComplementInvoice(Controller):
         invoice_vals = {
             "partner_id": partner_id,
             "partner_shipping_id": partner_id,
-            "ref": data.get("ref", ""),
             "invoice_date": invoice_date,
             "journal_id": data["journal_id"],
             "l10n_latam_document_type_id": data["l10n_latam_document_type_id"],
@@ -145,6 +143,8 @@ class ComplementInvoice(Controller):
             "cash_control_session_id": session_id.id,
             "pay_now_journal_id": data["pay_now_journal_id"],
             "invoice_user_id": session_id.user_id,
+            "ref": data.get("ref", ""),
+            "name" : data.get("name", "/"),
             # not sent in the data
             "type": "out_invoice",
             "debo_transaction_type": "complement",
@@ -197,7 +197,7 @@ class ComplementInvoice(Controller):
         return invoice_id.invoice_line_ids
 
     def _get_partner_id(self, data:dict) -> int:
-        """process JSON request to return a proper partner_id
+        """process JSON request to return a proper partner id
 
         Args:
             data (dict): JSON request

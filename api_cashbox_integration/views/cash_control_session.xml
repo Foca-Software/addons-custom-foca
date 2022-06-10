@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='config_id']" position="after">
                 <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)], 'readonly': [('state', '!=', 'draft')]}" />
+                <field name="has_final_cash_transfer"/>
             </xpath>
         </field>
     </record>
