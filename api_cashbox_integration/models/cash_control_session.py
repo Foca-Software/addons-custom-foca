@@ -12,6 +12,22 @@ class CashControlSession(models.Model):
     
     change_delivered = fields.Float(digits=(16,2),help="Amount of money left for next session")
 
+    def confirm_session(self, change_delivered:float = False):
+        for session in self:
+            if not session.change_delivered:
+                session.change_delivered = change_delivered
+            session.is_confirmed_in_debo_pos = True
+
+    show_confirmation_alert = fields.Boolean(compute="_compute_show_confirmation_alert")
+
+    def _compute_show_confirmation_alert(self):
+        for session in self:
+            condition = session.state in self._alert_states() and not session.is_confirmed_in_debo_pos
+            session.show_confirmation_alert = condition
+
+    def _alert_states(self):
+        return ['closed']
+
     def _api_add_user(self, user_id):
         try:
             self.write({"user_ids" : [(4, user_id)]})
