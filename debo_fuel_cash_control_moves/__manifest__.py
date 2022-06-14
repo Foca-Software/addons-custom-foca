@@ -17,6 +17,7 @@
     "depends": ["base","debo_cash_control","debo_fuel_tanks","account_check"],
     ### XML Data files
     'data': [
-        'wizards/res_config_settings.xml'
+        'wizards/res_config_settings.xml',
+        'views/cash_control_session.xml'
     ],
 }

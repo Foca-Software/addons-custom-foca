@@ -66,7 +66,6 @@ def _update_oil_card_number(picking: models.Model) -> bool:
 
 def create_invoices_from_sale(sale_orders: object, invoice_data: dict) -> object:
     invoice_ids = sale_orders._create_invoices()
-    _logger.info("hola?")
     for invoice in invoice_ids:
         invoice.write(invoice_data)
         _logger.info(invoice.read(['oil_card_number']))
