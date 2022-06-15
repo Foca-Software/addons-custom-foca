@@ -72,9 +72,11 @@ class CardBatchLoad(Controller):
         orig_journal_id = data["orig_journal_id"]
         payment_method = self._get_bank_payment_method(int(orig_journal_id))
         session_id = self._get_session_id(data["planilla"])
-        amount = self.compute_amount(session_id, dest_journal_id, data["amount"])
+        # amount = self.compute_amount(session_id, dest_journal_id, data["amount"])
+        amount = data["amount"]
         vals = {
             "cash_control_session_id": session_id.id,
+            "debo_transaction_type" : "card_batch",
             "communication": data.get("lot_number"),
             "journal_id": orig_journal_id,
             "destination_journal_id": dest_journal_id,

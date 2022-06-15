@@ -17,7 +17,7 @@
           ],
           "invoice_data":{
              "journal_id":10,
-             "l10n_latam_document_type_id":2,
+             "l10n_latam_document_type_id":1,
              "pay_now_journal_id":6
           }
        }

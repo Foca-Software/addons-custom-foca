@@ -76,7 +76,7 @@ class ReceiveData(Controller):
             if payment:
                 _logger.info(f"Payment {payment.ids} created")
                 res["payment_id"] = payment.ids
-            elif invoice_id.state == "paid":
+            elif invoice_id.invoice_payment_state == "paid":
                 res["payment"] = "Invoice was paid in cash"
             else:
                 res["payment"] = "Invoice not paid"
