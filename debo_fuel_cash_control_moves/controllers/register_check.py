@@ -117,6 +117,7 @@ class RegisterCheck(Controller):
         session_id = self._get_session_id(data["planilla"])
         vals = {
             "cash_control_session_id": session_id.id,
+            "debo_transaction_type" : "register_check",
             "journal_id": orig_journal_id,
             "destination_journal_id": dest_journal_id,
             "amount": data.get("amount", 0),
@@ -136,8 +137,6 @@ class RegisterCheck(Controller):
         for line in data:
             check = check_obj.create(self._get_check_vals(transfer_id, line))
             self._update_check(check, line, transfer_id)
-            # check_ids.append(check)
-            # transfer_id.write({"check_ids":[(4,check.id)]})
             transfer_id.check_ids = [(4,check.id)]
             transfer_id.onchange_checks()
             transfer_id._compute_check()
@@ -161,20 +160,6 @@ class RegisterCheck(Controller):
         )
         return check
 
-    # def _create_operation(self, partner_id, check_id):
-    #     _logger.info("_create_operation")
-    #     operation_obj = request.env["account.check.operation"].with_user(ADMIN_ID)
-    #     vals = {
-    #         "origin": "account.payment",
-    #         "partner_id": partner_id.id,
-    #         "operation": "transfered",
-    #         "check_id": check_id.id,
-    #     }
-    #     _logger.info("explota el dict")
-    #     operation = operation_obj.create(vals)
-    #     # _logger.info(operation.read())
-    #     # return operation
-
     def _required_check_fields(self):
         return [
             "name",
@@ -195,7 +180,6 @@ class RegisterCheck(Controller):
             "number": line["number"],
             "issue_date": datetime.strptime(line["issue_date"], DEBO_DATE_FORMAT),
             "amount": line["amount"],
-            # "currency_id": request.env.company.currency_id.id,
             "journal_id": transfer_id.journal_id.id,
             "partner_id": line["partner_id"],
         }

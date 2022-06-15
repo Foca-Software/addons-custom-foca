@@ -10,6 +10,30 @@
                 <page string="Complement Invoices" name="complement_invoice_ids" attrs="{'invisible':[('state','in',['draft','opened'])]}">
                     <field name="complement_invoice_ids"/>
                 </page>
+                <page string="Card Batch Loads" name="card_batch_ids" attrs="{'invisible':[('state','in',['draft','opened'])]}">
+                    <field name="card_batch_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="journal_id"/>
+                            <field name="destination_journal_id"/>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Register Checks" name="register_check_ids" attrs="{'invisible':[('state','in',['draft','opened'])]}">
+                    <field name="register_check_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="journal_id"/>
+                            <field name="destination_journal_id"/>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

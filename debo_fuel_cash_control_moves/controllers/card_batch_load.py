@@ -76,6 +76,7 @@ class CardBatchLoad(Controller):
         amount = data["amount"]
         vals = {
             "cash_control_session_id": session_id.id,
+            "debo_transaction_type" : "card_batch",
             "communication": data.get("lot_number"),
             "journal_id": orig_journal_id,
             "destination_journal_id": dest_journal_id,
