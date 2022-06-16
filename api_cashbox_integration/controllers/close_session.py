@@ -1,6 +1,6 @@
 from odoo.exceptions import AccessError
 from odoo.http import request, route, Controller, Response
-
+from odoo.models import Model
 from datetime import datetime
 import logging
 
@@ -20,13 +20,13 @@ class CloseSession(Controller):
     def receive_data(self, **kwargs):
         sent_user_id = kwargs.get("user_id", False)
         if not sent_user_id:
-            return self._return_error('user_id')
+            return self._return_error("user_id")
         user_id = request.env["res.users"].sudo().search([("id", "=", sent_user_id)])
         request.env.user = user_id
         request.env.company = user_id.company_id
         data = kwargs.get("data", False)
         if not data:
-            return self._return_error('missing fields')
+            return self._return_error("missing fields")
 
         try:
             cash_box = (
@@ -35,25 +35,20 @@ class CloseSession(Controller):
                 .browse(data.get("cash_id", []))
             )
         except Exception as e:
-            return self._return_error('cashbox_id')
+            return self._return_error("cashbox_id")
 
         try:
-            """
-            cash_control uses the same method to open and close a session, the only difference is
-            the 'balance' argument (open/close). In this case we only create the closing statement
-            """
-            cash_box.api_open_cashbox(
-                coin_value=data.get("amount", False), balance="close"
-            )
-            fuel_lines = data.get('fuel_moves', False)
-            if fuel_lines:
-                session_id = cash_box.current_session_id
-                session_id._api_edit_fuel_lines(fuel_lines)
-                session_id.create_stock_moves()
+            self.load_fuel_moves(cash_box,data.get("fuel_moves",False))
             cash_box.api_close_session()
             return {"status": "OK", "message": "Cash box %s Closed" % (cash_box.name)}
         except Exception as e:
             return self._return_error("other", info=e.args[0])
+
+    def load_fuel_moves(self, cash_box: Model, fuel_lines: list = False):
+        if fuel_lines:
+            session_id = cash_box.current_session_id
+            session_id._api_edit_fuel_lines(fuel_lines)
+            session_id.create_stock_moves()
 
     def _return_error(self, error_type: str, info: str = False) -> dict:
         messages = {
@@ -69,3 +64,11 @@ class CloseSession(Controller):
         }
 
 
+# LEGACY CLOSE--------------
+
+# #cash_control uses the same method to open and close a session, the only difference is
+# #the 'balance' argument (open/close). In this case we only create the closing statement
+
+# cash_box.api_open_cashbox(
+#     coin_value=data.get("amount", False), balance="close"
+# )

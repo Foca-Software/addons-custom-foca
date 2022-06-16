@@ -10,6 +10,8 @@ class CashControlSession(models.Model):
 
     is_confirmed_in_debo_pos = fields.Boolean()
     
+    change_received = fields.Float(digits=(16,2),help="Amount of money received from previous session")
+
     change_delivered = fields.Float(digits=(16,2),help="Amount of money left for next session")
 
     def confirm_session(self, change_delivered:float = False):
@@ -62,33 +64,5 @@ class CashControlSession(models.Model):
 
 
     def api_action_session_close(self):
-        _logger.info('clossing session....')
-
-        if abs(self.statement_difference) > self.config_id.amount_authorized_diff:
-            raise UserError(_(
-                "Your ending balance is too different from the theoretical cash closing (%.2f), "
-                "the maximum allowed is: %.2f. You can contact your manager to force it."
-            ) % (self.statement_difference, self.config_id.amount_authorized_diff))
-        # Close CashBox
-        self._check_pos_session_balance()
-        company_id = self.config_id.company_id.id
-        ctx = dict(self.env.context, force_company=company_id,
-                   company_id=company_id)
-        ctx_notrack = dict(ctx, mail_notrack=True)
-        for st in self.statement_ids:
-            # TODO: CERRAR SOLO LOS STATEMENTS DE CASH, EL DE TARJETA ES COMPARTIDO ENTRE TODAS LAS SUCURSALES - 15 TARJETAS APROX.
-            # VER COMO RESOLVER EL STATEMENT DE TARJETA QUE ES COMPARTIDO.
-            if (st.journal_id.type not in ['bank', 'cash']):
-                raise UserError(
-                    _("The journal type for your payment method should be bank or cash."))
-            st.with_context(ctx_notrack).sudo().button_confirm_bank()
-        return self._validate_session()
-#trash
-        # default_vals = self.env['account.bank.statement.cashbox'].default_get(action['context'])
-        # _logger.warning(default_vals)
-
-        #action = self.cash_register_id.open_cashbox_id()
-        # action['view_id'] = self.env.ref(
-        #     'account.view_account_bnk_stmt_cashbox_footer').id
-        # open_dict.update(default_vals)
-        # wiz = self.statement_id.with_context(default_vals).create(open_dict)
+        self.state = "closed"
+        # self.statement_id.state = "waiting_confirmation"
