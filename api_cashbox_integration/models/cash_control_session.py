@@ -64,5 +64,6 @@ class CashControlSession(models.Model):
 
 
     def api_action_session_close(self):
-        self.state = "closed"
-        # self.statement_id.state = "waiting_confirmation"
+        for session in self:
+            session.state = "closed"
+            session.date_end = fields.Datetime.now()
