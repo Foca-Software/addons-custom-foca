@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* api_cashbox_integration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-16 15:19+0000\n"
+"PO-Revision-Date: 2022-06-16 15:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,help:api_cashbox_integration.field_cash_control_session__change_delivered
+msgid "Amount of money left for next session"
+msgstr "Cantidad de dinero entregado para la próxima sesión"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,help:api_cashbox_integration.field_cash_control_session__change_received
+msgid "Amount of money received from previous session"
+msgstr "Cantidad de dinero recibido de la sesión anterior"
+
+#. module: api_cashbox_integration
+#: model:ir.model,name:api_cashbox_integration.model_cash_control_transfer_wizard
+msgid "Cash Control Transfer Wizard"
+msgstr "Transferencia de Efectivo"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__change_delivered
+msgid "Change Delivered"
+msgstr "Cambio Entregado"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__change_received
+msgid "Change Received"
+msgstr "Cambio Recibido"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__has_final_cash_transfer
+msgid "Has Final Cash Transfer"
+msgstr "Tiene última Transferencia de Efectivo"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__is_confirmed_in_debo_pos
+msgid "Is Confirmed In Debo Pos"
+msgstr "Está confirmado en Debo POS"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_transfer_cash__is_last_session_transfer
+msgid "Is Last Session Transfer"
+msgstr "Ultima transferencia de la Sesión"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_config__id_debo
+msgid "Planilla actual"
+msgstr ""
+
+#. module: api_cashbox_integration
+#: model_terms:ir.ui.view,arch_db:api_cashbox_integration.add_planilla_session_form
+msgid "Session is closed but not confirmed"
+msgstr "La Sesión esta cerrada pero sin Confirmar"
+
+#. module: api_cashbox_integration
+#: code:addons/api_cashbox_integration/controllers/transfer_cash.py:0
+#: code:addons/foca/api_cashbox_integration/controllers/transfer_cash.py:0
+#, python-format
+msgid "Session not found"
+msgstr "Sesión no encontrada"
+
+#. module: api_cashbox_integration
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__show_confirmation_alert
+msgid "Show Confirmation Alert"
+msgstr "Mostrar alerta"
+
+#. module: api_cashbox_integration
+#: model:ir.model,name:api_cashbox_integration.model_cash_control_transfer_cash
+msgid "transfer Cash"
+msgstr "Transferir Efectivo"

@@ -17,6 +17,7 @@
             <xpath expr="//field[@name='config_id']" position="after">
                 <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)], 'readonly': [('state', '!=', 'draft')]}" />
                 <field name="has_final_cash_transfer"/>
+                <field name="change_received"/>
                 <field name="change_delivered"/>
             </xpath>
         </field>
