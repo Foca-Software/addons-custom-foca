@@ -16,6 +16,24 @@
                             <field name="payment_date" />
                             <field name="state" />
                         </tree>
+                        <form>
+                            <group>
+                                <field name="name" />
+                                <field name="journal_id" />
+                                <field name="bank_id" />
+                                <field name="number" />
+                                <field name="amount" readonly="0" />
+                                <field name="amount_company_currency" />
+                            </group>
+                            <group>
+                                <field name="state" />
+                                <field name="owner_name" />
+                                <field name="owner_vat" />
+                                <field name="issue_date" />
+                                <field name="payment_date" />
+                            </group>
+                            <field name="operation_ids" />
+                        </form>
                     </field>
                 </group>
                 <footer>

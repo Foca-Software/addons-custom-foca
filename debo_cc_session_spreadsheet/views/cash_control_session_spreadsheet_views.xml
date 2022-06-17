@@ -127,7 +127,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" style="width: 3rem;" help="Complement Invoices">
+                                                            <button name="%(action_spreadsheet_complement_invoices_wizard)d" type="action" class="btn btn-primary" style="width: 3rem;" help="Complement Invoices">
                                                                 <span class="fa fa-file-text"></span>
                                                             </button>
                                                         </td>
@@ -141,12 +141,13 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <table class="table table-bordered" style="float: left; width:50%; margin-left: 3%; border: 2px solid !important">
+                                            <table class="table table-bordered" style="float: left; width:30%; margin-left: 3%; border: 2px solid !important">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" style="width: 40%;">Submission</th>
-                                                        <th scope="col">Actual</th>
-                                                        <th scope="col">Partial</th>
+                                                        <th scope="col" style="width: 60%;">Submission</th>
+                                                        <!-- Removed by request of the client but I prefer to save the columns for a few weeks -->
+                                                        <!-- <th scope="col">Actual</th>
+                                                        <th scope="col">Partial</th> -->
                                                         <th scope="col">Total</th>
                                                     </tr>
                                                 </thead>
@@ -155,10 +156,10 @@
                                                         <td class="background-default">
                                                             <strong>Cash</strong>
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <!-- <td>$ 0,00</td>
                                                         <td>
                                                             <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <field name="cash" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
@@ -167,10 +168,10 @@
                                                         <td class="background-default">
                                                             <strong>Expenses</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" attrs="{'readonly': [('state', '=', 'validated')]}" />
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             <field name="expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
@@ -179,10 +180,10 @@
                                                         <td class="background-default">
                                                             <strong>Checks</strong>
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <!-- <td>$ 0,00</td>
                                                         <td>
                                                             <field name="checks_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
-                                                        </td>
+                                                        </td> -->
                                                         <td>
                                                             <field name="checks_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
@@ -191,10 +192,10 @@
                                                         <td class="background-default">
                                                             <strong>Advanced Payment</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             $ 0,00
                                                         </td>
@@ -203,10 +204,10 @@
                                                         <td class="background-default">
                                                             <strong>Cards</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             <field name="cards_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
@@ -215,10 +216,10 @@
                                                         <td class="background-default">
                                                             <strong>In Vouchers</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             $ 0,00
                                                         </td>
@@ -227,10 +228,10 @@
                                                         <td class="background-default">
                                                             <strong>Out vouchers</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             $ 0,00
                                                         </td>
@@ -239,10 +240,10 @@
                                                         <td class="background-default">
                                                             <strong>Shop combo sales</strong>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             $ 0,00
                                                         </td>
-                                                        <td>$ 0,00</td>
+                                                        <td>$ 0,00</td> -->
                                                         <td>
                                                             $ 0,00
                                                         </td>

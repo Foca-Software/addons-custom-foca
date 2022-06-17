@@ -1,5 +1,6 @@
 from . import cc_spreadsheet_cards_details_wizard
 from . import cc_spreadsheet_checks_wizard
+from . import cc_spreadsheet_complement_invoices_wizard
 from . import cc_spreadsheet_oil_card_invoices_wizard
 from . import cc_spreadsheet_other_dispatches_wizard
 from . import cc_spreadsheet_other_sales_oil_companies_wizard

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_complement_invoices_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Complement Invoices Wizard</field>
+        <field name="model">cc.spreadsheet.complement.invoices.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Complement Invoices">
+                <group>
+                    <field name="session_complement_invoice_ids" nolabel="1" required="1" readonly="1" string="Complement Invoices" type="many2many" options="{'no_open': True }" />
+                </group>
+                <footer>
+                    <button name="confirm_complement_invoices" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_complement_invoices_wizard" name="Complement Invoices" res_model="cc.spreadsheet.complement.invoices.wizard" view_mode="form" target="new" />
+
+</odoo> 

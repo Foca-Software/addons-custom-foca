@@ -29,6 +29,7 @@
         "security/ir.model.access.csv",
         "wizard/cc_spreadsheet_cards_details_wizard.xml",
         "wizard/cc_spreadsheet_checks_wizard.xml",
+        "wizard/cc_spreadsheet_complement_invoices_wizard.xml",
         "wizard/cc_spreadsheet_oil_card_invoices_wizard.xml",
         "wizard/cc_spreadsheet_other_dispatches_wizard.xml",
         "wizard/cc_spreadsheet_other_sales_oil_companies_wizard.xml",

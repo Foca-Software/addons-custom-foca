@@ -78,6 +78,14 @@ class CashControlSessionSpreadsheet(models.Model):
     _description = "Cash Control Session Spreadsheet"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
+    @api.model
+    def create(self, vals_list):
+        """This is needed to update the Total Sales at the
+        creation time of the Cash Control Session Spreadsheet."""
+        res = super().create(vals_list)
+        self.get_session_fuel_detailed_list(res.id)
+        return res
+
     @api.depends("session_id")
     def _compute_session_spreadsheet_name(self):
         for record in self:
@@ -371,12 +379,14 @@ class CashControlSessionSpreadsheet(models.Model):
         for record in self:
             record.update(
                 {
-                    "total_sales": sum(
-                        [
-                            record.total_fuel_sales,
-                            record.total_other_dispatches,
-                            record.total_sales_no_oil_products,
-                        ]
+                    "total_sales": (
+                        sum(
+                            [
+                                record.total_fuel_sales,
+                                record.total_sales_no_oil_products,
+                            ]
+                        )
+                        - record.total_other_dispatches
                     )
                 }
             )
@@ -386,6 +396,7 @@ class CashControlSessionSpreadsheet(models.Model):
         compute=_compute_total_sales,
         store=True,
         tracking=True,
+        help="Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches",
     )
 
     @api.depends("total_sales", "checking_account_invoices_amount")
