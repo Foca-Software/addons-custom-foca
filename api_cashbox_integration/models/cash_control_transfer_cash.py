@@ -47,7 +47,6 @@ class CashControlTransferCash(models.Model):
             "ref": ref or "tc-%s" % (self.id),
             "name": self.name,
             "transaction_type": "TRANSFER_OUT",
-            # "transaction_type_cc_select" : "TRANSFER_OUT"
         }
 
         statement_line = self.env["account.bank.statement.line"].create(out_values)

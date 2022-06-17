@@ -1,6 +1,5 @@
-from odoo import fields, models, api, _
-import logging
-_logger = logging.getLogger(__name__)
+from odoo import fields, models, api
+
 
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
@@ -16,23 +15,40 @@ class AccountBankStatementLine(models.Model):
 
     amount_sign = fields.Boolean(compute="_compute_sign_amount", store=True)
 
-    def _transaction_type_cc_select_vals(self):
-        return [
-            ("TRANSFER_OUT", _("Outcome")),
-            ("TRANSFER_IN", _("Income")),
-        ]
+    # def _transaction_type_cc_select_vals(self):
+    #     return [
+    #         ("TRANSFER_OUT", "Outcome"),
+    #         ("TRANSFER_IN", "Income"),
+    #     ]
+
+    # transaction_type_cc_select = fields.Selection(
+    #     _transaction_type_cc_select_vals,
+    #     string="Transaction Type",
+    # )
+
+    # @api.model
+    # def create(self, vals):
+    #     res = super().create(vals)
+    #     possible_vals = [val[0] for val in self._transaction_type_cc_select_vals()]
+    #     if res.transaction_type in possible_vals:
+    #         res.transaction_type_cc_select = res.transaction_type
+    #     return res
 
     transaction_type_cc_select = fields.Selection(
-        selection=_transaction_type_cc_select_vals,
+        [
+            ("TRANSFER_OUT", "Outcome"),
+            ("TRANSFER_IN", "Income"),
+        ],
         string="Transaction Type",
     )
 
     @api.model
     def create(self, vals):
         res = super().create(vals)
-        if res.transaction_type in [
-            value[0] for value in self._transaction_type_cc_select_vals()
-        ]:
-            _logger.info(self.with_user(1)._fields['transaction_type_cc_select'].selection)
+        possible_vals = [
+            val[0]
+            for val in self.sudo()._fields["transaction_type_cc_select"].selection
+        ]
+        if res.transaction_type in possible_vals:
             res.transaction_type_cc_select = res.transaction_type
         return res
