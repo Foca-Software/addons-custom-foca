@@ -7,7 +7,10 @@ class CashControlConfigType(models.Model):
 
     name = fields.Char(string="Name")
     description = fields.Text(string="Description")
+    config_ids = fields.One2many(comodel_name='cash.control.config', inverse_name='type_id', string='Cashboxs')
 
+
+    #Place related fields and methods
     place_of_sale = fields.Selection(
         string="Place of Sale",
         selection=[("fuel_lot", "Fuel Lot"), ("shop", "Shop"), ("box", "Box")],
@@ -15,12 +18,6 @@ class CashControlConfigType(models.Model):
     )
 
     sells_fuel = fields.Boolean()
-    uses_complement_invoice = fields.Boolean()
-    creates_complement_invoice_in_pos = fields.Boolean()
-    creates_complement_invoice_in_cloud = fields.Boolean()
-
-    config_ids = fields.One2many(comodel_name='cash.control.config', inverse_name='type_id', string='Cashboxs')
-    
 
     @api.onchange('place_of_sale')
     def _onchange_place_of_sale(self):
@@ -31,3 +28,4 @@ class CashControlConfigType(models.Model):
     
     #TODO:
     #New fields will be needed for type shop. For now is_shop_cashbox is computed in config
+    #     
