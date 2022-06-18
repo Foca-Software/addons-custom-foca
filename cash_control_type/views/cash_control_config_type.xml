@@ -26,11 +26,6 @@
                         <field name="sells_fuel" invisible="1"/>
                         <field name="config_ids" widget="many2many_tags"/>
                     </group>
-                    <group name="complement" string="">
-                        <field name="uses_complement_invoice"/>
-                        <field name="creates_complement_invoice_in_pos" attrs="{'invisible':[('uses_complement_invoice','=',False)]}"/>
-                        <field name="creates_complement_invoice_in_cloud" attrs="{'invisible':[('uses_complement_invoice','=',False)]}"/>
-                    </group>
                     <notebook>
 
                     </notebook>
