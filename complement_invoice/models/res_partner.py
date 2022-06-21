@@ -24,7 +24,8 @@ class ResPartner(models.Model):
     ci_friday = fields.Boolean(string="Friday")
     ci_saturday = fields.Boolean(string="Saturday")
     ci_sunday = fields.Boolean(string="Sunday")
-    # this looks terrible
+#     Configuracion para realizar automaticamente por dia y turno
+# crear turnos delimitando por fecha de inicio/ final
     
 
     complement_invoice_ids = fields.One2many(
