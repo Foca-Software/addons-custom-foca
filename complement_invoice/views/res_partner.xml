@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- res.partner inherit form view -->
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.inherit.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Complement Invoices" name="complement_invoices">
+                    <group>
+                        <group>
+                            <field name="ci_minimum_amount" />
+                            <field name="ci_maximum_amount" />
+                            <field name="complement_percentage" />
+                            <field name="config_ids" widget="many2many_tags"/>
+                            <field name="complement_invoice_ids">
+                                <tree limit="10">
+                                    <field name="name"/>
+                                    <field name="invoice_date_due"/>
+                                    <field name="amount_total_signed"/>
+                                    <field name="state" optional="hide"/>
+                                    <field name="invoice_payment_state" optional="hide"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="ci_monday" />
+                            <field name="ci_tueday" />
+                            <field name="ci_wednesday" />
+                            <field name="ci_thursday" />
+                            <field name="ci_friday" />
+                            <field name="ci_saturday" />
+                            <field name="ci_sunday" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -10,9 +10,8 @@
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Alpha",
-    "version": "13.0.1.0.0",
-    # see https://odoo-community.org/page/development-status
-    "development_status": "Production/Stable",
+    "version": "13.0.0.0.1",
+    "development_status": "Alpha",
     "application": False,
     "installable": True,
     "external_dependencies": {
@@ -20,19 +19,10 @@
         "bin": [],
     },
     # any module necessary for this one to work correctly
-    "depends": ["base","cash_control_type","debo_fuel_tanks"],
-    ### XML Data files
-    # "data": [
-    #     "security/ir.model.access.csv",
-    #     "views/views.xml",
-    #     "views/templates.xml",
-    # ],
-    ### XML Demo files
-    # only loaded in demo mode
-    # "demo": [
-    #     "demo/demo.xml",
-    # ],
-    ###########################
-    # Delete all the commented lines after editing the module
-    ###########################
+    "depends": ["base","cash_control_type","debo_fuel_tanks", "account"],
+    "data": [
+        "views/cash_control_config_type.xml",
+        "views/account_move.xml",
+        "views/res_partner.xml",
+    ],
 }
