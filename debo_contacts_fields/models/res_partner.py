@@ -27,7 +27,6 @@ class PartnerNewFields(models.Model):
 
     sector_control = fields.Selection(
         selection=[("1", "Yes"), ("0", "No")],
-        required=True,
         copy=False,
     )
 
@@ -37,6 +36,13 @@ class PartnerNewFields(models.Model):
     client_observations = fields.Boolean()
     ignore_auto_block = fields.Boolean()
     lot_service_exception = fields.Boolean()
+
+    @api.onchange('checking_account')
+    def _onchange_checking_account(self):
+        if self.checking_account == "1":
+            self.billing_type = "2"
+        if self.checking_account == "0":
+            self.billing_type = "1"
 
     def _get_debo_fields(self):
         debo_like_fields = super()._get_debo_fields()
