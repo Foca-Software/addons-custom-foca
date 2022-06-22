@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_cards_details_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Cards Details Wizard</field>
+        <field name="model">cc.spreadsheet.cards.details.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cards">
+                <group>
+                    <field name="session_cards_details_ids" nolabel="1" required="1" readonly="1" string="Cards" type="many2many" options="{'no_open': True }">
+                        <tree>
+                            <field name="card_number" />
+                            <field name="company_currency_id" invisible="1" />
+                            <field name="amount" options="{'currency_field': 'company_currency_id'}" />
+                            <field name="payment_ref" />
+                            <field name="invoice_ref" />
+                            <field name="ticket_number" />
+                            <field name="date" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="confirm_cards_details" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_cards_details_wizard" name="Cards Details" res_model="cc.spreadsheet.cards.details.wizard" view_mode="form" target="new" />
+
+</odoo> 

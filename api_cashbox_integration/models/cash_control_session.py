@@ -1,12 +1,35 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
+    has_final_cash_transfer = fields.Boolean()
 
+    is_confirmed_in_debo_pos = fields.Boolean()
     
+    change_received = fields.Float(digits=(16,2),help="Amount of money received from previous session")
+
+    change_delivered = fields.Float(digits=(16,2),help="Amount of money left for next session")
+
+    def confirm_session(self, change_delivered:float = False):
+        for session in self:
+            if not session.change_delivered:
+                session.change_delivered = change_delivered
+            session.is_confirmed_in_debo_pos = True
+
+    show_confirmation_alert = fields.Boolean(compute="_compute_show_confirmation_alert")
+
+    def _compute_show_confirmation_alert(self):
+        for session in self:
+            condition = session.state in self._alert_states() and not session.is_confirmed_in_debo_pos
+            session.show_confirmation_alert = condition
+
+    def _alert_states(self):
+        return ['closed']
+
     def _api_add_user(self, user_id):
         try:
             self.write({"user_ids" : [(4, user_id)]})
@@ -32,44 +55,15 @@ class CashControlSession(models.Model):
         ctx['statement_id'] = self.statement_id.id
         ctx['pos_session_id'] = self.id
         ctx['default_pos_id'] = self.config_id.id
-        _logger.error(ctx)
         open_dict = {
             'cashbox_lines_ids' : [(0, 0, {'number': number, 'coin_value': coin_value, 'subtotal': subtotal})],
         }
-        _logger.warning(open_dict)
         wiz = self.env['account.bank.statement.cashbox'].with_context(ctx).create(open_dict)
         wiz._validate_cashbox()
         return wiz
 
 
     def api_action_session_close(self):
-        _logger.info('clossing session....')
-
-        if abs(self.statement_difference) > self.config_id.amount_authorized_diff:
-            raise UserError(_(
-                "Your ending balance is too different from the theoretical cash closing (%.2f), "
-                "the maximum allowed is: %.2f. You can contact your manager to force it."
-            ) % (self.statement_difference, self.config_id.amount_authorized_diff))
-        # Close CashBox
-        self._check_pos_session_balance()
-        company_id = self.config_id.company_id.id
-        ctx = dict(self.env.context, force_company=company_id,
-                   company_id=company_id)
-        ctx_notrack = dict(ctx, mail_notrack=True)
-        for st in self.statement_ids:
-            # TODO: CERRAR SOLO LOS STATEMENTS DE CASH, EL DE TARJETA ES COMPARTIDO ENTRE TODAS LAS SUCURSALES - 15 TARJETAS APROX.
-            # VER COMO RESOLVER EL STATEMENT DE TARJETA QUE ES COMPARTIDO.
-            if (st.journal_id.type not in ['bank', 'cash']):
-                raise UserError(
-                    _("The journal type for your payment method should be bank or cash."))
-            st.with_context(ctx_notrack).sudo().button_confirm_bank()
-        return self._validate_session()
-#trash
-        # default_vals = self.env['account.bank.statement.cashbox'].default_get(action['context'])
-        # _logger.warning(default_vals)
-
-        #action = self.cash_register_id.open_cashbox_id()
-        # action['view_id'] = self.env.ref(
-        #     'account.view_account_bnk_stmt_cashbox_footer').id
-        # open_dict.update(default_vals)
-        # wiz = self.statement_id.with_context(default_vals).create(open_dict)
+        for session in self:
+            session.state = "closed"
+            session.date_end = fields.Datetime.now()

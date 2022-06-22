@@ -1,0 +1,9 @@
+{
+    "params": {
+        "planilla": "10938",
+        "orig_journal_id": 6,
+        "dest_journal_id": 16,
+        "amount": 15000,
+        "lot_number": 1100501
+    }
+}

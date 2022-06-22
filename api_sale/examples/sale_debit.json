@@ -1,19 +1,15 @@
 {
     "params": {
-        "login": {
-            "username": "aquintana@focasoftware.com",
-            "password": "Foca.21"
-        },
-        "move_type" : 101,
+        "user_id":18,
+        "company_id" : 1,
         "payload": {
-            "company_id" : 1,
             "header": {
-                "partner_id": 147663,
+                "partner_id": 214,
                 "date_order": "02/03/2022"
             },
             "lines": [
                 {
-                    "product_id": 13887,
+                    "product_id": 215,
                     "product_uom_qty": 5
                 }
             ],
@@ -25,7 +21,10 @@
                 "journal_id": 10,
                 "payment_method_id": 4,
                 "card_id" : 1,
-                "instalment_id" : 1
+                "instalment_id" : 1,
+                "card_number" : "0118-9998-8199-9119",
+                "ticket_number" : "8899814",
+                "lot_number" : "48"
             }]
         }
     }

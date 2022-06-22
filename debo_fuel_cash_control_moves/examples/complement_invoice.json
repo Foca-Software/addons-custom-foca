@@ -1,0 +1,16 @@
+{
+    "params": {
+        "planilla": "10938",
+        "company_id": 1,
+        "journal_id": 10,
+        "pay_now_journal_id": 6,
+        "l10n_latam_document_type_id": 2,
+        "lines": [
+            {
+                "product_id": 215,
+                "quantity": 20,
+                "price_unit": 200
+            }
+        ]
+    }
+}

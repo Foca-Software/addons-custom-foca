@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_fuel_tanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-26 13:30+0000\n"
+"PO-Revision-Date: 2022-05-26 13:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_cash_control_session
+msgid "Cash Control Session"
+msgstr "Sesión"
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_fuel_move_line__session_consumption
+msgid "Consumption"
+msgstr "Consumo"
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_fuel_move_line
+msgid "Fuel Move Lines"
+msgstr "Movimientos de Combustible"
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_fuel_move_line__pump_id_debo
+msgid "ID DEBO"
+msgstr ""
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_stock_pump__id_debo
+msgid "ID debo"
+msgstr "ID DEBO"
+
+#. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.cash_control_session_add_fuel_form
+msgid "Move Number"
+msgstr "Movimiento"
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_cash_control_session__other_dispatch_line_ids
+msgid "Other Dispatch lines"
+msgstr "Lineas de Otros Despachos"
+
+#. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.cash_control_session_add_fuel_form
+msgid "Other Dispatchs"
+msgstr "Otros Despachos"
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_fuel_move_line__id_debo
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_stock_move__session_id_debo
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_stock_move_line__session_id_debo
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_stock_picking__session_id_debo
+msgid "Planilla"
+msgstr ""
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimiento de productos (Movimiento de existencias)"
+
+#. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.cash_control_session_add_fuel_form
+msgid "Pump Tests"
+msgstr "Pruebas de Surtidor"
+
+#. module: debo_fuel_tanks
+#: model:ir.model.fields,field_description:debo_fuel_tanks.field_cash_control_session__pump_test_line_ids
+msgid "Pump test lines"
+msgstr "Lineas de Pruebas de Surtidor"
+
+#. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.stock_move_line_view_search
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.view_move_search
+msgid "Spreadsheet"
+msgstr "Planilla"
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_stock_pump
+msgid "Stock Pump"
+msgstr "Surtidores"
+
+#. module: debo_fuel_tanks
+#: model_terms:ir.ui.view,arch_db:debo_fuel_tanks.cash_control_session_add_fuel_form
+msgid "TEST"
+msgstr ""
+
+#. module: debo_fuel_tanks
+#: model:ir.model,name:debo_fuel_tanks.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"

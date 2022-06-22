@@ -19,9 +19,7 @@
     },
     "depends": [
         "base",
-        # "cash_control",
-        # "cash_control_extension",
-        # "stock_fuel_tanks",
+        "debo_fuel_tanks",
         "fuel_tanks_cash_control",
     ],
     "data": [

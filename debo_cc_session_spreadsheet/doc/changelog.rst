@@ -14,6 +14,11 @@
 
 .. - Add field selector
 
+`0.1.1`
+-------
+
+- First version of wizards of the spreadsheet
+- First version of calculations of submit and to be submitted values
 
 `0.1.0`
 -------

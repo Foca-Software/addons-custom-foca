@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 22:21+0000\n"
-"PO-Revision-Date: 2022-05-02 22:21+0000\n"
+"POT-Creation-Date: 2022-06-17 12:52+0000\n"
+"PO-Revision-Date: 2022-06-17 12:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -82,6 +82,26 @@ msgstr "<strong>Total Rendido</strong>"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "<strong>Total Other Dispatches</strong>"
+msgstr "<strong>Total Otros Despachos</strong>"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "<strong>Total Sales - Fuel</strong>"
+msgstr "<strong>Total Ventas - Aforados</strong>"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "<strong>Total Sales - No Fuel Products</strong>"
+msgstr "<strong>Total Ventas - No Aforados</strong>"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "<strong>Total Sales</strong>"
+msgstr "<strong>Total Ventas</strong>"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
 msgid "<strong>Total To Submit</strong>"
 msgstr "<strong>Total a Rendir</strong>"
 
@@ -106,20 +126,21 @@ msgid "Activity State"
 msgstr "Estado de Actividad"
 
 #. module: debo_cc_session_spreadsheet
-#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
-msgid "Actual"
-msgstr "Actual"
-
-#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__amount
 #, python-format
 msgid "Amount"
 msgstr "Importe"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_account_bank_statement_line__amount_sign
+msgid "Amount Sign"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_attachment_count
@@ -127,14 +148,30 @@ msgid "Attachment Count"
 msgstr "Cantidad de Adjuntos"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea de extracto bancario"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__card_number
+msgid "Card Number"
+msgstr "Número de Tarjeta"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_cards_details_wizard
+msgid "Cards"
+msgstr "Tarjetas"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__cards_amount
 msgid "Cards Amount"
 msgstr "Monto de Tarjetas"
 
 #. module: debo_cc_session_spreadsheet
-#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
-msgid "Cards Payments in One Installment"
-msgstr "Pagos con Tarjetas de Contado"
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_cards_details_wizard
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__session_cards_details_ids
+msgid "Cards Details"
+msgstr "Detalles de Tarjetas"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__cash
@@ -169,6 +206,44 @@ msgid "Cash Control Session Spreadsheets"
 msgstr "Planillas de cierre de turno"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_cards_details_line
+msgid "Cash Control Spreadsheet Cards Details Line Wizard"
+msgstr ""
+"Líneas de Asistente de Detalles de Tarjetas de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_cards_details_wizard
+msgid "Cash Control Spreadsheet Cards Details Wizard"
+msgstr "Asistente de Detalles de Tarjetas de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_checks_wizard
+msgid "Cash Control Spreadsheet Checks Wizard"
+msgstr "Asistente de Cheques de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_complement_invoices_wizard
+msgid "Cash Control Spreadsheet Complement Invoices Wizard"
+msgstr "Asistente de Facturas Complementos de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_oil_card_invoices_wizard
+msgid "Cash Control Spreadsheet Oil Card Invoices Wizard"
+msgstr ""
+"Asistente de Facturas de Tarjetas de Petroleras de Planilla de Cierre de "
+"Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_other_dispatches_wizard
+msgid "Cash Control Spreadsheet Other Dispatches Wizard"
+msgstr "Asistente de Otros Despachos de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_other_sales_oil_companies_wizard
+msgid "Cash Control Spreadsheet Other Sales Oil Companies Wizard"
+msgstr "Asistente de Otras Ventas - Petroleras de Planilla de Cierre de Turno"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model,name:debo_cc_session_spreadsheet.model_cc_spreadsheet_partial_withdrawals_wizard
 msgid "Cash Control Spreadsheet Partial Withdrawals Wizard"
 msgstr "Asistente de Retiros Parciales de Cierre de Turno"
@@ -188,19 +263,22 @@ msgid "Checking Account"
 msgstr "Cuenta Corriente"
 
 #. module: debo_cc_session_spreadsheet
-#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__checking_account_dispatches_amount
-msgid "Checking Account Dispatches Amount"
-msgstr ""
-
-#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__checking_account_invoices_amount
 msgid "Checking Account Invoices Amount"
-msgstr ""
+msgstr "Monto de Facturas de Cuenta Corriente"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_checks_wizard
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__session_check_ids
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_checks_wizard
 msgid "Checks"
 msgstr "Cheques"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__checks_amount
+msgid "Checks Amount"
+msgstr "Monto de Cheques"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session
@@ -221,22 +299,51 @@ msgstr "Código"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__company_id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__company_id
 msgid "Company"
 msgstr "Empresa"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_complement_invoices_wizard
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__session_complement_invoice_ids
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_complement_invoices_wizard
 msgid "Complement Invoices"
 msgstr "Facturas Complemento"
 
 #. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_cards_details_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_checks_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_complement_invoices_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_oil_card_invoices_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_dispatches_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_sales_oil_companies_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_partial_withdrawals_wizard
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__create_uid
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__create_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__create_date
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -248,11 +355,24 @@ msgstr "Tarjetas de Crédito/Débito"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__company_currency_id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__company_currency_id
 msgid "Currency"
 msgstr "Moneda"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__display_name
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__display_name
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
@@ -263,6 +383,12 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_cards_details_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_checks_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_complement_invoices_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_oil_card_invoices_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_dispatches_wizard
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_sales_oil_companies_wizard
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_partial_withdrawals_wizard
 msgid "Exit"
 msgstr "Salir"
@@ -277,12 +403,12 @@ msgstr "Gastos"
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Final"
-msgstr "Final"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_channel_ids
@@ -308,16 +434,23 @@ msgstr "Combustibles"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__id
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__id
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "ID Debo"
-msgstr "ID Debo"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__activity_exception_icon
@@ -347,11 +480,21 @@ msgid "In and Out Vouchers"
 msgstr "Vales y Contra-vales"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields.selection,name:debo_cc_session_spreadsheet.selection__account_bank_statement_line__transaction_type_cc_select__transfer_in
+msgid "Income"
+msgstr "Ingreso"
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Initial"
 msgstr "Inicial"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__invoice_ref
+msgid "Invoice Reference"
+msgstr "Referencia de Factura"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_is_follower
@@ -360,18 +503,39 @@ msgstr "Es seguidor"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard____last_update
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard____last_update
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__write_uid
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Última modificación por"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_wizard__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_checks_wizard__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_complement_invoices_wizard__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__write_date
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__write_date
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__write_date
 msgid "Last Updated on"
 msgstr "Última modificación el"
@@ -381,7 +545,7 @@ msgstr "Última modificación el"
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Lts/m³"
-msgstr "Lts/m³"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_main_attachment_id
@@ -393,7 +557,7 @@ msgstr "Adjunto principal"
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Manual"
-msgstr "Manual"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_has_error
@@ -451,6 +615,18 @@ msgid "Number of unread messages"
 msgstr "Número de mensajes no leídos"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_oil_card_invoices_wizard
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_oil_card_invoices_wizard__session_oil_card_invoice_ids
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_oil_card_invoices_wizard
+msgid "Oil Card Invoices"
+msgstr "Facturas de Tarjetas Petroleras"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "Oil Cards Invoices in One Installment"
+msgstr "Facturas de Tarjetas Petroleras de contado"
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
@@ -459,19 +635,29 @@ msgid "One Installment"
 msgstr "Contado"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_other_dispatches_wizard
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_dispatches_wizard__session_other_dispatch_line_ids
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_dispatches_wizard
 msgid "Other Dispatches"
 msgstr "Otros Despachos"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_other_sales_oil_companies_wizard
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
-msgid "Other Sales"
-msgstr "Otras Ventas"
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_sales_oil_companies_wizard
+msgid "Other Sales - Oil Companies"
+msgstr "Otras Ventas - Petroleras"
 
 #. module: debo_cc_session_spreadsheet
-#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
-msgid "Partial"
-msgstr "Parcial"
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_other_sales_oil_companies_wizard__session_other_sale_oil_companies_ids
+msgid "Other Sales Oil Companies"
+msgstr "Otras Ventas - Petroleras"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields.selection,name:debo_cc_session_spreadsheet.selection__account_bank_statement_line__transaction_type_cc_select__transfer_out
+msgid "Outcome"
+msgstr "Egreso"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_partial_withdrawals_wizard
@@ -486,11 +672,15 @@ msgid "Partial withdrawals"
 msgstr "Retiros Parciales"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__payment_ref
+msgid "Payment Reference"
+msgstr "Referencia de Pago"
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
-#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_partial_withdrawals_wizard
 #, python-format
 msgid "Product"
 msgstr "Producto"
@@ -534,9 +724,24 @@ msgid "SMS Delivery error"
 msgstr "Error de entrega de SMS"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__sale_orders_not_invoiced_amount
+msgid "Sale Orders Not Invoiced Amount"
+msgstr "Monto de Órdenes de Venta no facturadas"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__session_bank_statement_id
+msgid "Session Bank Statement"
+msgstr "Extracto de Banco de la Sesión"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_config_name
 msgid "Session Config"
 msgstr "Configuración de sesión"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__session_config_id_name
+msgid "Session Config Id Name"
+msgstr ""
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_difference
@@ -562,6 +767,11 @@ msgstr "Surtidores de caja"
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_date_start
 msgid "Session Start"
 msgstr "Apertura de caja"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__session_state
+msgid "Session State"
+msgstr "Estado de caja"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__session_user_ids
@@ -617,6 +827,11 @@ msgid "Submited Total"
 msgstr "Total Rendido"
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__ticket_number
+msgid "Ticket Number"
+msgstr "Número de Ticket"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__fuel_detailed_list_widget
 msgid "To show the fuel detailed list."
 msgstr "Para mostrar la lista detallada de combustible."
@@ -629,12 +844,62 @@ msgstr "Para mostrar la lista de ventas de productos."
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
 msgid "Total"
-msgstr "Total"
+msgstr ""
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__submited_total
+msgid ""
+"Total Cash + Total Checks + Total Cards - Cash Amount Start + Cash Amount "
+"End"
+msgstr ""
+"Total Efectivo + Total Cheques + Total Tarjetas - Cambio Recibido + Cambio "
+"Entregado"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_fuel_sales
+msgid "Total Fuel Sales"
+msgstr "Total de Ventas Aforadas"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_sales
+msgid "Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches"
+msgstr ""
+"Total Ventas (Aforados) + Total Ventas (No Aforados) - Total Otros Despachos"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_other_dispatches
+msgid "Total Other Dispatches"
+msgstr "Total Otros Despachos"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_sales
+msgid "Total Sales"
+msgstr "Total de Ventas"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_to_submit
+msgid "Total Sales - Invoices not paid (Checking Account)"
+msgstr "Total de Ventas - Facturas no pagadas (Cuenta Corriente)"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_sales_no_oil_products
+msgid "Total Sales No Oil Products"
+msgstr "Total de Ventas (Productos no aforados)"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_other_dispatches_wizard
+msgid "Total Tax Included"
+msgstr "Total con Impuestos Incluidos"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_to_submit
 msgid "Total To Submit"
 msgstr "Total a Rendir"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_account_bank_statement_line__transaction_type_cc_select
+msgid "Transaction Type"
+msgstr "Tipo de Transacción"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__activity_exception_decoration

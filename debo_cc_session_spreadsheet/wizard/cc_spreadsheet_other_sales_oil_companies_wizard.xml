@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_other_sales_oil_companies_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Other Sales - Oil Companies Wizard</field>
+        <field name="model">cc.spreadsheet.other.sales.oil.companies.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Other Sales - Oil Companies">
+                <group>
+                    <field name="session_other_sale_oil_companies_ids" nolabel="1" required="1" readonly="1" string="Other Sales - Oil Companies" type="many2many" />
+                </group>
+                <footer>
+                    <button name="confirm_other_sales_oil_companies" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_other_sales_oil_companies_wizard" name="Other Sales - Oil Companies" res_model="cc.spreadsheet.other.sales.oil.companies.wizard" view_mode="form" target="new" />
+
+</odoo>

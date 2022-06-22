@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="spreadsheet_other_dispatches_wizard" model="ir.ui.view">
+        <field name="name">Cash Control Spreadsheet Other Dispatches Wizard</field>
+        <field name="model">cc.spreadsheet.other.dispatches.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Other Dispatches">
+                <group>
+                    <field name="session_other_dispatch_line_ids" nolabel="1" required="1" readonly="1" string="Other Dispatches" type="many2many">
+                        <tree>
+                            <field name="order_id" />
+                            <field name="name" />
+                            <field name="salesman_id" />
+                            <field name="product_uom_qty" />
+                            <field name="product_uom" />
+                            <field name="price_subtotal" />
+                            <field name="price_tax" />
+                            <field name="price_total" sum="Total Tax Included" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="confirm_other_dispatches" type="object" string="Confirm" class="oe_highlight" />
+                    <button special="cancel" string="Exit" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_spreadsheet_other_dispatches_wizard" name="Other Dispatches" res_model="cc.spreadsheet.other.dispatches.wizard" view_mode="form" target="new" />
+
+</odoo> 

@@ -4,8 +4,21 @@
         <field name="model">cash.control.session</field>
         <field name="inherit_id" ref="cash_control.cash_control_session_form" />
         <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <field name="is_confirmed_in_debo_pos" invisible="1"/>
+                <field name="show_confirmation_alert" invisible="1"/>
+                <div class="alert alert-info text-center" attrs="{'invisible': [('show_confirmation_alert', '!=', True)]}" role="alert">
+                    Session is closed but not confirmed
+                </div>
+                <!-- <div class="alert alert-info text-center" attrs="{'invisible': ['|',('is_confirmed_in_debo_pos', '=', True),('state', 'in', ['draft','open'])]}" role="alert">
+                    Session is closed but not confirmed
+                </div> -->
+            </xpath>
             <xpath expr="//field[@name='config_id']" position="after">
                 <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)], 'readonly': [('state', '!=', 'draft')]}" />
+                <field name="has_final_cash_transfer"/>
+                <field name="change_received"/>
+                <field name="change_delivered"/>
             </xpath>
         </field>
     </record>

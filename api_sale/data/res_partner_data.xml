@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <record model='res.partner' id='debo_other_dispatch'>
+            <field name='name'>Otros Despachos</field>
+            <field name='l10n_latam_identification_type_id' ref='l10n_ar.it_Sigd'/>
+            <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_CF"/>
+            <field name='eventual_customer' eval="True"/>
+        </record>
+
+        <record model='res.partner' id='debo_pump_test'>
+            <field name='name'>Prueba de Surtidor</field>
+            <field name='l10n_latam_identification_type_id' ref='l10n_ar.it_Sigd'/>
+            <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_CF"/>
+            <field name='eventual_customer' eval="True"/>
+        </record>
+    </data>
+
+</odoo>

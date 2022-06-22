@@ -69,18 +69,6 @@ msgid "Session ID"
 msgstr "Turno ID"
 
 #. module: cash_control
-#: model:ir.model.fields,field_description:cash_control.field_cash_control_config__statement_balance_start
-#: model:ir.model.fields,field_description:cash_control.field_cash_control_session__statement_balance_start
-msgid "Starting Balance"
-msgstr "Cambio Recibido"
-
-#. module: cash_control
-#: model:ir.model.fields,field_description:cash_control.field_cash_control_config__statement_balance_end_real
-#: model:ir.model.fields,field_description:cash_control.field_cash_control_session__statement_balance_end_real
-msgid "Ending Balance"
-msgstr "Cambio Entregado"
-
-#. module: cash_control
 #: model:ir.ui.menu,name:cash_control.cash_control_session_menu
 msgid "Session"
 msgstr "Planillas"

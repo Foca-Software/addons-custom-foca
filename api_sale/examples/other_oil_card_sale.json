@@ -1,0 +1,17 @@
+{
+    "params": {
+        "user_id": 8,
+        "company_id": 1,
+        "planilla": "3301",
+        "oil_card_number": "00022992",
+        "src_location_id": 8,
+        "dest_location_id": 5,
+        "partner_id": 214,
+        "lines": [
+            {
+                "product_id": 111,
+                "quantity_done": 1
+            }
+        ]
+    }
+}

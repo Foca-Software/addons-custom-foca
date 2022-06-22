@@ -19,8 +19,14 @@
     },
     "depends": [
         "base",
+        "account",
         "cash_control",
+        "debo_fuel_tanks",
+        "debo_integration_fields",
+        "fuel_tanks_cash_control",
     ],
     "data": [
+        "data/account_journal_data.xml",
+        "data/res_partner_data.xml"
     ],
 }

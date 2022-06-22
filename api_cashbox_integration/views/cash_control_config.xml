@@ -1,5 +1,5 @@
 <odoo>
-    <record id="add_planilla_config" model="ir.ui.view">
+    <record id="add_planilla_config_form" model="ir.ui.view">
         <field name="name">cash.control.config.form</field>
         <field name="model">cash.control.config</field>
         <field name="inherit_id" ref="cash_control.cash_control_config_form"/>
@@ -11,7 +11,7 @@
     </record>
 
 
-    <record id="FUCK_SHIT_FUCK" model="ir.ui.view">
+    <record id="add_planilla_config_tree" model="ir.ui.view">
         <field name="name">cash.control.config.tree</field>
         <field name="model">cash.control.config</field>
         <field name="inherit_id" ref="cash_control.cash_control_config_tree"/>

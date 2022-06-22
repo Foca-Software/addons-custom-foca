@@ -2,13 +2,6 @@ from odoo import models, _
 from odoo.exceptions import UserError
 
 
-def get_cash_amount(session):
-    """
-    Return the cash amount of the session.
-    """
-    return sum(session.mapped("transfer_ids.amount"))
-
-
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
@@ -18,7 +11,6 @@ class CashControlSession(models.Model):
                 "session_id": self.id,
                 "cash_amount_start": self.statement_balance_start,
                 "cash_amount_end": self.statement_balance_end_real,
-                "cash": get_cash_amount(self),
             }
         )
 

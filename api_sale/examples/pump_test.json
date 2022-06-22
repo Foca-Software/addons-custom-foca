@@ -1,0 +1,12 @@
+{
+    "params":{
+        "user_id": 18,
+        "company_id": 1,
+        "line": {
+            "product_id": 215,
+            "pump_id": 9,
+            "product_uom_qty": 5,
+            "price_unit": 100
+        }
+    }
+}

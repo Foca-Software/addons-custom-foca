@@ -15,7 +15,7 @@ class CashControlConfig(models.Model):
 
     def api_close_session(self):
         self.check_user()
-        self.current_session_id.action_session_close()
+        self.current_session_id.api_action_session_close()
         self.current_session_id = False
         self.transfer_pendientes = False
         return True
