@@ -9,9 +9,9 @@ class AccountBankStatementLine(models.Model):
         for rec in self:
             if rec.transaction_type_cc_select == "TRANSFER_OUT":
                 if rec.amount > 0:
-                    rec.amount = -rec.amount
+                    rec.amount_sign = -rec.amount
             else:
-                rec.amount = abs(rec.amount)
+                rec.amount_sign = abs(rec.amount)
 
     amount_sign = fields.Boolean(compute="_compute_sign_amount", store=True)
 
