@@ -7,7 +7,7 @@ class CashControlConfig(models.Model):
 
     is_fuel_cashbox = fields.Boolean(related="type_id.sells_fuel")
 
-    is_shop_cashbox = fields.Boolean(_compute="_compute_is_shop_cashbox")
+    is_shop_cashbox = fields.Boolean(compute="_compute_is_shop_cashbox")
 
     def _compute_is_shop_cashbox(self):
         for config in self:

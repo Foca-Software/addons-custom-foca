@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <!-- cash.control.config.type tree view -->
     <record id="cash_control_config_type_view_tree" model="ir.ui.view">
         <field name="name">cash.control.config.type.view.tree</field>
         <field name="model">cash.control.config.type</field>
@@ -12,7 +11,6 @@
             </tree>
         </field>
     </record>
-    <!-- cash.control.config.type form view -->
     <record id="cash_control_config_type_view_form" model="ir.ui.view">
         <field name="name">cash.control.config.type.view.form</field>
         <field name="model">cash.control.config.type</field>
@@ -25,11 +23,6 @@
                         <field name="place_of_sale"/>
                         <field name="sells_fuel" invisible="1"/>
                         <field name="config_ids" widget="many2many_tags"/>
-                    </group>
-                    <group name="complement" string="">
-                        <field name="uses_complement_invoice"/>
-                        <field name="creates_complement_invoice_in_pos" attrs="{'invisible':[('uses_complement_invoice','=',False)]}"/>
-                        <field name="creates_complement_invoice_in_cloud" attrs="{'invisible':[('uses_complement_invoice','=',False)]}"/>
                     </group>
                     <notebook>
 
@@ -53,5 +46,5 @@
         </field>
     </record>
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="cash_control_config_type_menu_act" name="Cashbox Types" parent="cash_control.cash_control_config_menu_root" action="cash_control_config_type_action" sequence="50" groups="base.group_no_one"/>
+    <menuitem id="cash_control_config_type_menu_act" name="Cashbox Types" parent="cash_control.cash_control_config_root_menu" action="cash_control_config_type_action" sequence="50" groups="base.group_no_one"/>
 </odoo>
