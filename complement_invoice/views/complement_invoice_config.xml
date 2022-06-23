@@ -10,16 +10,22 @@
                     <group>
                         <group>
                             <field name="day" required="1"/>
-                            <field name="turn_id" required="1"/>
+                            <!-- <field name="turn_id" required="1"/> -->
                         </group>
                         <group>
                             <field name="cash_control_config_id" required="1"/>
+                            <field name="summary_ids">
+                            <tree>
+                                <field name="product_id"/>
+                                <field name="percentage"/>
+                            </tree>
+                            </field>
                         </group>
                         <field name="config_line_ids">
                             <tree editable="bottom">
                                 <field name="partner_id" required="1"/>
-                                <field name="percentage" required="1" widget="percentage"/>
-                                <field name="product_ids" widget="many2many_tags"/>
+                                <field name="percentage" required="1"/>
+                                <field name="product_id"/>
                                 <field name="partner_min_amount"/>
                                 <field name="partner_max_amount"/>
                             </tree>
@@ -37,15 +43,14 @@
         <field name="arch" type="xml">
             <kanban default_group_by="day" class="oe_background_grey o_kanban_dashboard o_control_kanban o_emphasize_colors">
                 <field name="name"/>
-                <field name="turn_id"/>
+                <!-- <field name="turn_id"/> -->
                 <field name="cash_control_config_id"/>
-                <field name="total_percentage"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_10 oe_kanban_global_click o_has_icon o_kanban_record">
                             <div>
                                 <span>
-                                    <field name="total_percentage" widget="progressbar"/>
+                                    <!-- <field name="total_percentage" widget="progressbar"/> -->
                                 </span>
                                 <strong class="o_kanban_record_title">
                                     <field name="name" />
@@ -89,29 +94,4 @@
     </record>
 
     <menuitem id="complement_invoice_config_menu_act" name="Complement Invoice" parent="cash_control.cash_control_config_root_menu" action="complement_invoice_config_action" sequence="50" groups="base.group_no_one"/>
-
-    <!-- <div class="o_project_kanban_main">
-                                <div class="o_kanban_card_content">
-                                    <div class="o_kanban_primary_left">
-                                        <div class="o_primary">
-                                            <span>
-                                                <t t-esc="record.name.value"/>
-                                            </span>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <span>
-                                                    <field name="config_line_ids">
-                                                        <tree>
-                                                            <field name="partner_id" required="1"/>
-                                                            <field name="percentage" required="1" widget="percentage"/>
-                                                        </tree>
-                                                    </field>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
 </odoo>

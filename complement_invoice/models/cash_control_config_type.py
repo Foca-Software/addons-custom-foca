@@ -37,7 +37,6 @@ class CashControlConfigType(models.Model):
     )
     # Manual -> elegir lista de precios
     ci_product_pricelist_id = fields.Many2one(comodel_name="product.pricelist", string="Pricelist")
-    #TODO: # crear turnos delimitando por fecha de inicio/ final
     # d:
     ci_restricts_liters = fields.Boolean()
     ci_liter_max_amount = fields.Float(

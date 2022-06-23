@@ -24,7 +24,7 @@
             <tree>
                 <field name="partner_id"/>
                 <field name="percentage"/>
-                <field name="product_ids" widget="many2many_tags"/>
+                <field name="product_id"/>
                 <field name="partner_min_amount"/>
                 <field name="partner_max_amount"/>
             </tree>

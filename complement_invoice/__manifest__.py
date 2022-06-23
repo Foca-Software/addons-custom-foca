@@ -23,8 +23,6 @@
     "data": [
         "security/ir.model.access.csv",
         "views/cash_control_config_type.xml",
-        "views/cash_control_session.xml",
-        "views/cash_control_turn.xml",
         "views/complement_invoice_config.xml",
         "views/complement_invoice_config_line.xml",
         "views/res_partner.xml",
