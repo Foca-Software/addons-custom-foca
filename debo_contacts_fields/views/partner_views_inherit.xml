@@ -5,7 +5,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='geo_location']" position="after">
+            <xpath expr="//notebook[last()]" position="inside">
                 <page name="other_confs" string="Other Configurations">
                     <group>   
                         <group>
