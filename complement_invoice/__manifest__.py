@@ -21,8 +21,12 @@
     # any module necessary for this one to work correctly
     "depends": ["base","cash_control_type","debo_fuel_tanks", "account"],
     "data": [
+        "security/ir.model.access.csv",
         "views/cash_control_config_type.xml",
-        "views/account_move.xml",
+        "views/cash_control_session.xml",
+        "views/cash_control_turn.xml",
+        "views/complement_invoice_config.xml",
+        "views/complement_invoice_config_line.xml",
         "views/res_partner.xml",
     ],
 }

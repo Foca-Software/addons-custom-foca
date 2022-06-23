@@ -33,9 +33,10 @@ class CashControlConfigType(models.Model):
         comodel_name="product.product", string="Products", domain=_product_ids_domain, store=True
     )
     ci_amount = fields.Selection(
-        [("pump", "Pump"), ("manual", "Manual")], string="Amount for products"
+        [("pump", "Pump"), ("manual", "Manual"),('partner',"Partner Pricelist")], string="Amount for products"
     )
-    #TODO: Manual -> elegir lista de precios
+    # Manual -> elegir lista de precios
+    ci_product_pricelist_id = fields.Many2one(comodel_name="product.pricelist", string="Pricelist")
     #TODO: # crear turnos delimitando por fecha de inicio/ final
     # d:
     ci_restricts_liters = fields.Boolean()

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-21 17:18+0000\n"
-"PO-Revision-Date: 2022-06-21 17:18+0000\n"
+"POT-Creation-Date: 2022-06-23 01:48+0000\n"
+"PO-Revision-Date: 2022-06-23 01:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,9 +26,24 @@ msgid "Amount for products"
 msgstr "Monto por Productos"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__cash_control_config_id
+msgid "Cash Control Config"
+msgstr "Caja"
+
+#. module: complement_invoice
 #: model:ir.model,name:complement_invoice.model_cash_control_config_type
 msgid "Cash Control Config Type"
 msgstr "Tipo de Caja"
+
+#. module: complement_invoice
+#: model:ir.model,name:complement_invoice.model_cash_control_session
+msgid "Cash Control Session"
+msgstr "Turno"
+
+#. module: complement_invoice
+#: model:ir.model,name:complement_invoice.model_cash_control_turn
+msgid "Cash Control Turn"
+msgstr "Turno"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__config_ids
@@ -37,9 +52,9 @@ msgid "Cashbox"
 msgstr "Caja"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move__config_type
-msgid "Cashbox Type"
-msgstr "Tipo de Caja"
+#: model:ir.ui.menu,name:complement_invoice.cash_control_config_type_menu_act
+msgid "Cashbox Turns"
+msgstr "Turnos de Caja"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__ci_restricts_liters
@@ -57,35 +72,71 @@ msgid "Cloud Spreadsheet"
 msgstr "Planilla de Cloud"
 
 #. module: complement_invoice
+#: model:ir.ui.menu,name:complement_invoice.complement_invoice_config_menu_act
 #: model_terms:ir.ui.view,arch_db:complement_invoice.cash_control_config_type_view_form
 msgid "Complement Invoice"
 msgstr "Factura Complemento"
 
 #. module: complement_invoice
-#: model:ir.actions.act_window,name:complement_invoice.view_complement_invoices_action
+#: model:ir.model,name:complement_invoice.model_complement_invoice_config_line
+#: model:ir.model.fields,field_description:complement_invoice.field_res_partner__complement_invoice_config_line_ids
+#: model:ir.model.fields,field_description:complement_invoice.field_res_users__complement_invoice_config_line_ids
+msgid "Complement Invoice Config Line"
+msgstr "Linea de Configuracion de Facturas Cmplemento"
+
+#. module: complement_invoice
+#: model:ir.actions.act_window,name:complement_invoice.complement_invoice_config_action
+#: model_terms:ir.ui.view,arch_db:complement_invoice.complement_invoice_config_view_form
+msgid "Complement Invoice Configuration"
+msgstr "Configuracion de Facturas Complemento"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_res_partner__complement_invoice_config_ids
+#: model:ir.model.fields,field_description:complement_invoice.field_res_users__complement_invoice_config_ids
+msgid "Complement Invoice Configurations"
+msgstr "Configuraciones de Factura Complemento"
+
+#. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__complement_invoice_ids
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__complement_invoice_ids
-#: model:ir.ui.menu,name:complement_invoice.complement_invoice_menu_act
 #: model_terms:ir.ui.view,arch_db:complement_invoice.view_partner_form
 msgid "Complement Invoices"
 msgstr "Facturas Complementos"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move_line__complement_percentage
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__complement_percentage
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__complement_percentage
 msgid "Complement Percentage"
 msgstr "Porcentaje de Complemento"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move_line__complement_product_id
-msgid "Complement Product"
-msgstr "Producto"
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__config_id
+msgid "Config"
+msgstr "Configuración"
+
+#. module: complement_invoice
+#: model_terms:ir.ui.view,arch_db:complement_invoice.view_partner_form
+msgid "Configuration"
+msgstr "Configuración"
 
 #. module: complement_invoice
 #: model:ir.model,name:complement_invoice.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__create_uid
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__create_uid
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__create_date
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__create_date
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__create_date
+msgid "Created on"
+msgstr ""
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__creates_ci_in_cloud
@@ -98,20 +149,62 @@ msgid "Creates Ci In Pos"
 msgstr "Crea Fact. Compl. en POS"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__day
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__config_id_day
+msgid "Day"
+msgstr "Día"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__display_name
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__display_name
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__end_time
+msgid "End Time"
+msgstr "Hora de Finalización"
+
+#. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_friday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_friday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__5
 msgid "Friday"
 msgstr "Viernes"
 
 #. module: complement_invoice
-#: model:ir.model,name:complement_invoice.model_account_move
-msgid "Journal Entries"
-msgstr "Asientos Contables"
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__product_ids
+msgid "Fuel Types"
+msgstr "Combustibles"
 
 #. module: complement_invoice
-#: model:ir.model,name:complement_invoice.model_account_move_line
-msgid "Journal Item"
-msgstr "Asiento Contable"
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__id
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__id
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__id
+msgid "ID"
+msgstr ""
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn____last_update
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config____last_update
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__write_uid
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__write_uid
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__write_date
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__write_date
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__write_date
+msgid "Last Updated on"
+msgstr ""
 
 #. module: complement_invoice
 #: model:ir.model.fields.selection,name:complement_invoice.selection__cash_control_config_type__ci_amount__manual
@@ -124,24 +217,28 @@ msgid "Max liters per invoice"
 msgstr "Máximo de litros por Factura"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__partner_max_amount
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_maximum_amount
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_maximum_amount
 msgid "Maximum Amount"
 msgstr "Monto máximo"
 
 #. module: complement_invoice
+#: model:ir.model.fields,help:complement_invoice.field_complement_invoice_config_line__partner_max_amount
 #: model:ir.model.fields,help:complement_invoice.field_res_partner__ci_maximum_amount
 #: model:ir.model.fields,help:complement_invoice.field_res_users__ci_maximum_amount
 msgid "Maximum allowed amount for invoice"
 msgstr "Máximo permitido por Factura"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__partner_min_amount
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_minimum_amount
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_minimum_amount
 msgid "Minimum Amount"
 msgstr "Monto Mínimo"
 
 #. module: complement_invoice
+#: model:ir.model.fields,help:complement_invoice.field_complement_invoice_config_line__partner_min_amount
 #: model:ir.model.fields,help:complement_invoice.field_res_partner__ci_minimum_amount
 #: model:ir.model.fields,help:complement_invoice.field_res_users__ci_minimum_amount
 msgid "Minimum allowed amount for invoice"
@@ -155,18 +252,59 @@ msgstr "Momento de Creación"
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_monday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_monday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__1
 msgid "Monday"
 msgstr "Lunes"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move__planilla
-msgid "Planilla"
-msgstr "Planilla"
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__name
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: complement_invoice
+#: code:addons/complement_invoice/models/complement_invoice_config.py:0
+#: code:addons/foca/complement_invoice/models/complement_invoice_config.py:0
+#, python-format
+msgid "New Configuration"
+msgstr "Nueva Configuración"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__partner_id
+msgid "Partner"
+msgstr "Contacto"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__config_line_ids
+msgid "Partner Invoices"
+msgstr "Facturas de Contacto"
+
+#. module: complement_invoice
+#: model:ir.model.fields.selection,name:complement_invoice.selection__cash_control_config_type__ci_amount__partner
+msgid "Partner Pricelist"
+msgstr "Lista de Precios del Contacto"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_line__percentage
+msgid "Percentage"
+msgstr "Porcentaje"
+
+#. module: complement_invoice
+#: code:addons/complement_invoice/models/complement_invoice_config_line.py:0
+#: code:addons/foca/complement_invoice/models/complement_invoice_config_line.py:0
+#, python-format
+msgid "Percentage cannot be 0"
+msgstr "El porcentaje no puede ser 0"
 
 #. module: complement_invoice
 #: model:ir.model.fields.selection,name:complement_invoice.selection__cash_control_config_type__ci_moment_of_creation__pos_spreadsheet
 msgid "Pos Spreadsheet"
 msgstr "Planilla de POS"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__ci_product_pricelist_id
+msgid "Pricelist"
+msgstr "Lista de Precio"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__ci_product_ids
@@ -184,14 +322,20 @@ msgid ""
 "Quantity (liters / m3) per voucher since there are limitations in the south "
 "of the countrythat sales to the final consumer must not exceed 100 litres."
 msgstr ""
-"Cantidad (litros / m3) por comprobante ya que existen limitaciones en el sur del" 
-"país que las ventas a consumidor final no deben superar los 100 litros"
+"Cantidad (litros / m3) por comprobante ya que existen limitaciones en el sur"
+" delpaís que las ventas a consumidor final no deben superar los 100 litros"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_saturday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_saturday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__6
 msgid "Saturday"
 msgstr "Sábado"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__session_ids
+msgid "Sessions"
+msgstr "Sesiones"
 
 #. module: complement_invoice
 #: model:ir.model.fields,help:complement_invoice.field_cash_control_config_type__ci_moment_of_creation
@@ -199,21 +343,47 @@ msgid "Specifies when will Complement Invoices be created"
 msgstr "Especifica cuando se Crean las Facturas Complemento"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_turn__start_time
+msgid "Start Time"
+msgstr "Hora de Inicio"
+
+#. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_sunday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_sunday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__7
 msgid "Sunday"
 msgstr "Domingo"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_thursday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_thursday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__4
 msgid "Thursday"
 msgstr "Jueves"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move__total_liters
-msgid "Total Liters"
-msgstr "Total de Litros"
+#: code:addons/complement_invoice/models/cash_control_turn.py:0
+#: code:addons/foca/complement_invoice/models/cash_control_turn.py:0
+#, python-format
+msgid "Time must be greater than 0 and lesser than 24"
+msgstr "El horario debe ser mayor que 00:00 y menor a 23:59"
+
+#. module: complement_invoice
+#: code:addons/complement_invoice/models/complement_invoice_config_line.py:0
+#: code:addons/foca/complement_invoice/models/complement_invoice_config_line.py:0
+#, python-format
+msgid "Total Configuration percentage cannot exceed 100"
+msgstr "El porcentaje total de la Configuración no puede exceder 100"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__total_percentage
+msgid "Total Percentage"
+msgstr "Porcentage Total"
+
+#. module: complement_invoice
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__2
+msgid "Tuesday"
+msgstr "Martes"
 
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_tueday
@@ -222,12 +392,25 @@ msgid "Tuesday"
 msgstr "Martes"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_cash_control_session__turn_id
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__turn_id
+msgid "Turn"
+msgstr "Turno"
+
+#. module: complement_invoice
+#: model:ir.actions.act_window,name:complement_invoice.cash_control_turn_action
+#: model:ir.model.fields,field_description:complement_invoice.field_res_partner__turn_ids
+#: model:ir.model.fields,field_description:complement_invoice.field_res_users__turn_ids
+#: model_terms:ir.ui.view,arch_db:complement_invoice.cash_control_turn_view_form
+msgid "Turns"
+msgstr "Turnos"
+
+#. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__uses_complement_credit_note
 msgid "Uses Complement Credit Note"
 msgstr "Usa Notas de Crédito Complemento"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_account_move__config_uses_complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_cash_control_config_type__uses_complement_invoice
 msgid "Uses Complement Invoice"
 msgstr "Usa Factura Complemento"
@@ -235,5 +418,16 @@ msgstr "Usa Factura Complemento"
 #. module: complement_invoice
 #: model:ir.model.fields,field_description:complement_invoice.field_res_partner__ci_wednesday
 #: model:ir.model.fields,field_description:complement_invoice.field_res_users__ci_wednesday
+#: model:ir.model.fields.selection,name:complement_invoice.selection__complement_invoice_config__day__3
 msgid "Wednesday"
-msgstr "Miercoles"
+msgstr "Miércoles"
+
+#. module: complement_invoice
+#: model:ir.model,name:complement_invoice.model_complement_invoice_config
+msgid "complement.invoice.config"
+msgstr ""
+
+#. module: complement_invoice
+#: model_terms:ir.ui.view,arch_db:complement_invoice.view_partner_form
+msgid "group_string"
+msgstr ""
