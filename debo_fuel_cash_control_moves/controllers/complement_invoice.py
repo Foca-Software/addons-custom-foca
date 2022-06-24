@@ -47,6 +47,7 @@ class ComplementInvoice(Controller):
             return res
 
         except Exception as e:
+            _logger.error(e)
             if invoice_id:
                 invoice_id.button_draft()
                 invoice_id.button_cancel()
