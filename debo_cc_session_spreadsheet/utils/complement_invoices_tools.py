@@ -18,11 +18,11 @@ def check_missing_complement_invoice(spreadsheet, env):
     invoices = spreadsheet.session_id.mapped("invoice_ids")
     for key, value in fuel_sales.items():
         for invoice in invoices:
-            invoice_lines = invoice.invoice_line_ids.filtered(
+            invoice_line = invoice.invoice_line_ids.filtered(
                 lambda x, key=key: x.name == key
             )
-            if invoice_lines:
-                fuel_sales[key] -= invoice_lines.cubic_meters
+            if invoice_line:
+                fuel_sales[key] -= invoice_line.quantity
                 break
 
     # Update the amounts subtracting other dispatches
