@@ -52,7 +52,7 @@ class TransferCash(Controller):
             context = {}
             context.update(request.env.context)
             action_context = {
-                "default_orig_journal_id": cashbox_id.journal_id,
+                "default_orig_journal_id": session_id.statement_id.journal_id,
                 "default_dest_cash_control_id": cashbox_id.accumulator_cash_id.id,
                 "default_amount": amount,
                 "default_is_acum_cash_control": False,
@@ -65,7 +65,7 @@ class TransferCash(Controller):
                 .create({})
             )
             transfer_number = data.get("transfer_number", False)
-            transfer_ref = f"{cashbox_id.name}:{cashbox_id.current_session_id.id_debo}-{transfer_number}"
+            transfer_ref = f"{cashbox_id.name}:{session_id.id_debo}-{transfer_number}"
             transfer_movement = transfer_wizard.api_transfer_cash(
                 ref=transfer_ref, session_id=session_id
             )
