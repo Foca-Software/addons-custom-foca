@@ -1,8 +1,10 @@
 {
     "params":{
-        "user_id" : 6,
-        "cashbox_id" : 10,
+        "user_id" : 16,
+        "cashbox_id" : 6,
+        "planilla": "11003",
         "amount" : 500,
-        "transfer_number" : 5
+        "transfer_number" : 5,
+        "is_last_session_transfer": true
     }
 }
