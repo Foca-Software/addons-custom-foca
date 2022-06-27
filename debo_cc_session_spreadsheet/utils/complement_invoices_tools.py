@@ -17,6 +17,12 @@ def check_missing_complement_invoice(spreadsheet, env):
     # Update the amounts subtracting invoices
     invoices = spreadsheet.session_id.mapped("invoice_ids")
     for key, value in fuel_sales.items():
+        invoice_lines = invoices.mapped("invoice_line_ids").filtered(
+            lambda x, key=key: x.name == key
+        )
+        if invoice_lines:
+            fuel_sales[key] -= sum(invoice_lines.mapped("quantity"))
+
         for invoice in invoices:
             invoice_line = invoice.invoice_line_ids.filtered(
                 lambda x, key=key: x.name == key
