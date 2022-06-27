@@ -18,6 +18,7 @@
         "web",
         "debo_integration_fields",
         "debo_cc_session_states",
+        "debo_fuel_cash_control_moves",
         "fuel_tanks_cash_control",
         "debo_fuel_tanks",
     ],

@@ -24,6 +24,12 @@
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
+                    <field name="complement_invoice_check" invisible="1" />
+                    <div class="alert alert-danger text-center" attrs="{'invisible': [('complement_invoice_check', '=', True)]}" role="alert">
+                        There exists differences between the Fuel Sales and Invoiced Sales, Complement Invoice by the import
+                        <field name="complement_invoice_missing_amount" />
+                        is missing. Cash or cubic meters?
+                    </div>
                     <div>
                         <span class="o_form_label">
                             <p>Close Spreadsheet</p>
@@ -258,6 +264,14 @@
                                                         </td>
                                                         <td>
                                                             <field name="total_fuel_sales" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="background-default">
+                                                            <strong>Total Pump Tests</strong>
+                                                        </td>
+                                                        <td>
+                                                            <field name="total_pump_test_amount" widget="monetary" options="{'currency_field': 'company_currency_id'}" readonly="1" force_save="1" />
                                                         </td>
                                                     </tr>
                                                     <tr>

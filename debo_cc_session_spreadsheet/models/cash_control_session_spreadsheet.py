@@ -2,6 +2,8 @@ import json
 
 from odoo import fields, models, api
 
+from ..utils.complement_invoices_tools import check_missing_complement_invoice
+
 IN_CHECK = "account_check.account_payment_method_received_third_check"
 
 
@@ -256,6 +258,36 @@ class CashControlSessionSpreadsheet(models.Model):
         tracking=True,
     )
 
+    ##########################
+    # Complement Invoice Check
+
+    @api.depends("session_id.complement_invoice_ids")
+    def _compute_complement_invoice_check(self):
+        for record in self:
+            check_missing_complement_invoice(record, self.env)
+            if not record.session_id.complement_invoice_ids:
+                record.update({"complement_invoice_check": False})
+            else:
+                record.update({"complement_invoice_check": True})
+
+    complement_invoice_check = fields.Boolean(
+        compute=_compute_complement_invoice_check,
+        tracking=True,
+    )
+
+    @api.depends("complement_invoice_check")
+    def _compute_complement_invoice_missing_amount(self):
+        for record in self:
+            if not record.complement_invoice_check:
+                # If total_fuel_sales (product lts sold by pump and product) - total_other_dispatches (same product) - total_pump_test_amount (same product) - total invoiced sales (same product) - total credit notes (same product) > abs(0.009) -> show message
+                record.update({"complement_invoice_missing_amount": 150})
+
+    complement_invoice_missing_amount = fields.Monetary(
+        currency_field="company_currency_id",
+        compute=_compute_complement_invoice_missing_amount,
+        tracking=True,
+    )
+
     #########
     # Summary
 
@@ -353,6 +385,24 @@ class CashControlSessionSpreadsheet(models.Model):
         tracking=True,
     )
 
+    @api.depends("session_id.pump_test_line_ids")
+    def _compute_total_pump_test_amount(self):
+        for record in self:
+            record.update(
+                {
+                    "total_pump_test_amount": sum(
+                        record.session_id.mapped("pump_test_line_ids.price_total")
+                    )
+                }
+            )
+
+    total_pump_test_amount = fields.Monetary(
+        currency_field="company_currency_id",
+        compute=_compute_total_pump_test_amount,
+        store=True,
+        tracking=True,
+    )
+
     @api.depends("session_id.invoice_ids")
     def _compute_total_sales_no_oil_products(self):
         for record in self:
@@ -373,7 +423,10 @@ class CashControlSessionSpreadsheet(models.Model):
     )
 
     @api.depends(
-        "total_fuel_sales", "total_other_dispatches", "total_sales_no_oil_products"
+        "total_fuel_sales",
+        "total_pump_test_amount",
+        "total_other_dispatches",
+        "total_sales_no_oil_products",
     )
     def _compute_total_sales(self):
         for record in self:
@@ -387,6 +440,7 @@ class CashControlSessionSpreadsheet(models.Model):
                             ]
                         )
                         - record.total_other_dispatches
+                        - record.total_pump_test_amount
                     )
                 }
             )
@@ -396,7 +450,7 @@ class CashControlSessionSpreadsheet(models.Model):
         compute=_compute_total_sales,
         store=True,
         tracking=True,
-        help="Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches",
+        help="Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches - Total Pump Tests",
     )
 
     @api.depends("total_sales", "checking_account_invoices_amount")

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 12:52+0000\n"
-"PO-Revision-Date: 2022-06-17 12:52+0000\n"
+"POT-Creation-Date: 2022-06-24 08:12+0000\n"
+"PO-Revision-Date: 2022-06-24 08:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,11 @@ msgstr "<strong>Total Rendido</strong>"
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
 msgid "<strong>Total Other Dispatches</strong>"
 msgstr "<strong>Total Otros Despachos</strong>"
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid "<strong>Total Pump Tests</strong>"
+msgstr "<strong>Total Pruebas de Surtidores</strong>"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
@@ -862,14 +867,21 @@ msgstr "Total de Ventas Aforadas"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_sales
-msgid "Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches"
+msgid ""
+"Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches - Total Pump"
+" Tests"
 msgstr ""
-"Total Ventas (Aforados) + Total Ventas (No Aforados) - Total Otros Despachos"
+"Total Ventas (Aforados) - Total Pruebas Surtidores + Total Ventas (No Aforados) - Total Otros Despachos"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_other_dispatches
 msgid "Total Other Dispatches"
 msgstr "Total Otros Despachos"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_pump_test_line_ids
+msgid "Total Pump Test Line"
+msgstr "Total Pruebas Surtidores"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_sales
