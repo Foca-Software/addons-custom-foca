@@ -292,6 +292,8 @@ class CashControlSessionSpreadsheet(models.Model):
                     if abs(value) > 0.009:
                         msg += f"\n{key}: {value:.3f}"
                 record.update({"complement_invoice_status": msg})
+            else:
+                record.update({"complement_invoice_status": False})
 
     complement_invoice_status = fields.Text(
         compute=_compute_complement_invoice_status,
