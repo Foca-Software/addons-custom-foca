@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-24 08:12+0000\n"
-"PO-Revision-Date: 2022-06-24 08:12+0000\n"
+"POT-Creation-Date: 2022-06-27 23:18+0000\n"
+"PO-Revision-Date: 2022-06-27 23:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -307,6 +307,16 @@ msgstr "Código"
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__company_id
 msgid "Company"
 msgstr "Empresa"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__complement_invoice_check
+msgid "Complement Invoice Check"
+msgstr "Cheque de Factura Complementaria"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__complement_invoice_status
+msgid "Complement Invoice Status"
+msgstr "Estado de Factura Complementaria"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.actions.act_window,name:debo_cc_session_spreadsheet.action_spreadsheet_complement_invoices_wizard
@@ -832,6 +842,16 @@ msgid "Submited Total"
 msgstr "Total Rendido"
 
 #. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid ""
+"There exists differences between the Fuel Sales and the Invoices. Complement"
+" Invoices are needed by the following Fuel Sales: "
+msgstr ""
+"Existe diferencias entre las Ventas de Combustible y las Facturas. Se necesitan"
+" las Facturas complementarias para las siguientes Ventas de Combustible: "
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__ticket_number
 msgid "Ticket Number"
 msgstr "Número de Ticket"
@@ -871,7 +891,8 @@ msgid ""
 "Total Fuel Sales + Total No-Fuel Sales - Total Other Dispatches - Total Pump"
 " Tests"
 msgstr ""
-"Total Ventas (Aforados) - Total Pruebas Surtidores + Total Ventas (No Aforados) - Total Otros Despachos"
+"Total Ventas (Aforados) - Total Pruebas Surtidores + Total Ventas (No "
+"Aforados) - Total Otros Despachos"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_other_dispatches
@@ -879,8 +900,8 @@ msgid "Total Other Dispatches"
 msgstr "Total Otros Despachos"
 
 #. module: debo_cc_session_spreadsheet
-#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_pump_test_line_ids
-msgid "Total Pump Test Line"
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__total_pump_test_amount
+msgid "Total Pump Test Amount"
 msgstr "Total Pruebas Surtidores"
 
 #. module: debo_cc_session_spreadsheet

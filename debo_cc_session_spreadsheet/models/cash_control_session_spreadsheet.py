@@ -1,10 +1,13 @@
 import json
+import logging
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 
-from ..utils.complement_invoices_tools import check_missing_complement_invoice
+from ..utils.complement_invoices_tools import check_fuel_sales_conciliation
 
 IN_CHECK = "account_check.account_payment_method_received_third_check"
+
+_logger = logging.getLogger(__name__)
 
 
 def add_to_product_list(products: dict, name: str, line: models.Model) -> dict:
@@ -264,11 +267,12 @@ class CashControlSessionSpreadsheet(models.Model):
     @api.depends("session_id.complement_invoice_ids")
     def _compute_complement_invoice_check(self):
         for record in self:
-            check_missing_complement_invoice(record, self.env)
-            if not record.session_id.complement_invoice_ids:
-                record.update({"complement_invoice_check": False})
-            else:
-                record.update({"complement_invoice_check": True})
+            fuel_sales = check_fuel_sales_conciliation(record)
+            record.update({"complement_invoice_check": False})
+            for key, value in fuel_sales.items():
+                if abs(value) > 0.009:
+                    record.update({"complement_invoice_check": True})
+                    break
 
     complement_invoice_check = fields.Boolean(
         compute=_compute_complement_invoice_check,
@@ -276,15 +280,21 @@ class CashControlSessionSpreadsheet(models.Model):
     )
 
     @api.depends("complement_invoice_check")
-    def _compute_complement_invoice_missing_amount(self):
+    def _compute_complement_invoice_status(self):
         for record in self:
-            if not record.complement_invoice_check:
-                # If total_fuel_sales (product lts sold by pump and product) - total_other_dispatches (same product) - total_pump_test_amount (same product) - total invoiced sales (same product) - total credit notes (same product) > abs(0.009) -> show message
-                record.update({"complement_invoice_missing_amount": 150})
+            if record.complement_invoice_check:
+                fuel_sales = check_fuel_sales_conciliation(record)
+                msg = _(
+                    "There exists differences between the Fuel Sales and the Invoices. "
+                    "Complement Invoices are needed by the following Fuel Sales: "
+                )
+                for key, value in fuel_sales.items():
+                    if abs(value) > 0.009:
+                        msg += f"\n{key}: {value:.3f}"
+                record.update({"complement_invoice_status": msg})
 
-    complement_invoice_missing_amount = fields.Monetary(
-        currency_field="company_currency_id",
-        compute=_compute_complement_invoice_missing_amount,
+    complement_invoice_status = fields.Text(
+        compute=_compute_complement_invoice_status,
         tracking=True,
     )
 

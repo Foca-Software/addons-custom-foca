@@ -25,10 +25,8 @@
                 </header>
                 <sheet>
                     <field name="complement_invoice_check" invisible="1" />
-                    <div class="alert alert-danger text-center" attrs="{'invisible': [('complement_invoice_check', '=', True)]}" role="alert">
-                        There exists differences between the Fuel Sales and Invoiced Sales, Complement Invoice by the import
-                        <field name="complement_invoice_missing_amount" />
-                        is missing. Cash or cubic meters?
+                    <div class="alert alert-danger text-left" style="margin: 1% 25%;" attrs="{'invisible': [('complement_invoice_check', '=', False)]}" role="alert">
+                        <field name="complement_invoice_status" />
                     </div>
                     <div>
                         <span class="o_form_label">
