@@ -1,6 +1,6 @@
 from odoo import models, _
 from odoo.exceptions import UserError
-
+import logging
 
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
@@ -40,3 +40,24 @@ class CashControlSession(models.Model):
             "target": "current",
             "res_id": spreadsheet.id,
         }
+
+    def close_statement_id(self, session_difference: float = 0):
+        """manipulates statement values to match spreadsheet closing values
+
+        Args:
+            session_difference (float, optional): spreadsheet_id.session_difference. Defaults to 0.
+        """
+        for session in self:
+            statement_id = session.statement_id
+            statement_id.update(
+                {"balance_end_real": statement_id.balance_end + session_difference}
+            )
+            statement_id.button_confirm_bank()
+
+    def reopen_statement_id(self):
+        """
+        Statement should reopen and delete difference lines created when spreadsheet was confirmed
+        """
+        for session in self:
+            statement_id = session.statement_id
+            statement_id.revert_difference_line()

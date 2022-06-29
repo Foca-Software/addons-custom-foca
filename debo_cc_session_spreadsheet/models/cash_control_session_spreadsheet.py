@@ -127,6 +127,7 @@ class CashControlSessionSpreadsheet(models.Model):
         self.ensure_one()
         self.update({"state": "validated"})
         self.session_id.update({"state": "final_close"})
+        self.action_close_statement()
 
     def action_spreadsheet_draft(self):
         """
@@ -136,6 +137,7 @@ class CashControlSessionSpreadsheet(models.Model):
         self.ensure_one()
         self.update({"state": "draft"})
         self.session_id.update({"state": "spreadsheet_control"})
+        self.action_reopen_statement()
 
     #############################
     # Cash Control Session fields
@@ -559,3 +561,11 @@ class CashControlSessionSpreadsheet(models.Model):
             spreadsheet.update({"total_fuel_sales": total_fuel_sales})
             return json.dumps(res)
         return False
+
+    def action_close_statement(self):
+        for spreadsheet in self:
+            spreadsheet.session_id.close_statement_id(spreadsheet.session_difference)
+
+    def action_reopen_statement(self):
+        for spreadsheet in self:
+            spreadsheet.session_id.reopen_statement_id()
