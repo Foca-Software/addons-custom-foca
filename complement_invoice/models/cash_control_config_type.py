@@ -28,34 +28,36 @@ class CashControlConfigType(models.Model):
             ("is_fuel", "=", True),
         ]
 
-
     ci_product_ids = fields.Many2many(
-        comodel_name="product.product", string="Products", domain=_product_ids_domain, store=True
+        comodel_name="product.product",
+        string="Products",
+        domain=_product_ids_domain,
+        store=True,
     )
     ci_amount = fields.Selection(
-        [("pump", "Pump"), ("manual", "Manual"),('partner',"Partner Pricelist")], string="Amount for products"
+        [("pump", "Pump"), ("manual", "Manual"), ("partner", "Partner Pricelist")],
+        string="Amount for products",
     )
-    # Manual -> elegir lista de precios
-    ci_product_pricelist_id = fields.Many2one(comodel_name="product.pricelist", string="Pricelist")
-    # d:
+    ci_product_pricelist_id = fields.Many2one(
+        comodel_name="product.pricelist", string="Pricelist"
+    )
     ci_restricts_liters = fields.Boolean()
     ci_liter_max_amount = fields.Float(
         string="Max liters per invoice",
         default=100.0,
         help="Quantity (liters / m3) per voucher since there are limitations in the south of the country"
-            "that sales to the final consumer must not exceed 100 litres.",
+        " that sales to the final consumer must not exceed 100 litres.",
     )
     uses_complement_credit_note = fields.Boolean()
 
     creates_ci_in_pos = fields.Boolean()
     creates_ci_in_cloud = fields.Boolean()
 
-    @api.onchange('ci_moment_of_creation')
+    @api.onchange("ci_moment_of_creation")
     def _onchange_ci_moment_of_creation(self):
-        if self.ci_moment_of_creation in ['cloud_spreadsheet']:
+        if self.ci_moment_of_creation in ["cloud_spreadsheet"]:
             self.creates_ci_in_cloud = True
             self.creates_ci_in_pos = False
-        if self.ci_moment_of_creation in ['pos_closing','pos_spreadsheet']:
+        if self.ci_moment_of_creation in ["pos_closing", "pos_spreadsheet"]:
             self.creates_ci_in_pos = True
             self.creates_ci_in_cloud = False
-    # ----------
