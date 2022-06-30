@@ -1,0 +1,76 @@
+{
+    "config": [
+        {
+            "id": 1,
+            "day": "2",
+            "cash_control_config_id": [
+                4,
+                "Playa T1 Noche"
+            ]
+        }
+    ],
+    "lines": [
+        {
+            "id": 3,
+            "partner_id": [
+                136695,
+                "13 DE AGOSTO S.R.L."
+            ],
+            "product_id": [
+                127907,
+                "[NAFTA INFINIA] NAFTA INFINIA"
+            ],
+            "percentage": 91.0,
+            "partner_max_amount": 0.0,
+            "partner_min_amount": 0.0
+        },
+        {
+            "id": 4,
+            "partner_id": [
+                149526,
+                "17 DE ABRIL  S.A."
+            ],
+            "product_id": [
+                127910,
+                "[INFINIA DIESEL] INFINIA DIESEL"
+            ],
+            "percentage": 50.0,
+            "partner_max_amount": 0.0,
+            "partner_min_amount": 500.0
+        }
+    ],
+    "summary": [
+        {
+            "id": 1,
+            "product_id": [
+                127910,
+                "[INFINIA DIESEL] INFINIA DIESEL"
+            ],
+            "percentage": 50.0
+        },
+        {
+            "id": 2,
+            "product_id": [
+                127907,
+                "[NAFTA INFINIA] NAFTA INFINIA"
+            ],
+            "percentage": 91.0
+        },
+        {
+            "id": 3,
+            "product_id": [
+                127908,
+                "[NAFTA SUPER] NAFTA SUPER"
+            ],
+            "percentage": 0.0
+        },
+        {
+            "id": 4,
+            "product_id": [
+                127909,
+                "[ULTRADIESEL] ULTRADIESEL"
+            ],
+            "percentage": 0.0
+        }
+    ]
+}

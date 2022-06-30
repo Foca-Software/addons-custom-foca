@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <form string="Complement Invoice Configuration">
                 <sheet>
+                <button name="action_test_read" type="object" string="ObjectButton"/>
                     <group>
                         <group>
                             <field name="day" required="1"/>
