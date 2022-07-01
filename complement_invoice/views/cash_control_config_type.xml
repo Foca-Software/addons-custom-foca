@@ -15,10 +15,11 @@
                         <field name="ci_moment_of_creation"/>
                         <field name="ci_product_ids" widget="many2many_tags"/>
                         <field name="ci_amount"/>
+                        <field name="ci_product_pricelist_id" attrs="{'invisible':[('ci_amount','!=','manual')]}"/>
                         <field name="ci_restricts_liters"/>
                         <field name="ci_liter_max_amount" attrs="{'invisible':[('ci_restricts_liters','=',False)]}"/>
-                        <field name="creates_ci_in_pos" invisible="0"/>
-                        <field name="creates_ci_in_cloud" invisible="0"/>
+                        <field name="creates_ci_in_pos" invisible="1"/>
+                        <field name="creates_ci_in_cloud" invisible="1"/>
                     </group>
                 </page>
             </xpath>

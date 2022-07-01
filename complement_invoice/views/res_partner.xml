@@ -8,45 +8,16 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Complement Invoices" name="complement_invoices">
-                    <group>
-                        <group>
-                            <!-- <field name="ci_minimum_amount" />
-                            <field name="ci_maximum_amount" />
-                            <field name="complement_percentage"/> -->
-                            <field name="complement_invoice_ids">
-                                <tree limit="10">
-                                    <field name="name"/>
-                                    <field name="invoice_date_due"/>
-                                    <field name="amount_total_signed"/>
-                                    <field name="state" optional="hide"/>
-                                    <field name="invoice_payment_state" optional="hide"/>
-                                </tree>
-                            </field>
-                        </group>
-                        <group string="Configuration" name="ci_config_lines">
-                        <field name="complement_invoice_config_line_ids" context="{'default_partner_id':active_id}" nolabel="1">
-                            <tree>
-                                <field name="config_id_day"/>
-                                <field name="config_id"/>
-                                <field name="product_id"/>
-                                <field name="percentage"/>
+                    <group string="Complement Invoices">
+                        <field name="complement_invoice_ids" nolabel="1" readonly="1">
+                            <tree limit="10">
+                                <field name="name"/>
+                                <field name="invoice_date_due"/>
+                                <field name="amount_total_signed"/>
+                                <field name="state"/>
+                                <field name="invoice_payment_state"/>
                             </tree>
-                            <form>
-                                <sheet>
-                                    <group>
-                                        <group>
-                                            <field name="config_id"/>
-                                            <field name="config_id_day"/>
-                                        </group>
-                                        <group>
-                                            <field name="product_id"/>
-                                            <field name="percentage"/>
-                                        </group>
-                                    </group>
-                                </sheet>
-                            </form>
                         </field>
-                        </group>
                     </group>
                 </page>
             </xpath>
