@@ -201,7 +201,9 @@ class CashControlSessionSpreadsheet(models.Model):
     @api.depends("session_id.transfer_ids")
     def _compute_cash(self):
         for record in self:
-            record.update({"cash": sum(self.session_id.mapped("transfer_ids.amount"))})
+            record.update(
+                {"cash": abs(sum(self.session_id.mapped("transfer_ids.amount")))}
+            )
 
     cash = fields.Monetary(
         compute=_compute_cash,
