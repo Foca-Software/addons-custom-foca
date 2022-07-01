@@ -289,17 +289,22 @@ class CashControlSessionSpreadsheet(models.Model):
             if record.complement_invoice_check:
                 fuel_sales = check_fuel_sales_conciliation(record)
                 msg = _(
-                    "There exists differences between the Fuel Sales and the Invoices. "
-                    "Complement Invoices are needed by the following Fuel Sales: "
+                    "<p>There exists differences between the Fuel Sales and the Invoices. "
+                    "Complement Invoices are needed by the following Fuel Sales: </p>"
+                    "<ul>"
                 )
                 for key, value in fuel_sales.items():
                     if abs(value) > 0.009:
-                        msg += f"\n{key}: {value:.3f}"
+                        if value > 0:
+                            msg += f"<li>{key}: <span style='color: red;'>{value:.3f}</span> lts.</li>"
+                        else:
+                            msg += f"<li>{key}: <span style='color: blue;'>{value:.3f}</span> lts.</li>"
+                msg += "</ul>"
                 record.update({"complement_invoice_status": msg})
             else:
                 record.update({"complement_invoice_status": False})
 
-    complement_invoice_status = fields.Text(
+    complement_invoice_status = fields.Html(
         compute=_compute_complement_invoice_status,
         tracking=True,
     )
