@@ -17,5 +17,5 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base",'complement_invoice'],
+    "depends": ["base",'complement_invoice','send_debo_fields'],
 }
