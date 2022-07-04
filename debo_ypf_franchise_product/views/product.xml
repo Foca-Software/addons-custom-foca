@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- product.template inherit form view -->
+    <record id="add_ypf_fields" model="ir.ui.view">
+        <field name="name">product.product.inherit.view.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[last()]" position="inside">
+                <page string="YPF FULL" name="ypf_franchise" attrs="{'invisible':[('is_ypf_franchise_product','=',False)]}">
+                <group name="ypf_fields" string="Configuration">
+                    <group>
+                        <field name="ypf_description"/>
+                        <field name="ypf_internal_code"/>
+                        <field name="ypf_code_bar"/>
+                        <field name="ypf_product_category_id"/>
+                        <field name="ypf_major_product_category_id"/>
+                    </group>
+                    <group>
+                        <field name="ypf_product_uom_id"/>
+                        <field name="ypf_pricelist"/>
+                        <field name="ypf_price"/>
+                        <field name="ypf_tax_ids" widget="many2many_tags"/>
+                        <field name="store_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- product.template inherit form view -->
+    <record id="add_is_ypf_product" model="ir.ui.view">
+        <field name="name">product.template.inherit.view.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">            
+            <xpath expr="//div[@name='options']" position="inside">
+                <div>
+                    <field name="is_ypf_franchise_product"/>
+                    <label for="is_ypf_franchise_product"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

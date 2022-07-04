@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <record id="YPF_Franchise" model="franchise.franchise">
+            <field name="name">YPF FULL</field>
+            <field name="description">Franquicia de YPF FULL</field>
+        </record>
+    </data>
+</odoo>
