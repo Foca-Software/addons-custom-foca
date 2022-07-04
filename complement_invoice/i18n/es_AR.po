@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-30 22:25+0000\n"
-"PO-Revision-Date: 2022-06-30 22:25+0000\n"
+"POT-Creation-Date: 2022-07-04 16:09+0000\n"
+"PO-Revision-Date: 2022-07-04 16:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,6 +57,11 @@ msgid "Cloud Spreadsheet"
 msgstr "Planilla de Cloud"
 
 #. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__company_id
+msgid "Company"
+msgstr "Companía"
+
+#. module: complement_invoice
 #: model:ir.ui.menu,name:complement_invoice.complement_invoice_config_menu_act
 #: model_terms:ir.ui.view,arch_db:complement_invoice.cash_control_config_type_view_form
 msgid "Complement Invoice"
@@ -98,6 +103,11 @@ msgstr "Facturas Complementos"
 #: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config_summary__config_id
 msgid "Config"
 msgstr "Configuración"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__config_line_ids
+msgid "Configuration Lines"
+msgstr "Lineas de Configuración"
 
 #. module: complement_invoice
 #: model:ir.model,name:complement_invoice.model_res_partner
@@ -248,11 +258,6 @@ msgid "Partner"
 msgstr "Contacto"
 
 #. module: complement_invoice
-#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__config_line_ids
-msgid "Partner Invoices"
-msgstr "Facturas de Contacto"
-
-#. module: complement_invoice
 #: model:ir.model.fields.selection,name:complement_invoice.selection__cash_control_config_type__ci_amount__partner
 msgid "Partner Pricelist"
 msgstr "Lista de Precios del Contacto"
@@ -268,6 +273,11 @@ msgstr "Porcentaje"
 #, python-format
 msgid "Percentage cannot be 0"
 msgstr "El porcentaje no puede ser 0"
+
+#. module: complement_invoice
+#: model:ir.model.fields,field_description:complement_invoice.field_complement_invoice_config__perceptions_apply
+msgid "Perceptions Apply"
+msgstr "Aplican Percepciones"
 
 #. module: complement_invoice
 #: model:ir.model.fields.selection,name:complement_invoice.selection__cash_control_config_type__ci_moment_of_creation__pos_spreadsheet

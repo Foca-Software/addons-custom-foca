@@ -9,6 +9,13 @@ class ComplementInvoiceConfig(models.Model):
     _name = "complement.invoice.config"
     _description = "complement Invoice Configuration"
 
+
+    company_id = fields.Many2one(
+        comodel_name="res.company", compute="_compute_company_id"
+    )
+
+    perceptions_apply = fields.Boolean()
+
     name = fields.Char(compute="_compute_name")
     day = fields.Selection(
         selection=[
@@ -24,7 +31,7 @@ class ComplementInvoiceConfig(models.Model):
     config_line_ids = fields.One2many(
         comodel_name="complement.invoice.config.line",
         inverse_name="config_id",
-        string="Partner Invoices",
+        string="Configuration Lines",
     )
 
     cash_control_config_id = fields.Many2one(
@@ -39,12 +46,18 @@ class ComplementInvoiceConfig(models.Model):
 
     total_percentage = fields.Float(compute="_compute_total_percentage")
 
+    def _compute_company_id(self):
+        for config in self:
+            config.company_id = (
+                config.cash_control_config_id.company_id or self.env.company
+            )
+
     def _compute_total_percentage(self):
         for config in self:
             if config.config_line_ids:
-                total = sum(config.config_line_ids.mapped('percentage'))
+                total = sum(config.config_line_ids.mapped("percentage"))
                 lines = len(config.summary_ids)
-                config.total_percentage = total/lines
+                config.total_percentage = total / lines
             else:
                 config.config_line_ids = 0
 
