@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_ypf_franchise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-04 23:04+0000\n"
+"PO-Revision-Date: 2022-07-04 23:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_ypf_franchise
+#: model:ir.model.fields,field_description:debo_ypf_franchise.field_res_store__is_ypf_franchise
+msgid "Is Ypf Franchise"
+msgstr "Es Franquicia YPF"
+
+#. module: debo_ypf_franchise
+#: model:ir.model,name:debo_ypf_franchise.model_res_store
+msgid "Stores"
+msgstr "Sucursales"

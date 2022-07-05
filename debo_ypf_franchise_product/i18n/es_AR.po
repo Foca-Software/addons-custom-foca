@@ -1,0 +1,178 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_ypf_franchise_product
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-04 23:25+0000\n"
+"PO-Revision-Date: 2022-07-04 23:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__code
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__code
+msgid "Code"
+msgstr "Código"
+
+#. module: debo_ypf_franchise_product
+#: model_terms:ir.ui.view,arch_db:debo_ypf_franchise_product.add_ypf_fields
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__create_uid
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__create_date
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__display_name
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__id
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__id
+msgid "ID"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_pricelist__is_ypf_pricelist
+msgid "Is YPF Pricelist"
+msgstr "Lista de Precios de YPF"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_account_tax__is_ypf_tax
+msgid "Is YPF Tax"
+msgstr "Impuesto de YPF"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__is_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_template__is_ypf_franchise_product
+msgid "Is Ypf Franchise Product"
+msgstr "Es Producto Franquiciado YPF"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category____last_update
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__write_uid
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__write_date
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__name
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_product_pricelist
+msgid "Pricelist"
+msgstr "Tarifa"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_product_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__product_ids
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_product_category__product_ids
+msgid "Product"
+msgstr "Producto"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__store_ids
+msgid "Store"
+msgstr "Sucursal"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: debo_ypf_franchise_product
+#: model_terms:ir.ui.view,arch_db:debo_ypf_franchise_product.add_ypf_fields
+msgid "YPF FULL"
+msgstr ""
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_ypf_major_product_category
+msgid "YPF Major Product Category"
+msgstr "Rubro Mayor"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_price
+msgid "YPF Price"
+msgstr "Precio"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model,name:debo_ypf_franchise_product.model_ypf_product_category
+msgid "YPF Product Category"
+msgstr "Rubro"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_code_bar
+msgid "Ypf Code Bar"
+msgstr "Código de Barra"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_description
+msgid "Ypf Description"
+msgstr "Descripción"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_internal_code
+msgid "Ypf Internal Code"
+msgstr "Código Interno"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_major_product_category_id
+msgid "Ypf Major Product Category"
+msgstr "Rubro Mayor"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_pricelist
+msgid "Ypf Pricelist"
+msgstr "Tarifa"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_product_category_id
+msgid "Ypf Product Category"
+msgstr "Rubro"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_product_uom_id
+msgid "Ypf Product Uom"
+msgstr "Unidad de Medida"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_tax_ids
+msgid "Ypf Tax"
+msgstr "Impuestos"
