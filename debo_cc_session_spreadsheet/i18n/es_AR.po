@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 23:18+0000\n"
-"PO-Revision-Date: 2022-06-27 23:18+0000\n"
+"POT-Creation-Date: 2022-07-05 11:05+0000\n"
+"PO-Revision-Date: 2022-07-05 11:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
 msgid "$ 0,00"
 msgstr ""
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid ""
+"<p>There exists differences between the Fuel Sales and the Invoices. "
+"Complement Invoices are needed by the following Fuel Sales: </p><ul>"
+msgstr ""
+"<p>Existen diferencias entre las Ventas de Aforados y las Facturas. "
+"Se necesitan las Facturas Complemento por las siguientes Ventas: </p><ul>"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
@@ -148,9 +158,21 @@ msgid "Amount Sign"
 msgstr ""
 
 #. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Amount:"
+msgstr "Importe:"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_attachment_count
 msgid "Attachment Count"
 msgstr "Cantidad de Adjuntos"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model,name:debo_cc_session_spreadsheet.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Extracto bancario"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model,name:debo_cc_session_spreadsheet.model_account_bank_statement_line
@@ -260,6 +282,12 @@ msgid "Cash control session must have an id_debo"
 msgstr "Un turno debe tener un ID Debo."
 
 #. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/account_bank_statement.py:0
+#, python-format
+msgid "Cash difference observed during the counting (%s)"
+msgstr "Diferencia de efectivo observada durante la cuenta (%s)"
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
@@ -284,6 +312,14 @@ msgstr "Cheques"
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__checks_amount
 msgid "Checks Amount"
 msgstr "Monto de Cheques"
+
+#. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Close"
+msgstr "Cerrar"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session
@@ -398,6 +434,13 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Edit"
+msgstr "Editar"
+
+#. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_cards_details_wizard
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_checks_wizard
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.spreadsheet_complement_invoices_wizard
@@ -418,6 +461,13 @@ msgstr "Gastos"
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Final"
+msgstr ""
+
+#. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Final:"
 msgstr ""
 
 #. module: debo_cc_session_spreadsheet
@@ -507,6 +557,13 @@ msgid "Initial"
 msgstr "Inicial"
 
 #. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Initial:"
+msgstr "Inicial:"
+
+#. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__invoice_ref
 msgid "Invoice Reference"
 msgstr "Referencia de Factura"
@@ -556,10 +613,23 @@ msgid "Last Updated on"
 msgstr "Última modificación el"
 
 #. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/account_bank_statement.py:0
+#, python-format
+msgid "Loss"
+msgstr "Pérdidas"
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #, python-format
 msgid "Lts/m³"
+msgstr ""
+
+#. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Lts/m³:"
 msgstr ""
 
 #. module: debo_cc_session_spreadsheet
@@ -692,6 +762,16 @@ msgid "Payment Reference"
 msgstr "Referencia de Pago"
 
 #. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/account_bank_statement.py:0
+#, python-format
+msgid ""
+"Please go on the %s journal and define a %s Account. This account will be "
+"used to record cash difference."
+msgstr ""
+"Vaya al diario %s y defina una cuenta %s . Esta cuenta se usará para "
+"registrar la diferencia de efectivo."
+
+#. module: debo_cc_session_spreadsheet
 #. openerp-web
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
 #: code:addons/debo_cc_session_spreadsheet/static/src/xml/product_sales_list_widget_template.xml:0
@@ -712,6 +792,19 @@ msgstr "Widget de lista de productos"
 #, python-format
 msgid "Products"
 msgstr "Productos"
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/account_bank_statement.py:0
+#, python-format
+msgid "Profit"
+msgstr "Beneficio"
+
+#. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Pump:"
+msgstr "Surtidor:"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
@@ -742,6 +835,13 @@ msgstr "Error de entrega de SMS"
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__sale_orders_not_invoiced_amount
 msgid "Sale Orders Not Invoiced Amount"
 msgstr "Monto de Órdenes de Venta no facturadas"
+
+#. module: debo_cc_session_spreadsheet
+#. openerp-web
+#: code:addons/debo_cc_session_spreadsheet/static/src/xml/fuel_detailed_list_widget_template.xml:0
+#, python-format
+msgid "Save"
+msgstr "Guardar"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__session_bank_statement_id
@@ -842,14 +942,14 @@ msgid "Submited Total"
 msgstr "Total Rendido"
 
 #. module: debo_cc_session_spreadsheet
-#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#: code:addons/debo_cc_session_spreadsheet/models/account_bank_statement.py:0
 #, python-format
 msgid ""
-"There exists differences between the Fuel Sales and the Invoices. Complement"
-" Invoices are needed by the following Fuel Sales: "
+"The ending balance is incorrect !\n"
+"The expected balance (%s) is different from the computed one. (%s)"
 msgstr ""
-"Existe diferencias entre las Ventas de Combustible y las Facturas. Se necesitan"
-" las Facturas complementarias para las siguientes Ventas de Combustible: "
+"¡El balance final es incorrecto!\n"
+"El balance esperado (%s) es diferente del calculado. (%s)"
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__ticket_number

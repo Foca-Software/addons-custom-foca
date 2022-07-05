@@ -53,7 +53,7 @@
                                 <th scope="col">Manual</th>
                                 <th scope="col">Lts/m³</th>
                                 <th scope="col">Amount</th>
-                                <th width="5%">Edit</th>
+                                <th width="4%">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="fuelsDetailedTable"></tbody>
@@ -64,7 +64,10 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editPumpModalLabel">Pump: </h5>
+                            <h5 class="modal-title" id="editPumpModalLabel">
+                                Pump:
+                                <span id="modalTitleInfo"></span>
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-times"></i>
                             </button>
@@ -72,6 +75,7 @@
                         <div class="modal-body">
                             <form style="display: flex; justify-content: space-around;">
                                 <input type="text" class="d-none" id="line_id" />
+                                <input type="text" class="d-none" id="price" />
                                 <div class="form-group">
                                     <label for="initial_qty" class="col-form-label">Initial:</label>
                                     <input type="text" class="form-control" id="initial_qty" />

@@ -51,6 +51,7 @@ odoo.define(
                             <button class="edit-pump-button btn btn-default m-0 p-0" data-toggle="modal" 
                                 data-target="#editPumpModal"
                                 data-id=${pump.id}
+                                data-price=${formant_currency(pump.price)}
                                 data-id_debo=${pump.id_debo}
                                 data-code=${pump.code}
                                 data-initial_qty=${pump.initial_qty}
@@ -132,6 +133,7 @@ odoo.define(
                 $("#editPumpModal").on("show.bs.modal", function (event) {
                     const button = $(event.relatedTarget);
                     const line_id = button.data("id");
+                    const price = button.data("price");
                     const id_debo = button.data("id_debo");
                     const code = button.data("code");
                     const initial_qty = button.data("initial_qty");
@@ -140,12 +142,50 @@ odoo.define(
                     const amount = button.data("amount");
 
                     const modal = $(this);
-                    modal.find(".modal-title").append(id_debo + " - " + code);
+                    modal.find("#modalTitleInfo").text(id_debo + " - " + code);
                     modal.find(".modal-body #line_id").val(line_id);
+                    modal.find(".modal-body #price").val(price);
                     modal.find(".modal-body #initial_qty").val(initial_qty);
                     modal.find(".modal-body #final_qty").val(final_qty);
                     modal.find(".modal-body #cubic_meters").val(cubic_meters);
                     modal.find(".modal-body #amount").val(amount);
+
+                    const initial_qtyInput =
+                        document.querySelector("#initial_qty");
+                    const final_qtyInput = document.querySelector("#final_qty");
+                    const cubic_metersInput =
+                        document.querySelector("#cubic_meters");
+                    const amountInput = document.querySelector("#amount");
+
+                    initial_qtyInput.addEventListener("change", (event) => {
+                        final_qtyInput.value =
+                            Number(event.target.value) +
+                            Number(cubic_metersInput.value);
+                        amountInput.value = formant_currency(
+                            Number(cubic_metersInput.value) *
+                                Number(price.replace("$", "").replace(",", "."))
+                        );
+                    });
+
+                    final_qtyInput.addEventListener("change", (event) => {
+                        cubic_metersInput.value =
+                            Number(event.target.value) -
+                            Number(initial_qtyInput.value);
+                        amountInput.value = formant_currency(
+                            Number(cubic_metersInput.value) *
+                                Number(price.replace("$", "").replace(",", "."))
+                        );
+                    });
+
+                    cubic_metersInput.addEventListener("change", (event) => {
+                        final_qtyInput.value =
+                            Number(event.target.value) +
+                            Number(initial_qtyInput.value);
+                        amountInput.value = formant_currency(
+                            Number(cubic_metersInput.value) *
+                                Number(price.replace("$", "").replace(",", "."))
+                        );
+                    });
                 });
             },
 
@@ -156,10 +196,6 @@ odoo.define(
                 const final_qty = document.querySelector("#final_qty").value;
                 const cubic_meters =
                     document.querySelector("#cubic_meters").value;
-                console.log(id);
-                console.log(initial_qty);
-                console.log(final_qty);
-                console.log(cubic_meters);
 
                 ajax.rpc(
                     "/web/dataset/call_kw/cash.control.session.spreadsheet/update_pump",
@@ -174,8 +210,8 @@ odoo.define(
                         const data = JSON.parse(response);
                         console.log(data);
                         if (data.success) {
-                            $("#editPumpModal").modal("hide");
-                            this.renderList();
+                            // TODO: improve the row update to avoid this reload
+                            document.location.reload(true);
                         }
                     }
                 });

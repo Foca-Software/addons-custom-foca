@@ -580,12 +580,21 @@ class CashControlSessionSpreadsheet(models.Model):
 
     @api.model
     def update_pump(self, line_id, initial_qty, final_qty, cubic_meters):
-        fuel_move_line = self.env["fuel.move.line"].browse(line_id)
+        fuel_move_line = self.env["fuel.move.line"].browse(int(line_id))
+        amount = fuel_move_line.price * float(cubic_meters)
         fuel_move_line.update(
             {
                 "initial_qty": initial_qty,
                 "final_qty": final_qty,
                 "cubic_meters": cubic_meters,
+                "amount": amount,
             }
         )
+        spreadsheet = self.env["cash.control.session.spreadsheet"].search(
+            [("session_id", "=", fuel_move_line.session_id.id)]
+        )
+        total_fuel_sales = sum(
+            fuel_move_line.session_id.mapped("fuel_move_ids").mapped("amount")
+        )
+        spreadsheet.update({"total_fuel_sales": total_fuel_sales})
         return json.dumps({"success": True})
