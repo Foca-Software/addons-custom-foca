@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
 
-    <!-- product.template inherit form view -->
+
     <record id="add_is_ypf_product" model="ir.ui.view">
         <field name="name">product.template.inherit.view.form</field>
         <field name="model">product.template</field>
@@ -15,7 +15,8 @@
             </xpath>
         </field>
     </record>
-    <!-- product.template inherit form view -->
+
+
     <record id="add_ypf_fields" model="ir.ui.view">
         <field name="name">product.product.inherit.view.form</field>
         <field name="model">product.product</field>
