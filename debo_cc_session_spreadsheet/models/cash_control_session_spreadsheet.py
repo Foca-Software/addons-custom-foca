@@ -60,6 +60,7 @@ def add_to_fuel_list(fuels: dict, name: str, line: models.Model) -> dict:
     """
 
     vals = {
+        "id": line.id,
         "price": line.price,
         "id_debo": line.pump_id_debo,
         "code": line.pump_code,
@@ -138,6 +139,14 @@ class CashControlSessionSpreadsheet(models.Model):
         self.update({"state": "draft"})
         self.session_id.update({"state": "spreadsheet_control"})
         self.action_reopen_statement()
+
+    def action_close_statement(self):
+        for spreadsheet in self:
+            spreadsheet.session_id.close_statement_id(spreadsheet.session_difference)
+
+    def action_reopen_statement(self):
+        for spreadsheet in self:
+            spreadsheet.session_id.reopen_statement_id()
 
     #############################
     # Cash Control Session fields
@@ -569,10 +578,14 @@ class CashControlSessionSpreadsheet(models.Model):
             return json.dumps(res)
         return False
 
-    def action_close_statement(self):
-        for spreadsheet in self:
-            spreadsheet.session_id.close_statement_id(spreadsheet.session_difference)
-
-    def action_reopen_statement(self):
-        for spreadsheet in self:
-            spreadsheet.session_id.reopen_statement_id()
+    @api.model
+    def update_pump(self, line_id, initial_qty, final_qty, cubic_meters):
+        fuel_move_line = self.env["fuel.move.line"].browse(line_id)
+        fuel_move_line.update(
+            {
+                "initial_qty": initial_qty,
+                "final_qty": final_qty,
+                "cubic_meters": cubic_meters,
+            }
+        )
+        return json.dumps({"success": True})

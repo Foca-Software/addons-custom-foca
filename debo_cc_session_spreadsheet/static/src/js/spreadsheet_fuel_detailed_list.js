@@ -34,7 +34,7 @@ odoo.define(
                     total += pump.amount || 0;
                     fuelDetailed.insertAdjacentHTML(
                         "beforeend",
-                        `<tr>
+                        `<tr id=${pump.id}>
                             <td class="text-center">
                                 ${formant_currency(pump.price)}
                             </td>
@@ -46,6 +46,18 @@ odoo.define(
                             <td class="text-center">${pump.cubic_meters}</td>
                             <td class="text-center">
                                 ${formant_currency(pump.amount)}
+                            </td>
+                            <td class="text-center">
+                            <button class="edit-pump-button btn btn-default m-0 p-0" data-toggle="modal" 
+                                data-target="#editPumpModal"
+                                data-id=${pump.id}
+                                data-id_debo=${pump.id_debo}
+                                data-code=${pump.code}
+                                data-initial_qty=${pump.initial_qty}
+                                data-final_qty=${pump.final_qty}
+                                data-cubic_meters=${pump.cubic_meters}
+                                data-amount=${formant_currency(pump.amount)}
+                            ><i class="fa fa-pencil-square"></i></button>
                             </td>
                         </tr>`
                     );
@@ -82,6 +94,11 @@ odoo.define(
             template:
                 "debo_cc_session_spreadsheet.fuel_detailed_list_widget_template",
 
+            events: {
+                "click .edit-pump-button": "editPump",
+                "click .save-pump-button": "savePump",
+            },
+
             start() {
                 this._super.apply(this, arguments);
                 this.renderList();
@@ -109,6 +126,59 @@ odoo.define(
                 };
                 await waitForElm("#fuelsDetailedTable");
                 getFuels(this.record.res_id);
+            },
+
+            editPump() {
+                $("#editPumpModal").on("show.bs.modal", function (event) {
+                    const button = $(event.relatedTarget);
+                    const line_id = button.data("id");
+                    const id_debo = button.data("id_debo");
+                    const code = button.data("code");
+                    const initial_qty = button.data("initial_qty");
+                    const final_qty = button.data("final_qty");
+                    const cubic_meters = button.data("cubic_meters");
+                    const amount = button.data("amount");
+
+                    const modal = $(this);
+                    modal.find(".modal-title").append(id_debo + " - " + code);
+                    modal.find(".modal-body #line_id").val(line_id);
+                    modal.find(".modal-body #initial_qty").val(initial_qty);
+                    modal.find(".modal-body #final_qty").val(final_qty);
+                    modal.find(".modal-body #cubic_meters").val(cubic_meters);
+                    modal.find(".modal-body #amount").val(amount);
+                });
+            },
+
+            savePump(e) {
+                const id = document.querySelector("#line_id").value;
+                const initial_qty =
+                    document.querySelector("#initial_qty").value;
+                const final_qty = document.querySelector("#final_qty").value;
+                const cubic_meters =
+                    document.querySelector("#cubic_meters").value;
+                console.log(id);
+                console.log(initial_qty);
+                console.log(final_qty);
+                console.log(cubic_meters);
+
+                ajax.rpc(
+                    "/web/dataset/call_kw/cash.control.session.spreadsheet/update_pump",
+                    {
+                        model: "cash.control.session.spreadsheet",
+                        method: "update_pump",
+                        args: [id, initial_qty, final_qty, cubic_meters],
+                        kwargs: {},
+                    }
+                ).then((response) => {
+                    if (response) {
+                        const data = JSON.parse(response);
+                        console.log(data);
+                        if (data.success) {
+                            $("#editPumpModal").modal("hide");
+                            this.renderList();
+                        }
+                    }
+                });
             },
 
             isSet() {

@@ -31,6 +31,14 @@
                     border: 1.1px solid #818589;
                 }
 
+                .form-group {
+                    margin-right: 5px;
+                }
+
+                .form-control:focus {
+                    border-color: #5f97d4 !important;
+                }
+
             </style>
             <div class="container-fluid">
                 <div class="row d-flex justify-content-start">
@@ -45,10 +53,48 @@
                                 <th scope="col">Manual</th>
                                 <th scope="col">Lts/m³</th>
                                 <th scope="col">Amount</th>
+                                <th width="5%">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="fuelsDetailedTable"></tbody>
                     </table>
+                </div>
+            </div>
+            <div class="modal fade" id="editPumpModal" tabindex="-1" aria-labelledby="editPumpModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editPumpModalLabel">Pump: </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form style="display: flex; justify-content: space-around;">
+                                <input type="text" class="d-none" id="line_id" />
+                                <div class="form-group">
+                                    <label for="initial_qty" class="col-form-label">Initial:</label>
+                                    <input type="text" class="form-control" id="initial_qty" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="final_qty" class="col-form-label">Final:</label>
+                                    <input type="text" class="form-control" id="final_qty" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="cubic_meters" class="col-form-label">Lts/m³:</label>
+                                    <input type="text" class="form-control" id="cubic_meters" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="cubic_meters" class="col-form-label">Amount:</label>
+                                    <input type="text" class="form-control" id="amount" readonly="readonly" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="save-pump-button btn btn-primary" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
