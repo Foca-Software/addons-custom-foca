@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="add_ypf_fields" model="ir.ui.view">
+        <field name="name">product.product.inherit.view.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[last()]" position="inside">
+                <!-- <xpath expr="//field[@name='categ_id']" position="after"> -->
+                <page string="Sucursales" name="stores">
+                    <group>
+                        <group name="store_dependent_fields" string="Store Dependent Fields">
+                            <field name="store_dependent_field_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="store_id" />
+                                    <field name="name"/>
+                                    <field name="price"/>
+                                    <field name="pricelist_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
