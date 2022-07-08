@@ -18,7 +18,7 @@ def create_sale_order(user_id: int, line_data: dict) -> object or False:
 
 
 def _get_other_dispatch_partner_id() -> int:
-    return request.env.ref("api_sale.debo_other_dispatch").id
+    return request.env.ref("api_sale.debo_other_dispatch_partner").id
 
 
 def _get_sale_data() -> str:
@@ -55,4 +55,4 @@ def unreserve_orders(sale_orders: object) -> object:
     return picking_ids
 
 def _get_other_dispatch_journal_id() -> int:
-    return request.env.ref("api_sale.other_dispatch").id
+    return request.env.ref("api_sale.debo_other_dispatch_journal").id

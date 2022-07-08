@@ -1,28 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <data noupdate="1">
-        <record model="account.journal" id="other_dispatch">
+        <record model="account.journal" id="debo_other_dispatch_journal">
             <field name="name">Otros Despachos</field>
             <field name="code">ODes</field>
             <field name="type">sale</field>
-            <!-- <field name="default_credit_account_id" ref="a_sale"/> -->
-            <!-- <field name="default_debit_account_id" ref="a_sale"/> -->
-            <!-- <field name="refund_sequence" eval="True"/> -->
         </record>
 
-        <!-- <record model="account.journal" id="other_dispatch_pay">
-        <field name="name">Otros Despachos - Pagos</field>
-        <field name="code">ODP</field>
-        <field name="type">cash</field>
-    </record> -->
-
-        <record model="account.journal" id="pump_test">
+        <record model="account.journal" id="debo_pump_test_journal">
             <field name="name">Prueba de Surtidor</field>
             <field name="code">PSur</field>
             <field name="type">sale</field>
-            <!-- <field name="default_credit_account_id" ref="a_sale"/> -->
-            <!-- <field name="default_debit_account_id" ref="a_sale"/> -->
-            <!-- <field name="refund_sequence" eval="True"/> -->
         </record>
 
     </data>
