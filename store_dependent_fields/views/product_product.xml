@@ -8,17 +8,22 @@
             <xpath expr="//notebook[last()]" position="inside">
                 <!-- <xpath expr="//field[@name='categ_id']" position="after"> -->
                 <page string="Sucursales" name="stores">
-                    <group>
-                        <group name="store_dependent_fields" string="Store Dependent Fields">
-                            <field name="store_dependent_field_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="store_id" />
-                                    <field name="name"/>
-                                    <field name="price"/>
-                                    <field name="pricelist_id"/>
-                                </tree>
-                            </field>
-                        </group>
+                    <group name="store_dependent_fields" string="Store Dependent Fields">
+                        <field name="store_dependent_field_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="store_id" />
+                                <field name="name"/>
+                                <field name="price"/>
+                                <field name="pricelist_id"/>
+                                <field name="internal_reference" />
+                                <field name="barcode" />
+                                <field name="categ_id" />
+                                <field name="tax_ids" widget="many2many_tags"/>
+                                <field name="cost" />
+                                <field name="uom_id" />
+                                <field name="uom_po_id" />
+                            </tree>
+                        </field>
                     </group>
                 </page>
             </xpath>
