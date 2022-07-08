@@ -19,7 +19,7 @@
                 </style>
                 <header>
                     <!-- TODO: These buttons should require some permission group -->
-                    <button name="action_spreadsheet_validate" string="Validate Spreadsheet" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['validated'])]}" />
+                    <button name="action_spreadsheet_validate" string="Validate Spreadsheet" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['validated'])]}" confirm="Please notice that if you want to update the values on the future spreadsheets with the pump values of this spreadsheet, the field Maintain Pump Values Forward should be set. Want to continue with the current Maintain Pump Values Forward value?" />
                     <button name="action_spreadsheet_draft" string="Spreadsheet to Draft" type="object" attrs="{'invisible': [('state', 'in', ['draft'])]}" />
                     <field name="state" widget="statusbar" />
                 </header>
@@ -58,6 +58,11 @@
                         <group id="header_left_group_2">
                             <field name="session_user_ids" widget="many2many_tags" />
                             <field name="session_pump_ids" widget="many2many_tags" />
+                            <separator />
+                            <field name="maintain_pumps_values_forward" widget="boolean_toggle" />
+                            <div class="alert alert-warning text-left" style="margin: 2.5%;" attrs="{'invisible': [('maintain_pumps_values_forward', '=', False)]}" role="alert">
+                                <field name="maintain_pumps_values_forward_status" />
+                            </div>
                         </group>
                         <group id="header_right_group_2">
                             <field name="session_payment_journal_ids" widget="many2many_tags" />

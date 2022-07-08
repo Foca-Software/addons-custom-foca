@@ -6,32 +6,48 @@
         <field name="model">stock.pump</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="code"/>
-                <field name="name"/>
-                <field name="description"/>
-                <field name="tank_id"/>
+                <field name="code" />
+                <field name="name" />
+                <field name="description" />
+                <field name="tank_id" />
             </tree>
         </field>
     </record>
 
     <!-- stock.pump form view -->
-    <!-- <record id="stock_pump_view_form" model="ir.ui.view">
+    <record id="stock_pump_view_form" model="ir.ui.view">
         <field name="name">stock.pump.view.form</field>
         <field name="model">stock.pump</field>
         <field name="arch" type="xml">
             <form string="">
                 <sheet>
-                
                     <group>
                         <group>
-
+                            <field name="name" />
+                            <field name="description" />
+                            <field name="product_id" />
                         </group>
-
+                        <group>
+                            <field name="code" />
+                            <field name="tank_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="pump_history_ids" readonly="1">
+                            <tree>
+                                <field name="cash_control_session_id" />
+                                <field name="modified_date" />
+                                <field name="initial_qty" />
+                                <field name="final_qty" />
+                                <field name="cubic_meters" />
+                                <field name="amount" />
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>
         </field>
-    </record> -->
+    </record>
 
     <!-- stock.pump search view -->
     <record id="stock_pump_view_search" model="ir.ui.view">
@@ -39,10 +55,10 @@
         <field name="model">stock.pump</field>
         <field name="arch" type="xml">
             <search>
-                <field name="code" filter_domain="[('code','like',self)]"/>
-                <field name="name" filter_domain="[('name','like',self)]"/>
-                <separator/>
-                <filter name='tank_id' string="Tank" context="{'group_by':'tank_id'}"/>
+                <field name="code" filter_domain="[('code','like',self)]" />
+                <field name="name" filter_domain="[('name','like',self)]" />
+                <separator />
+                <filter name='tank_id' string="Tank" context="{'group_by':'tank_id'}" />
             </search>
         </field>
     </record>
@@ -65,5 +81,5 @@
     </record>
 
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="stock_pump_view_menu_act" name="Pumps" parent="stock.menu_warehouse_config" action="stock_pump_view_action" sequence="20" groups="base.group_user"/>
+    <menuitem id="stock_pump_view_menu_act" name="Pumps" parent="stock.menu_warehouse_config" action="stock_pump_view_action" sequence="20" groups="base.group_user" />
 </odoo>

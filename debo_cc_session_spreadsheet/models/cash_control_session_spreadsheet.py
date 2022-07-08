@@ -79,6 +79,54 @@ def add_to_fuel_list(fuels: dict, name: str, line: models.Model) -> dict:
     return fuels
 
 
+def recalculate_pumps_values_newest_sessions(
+    env: models.Model, session: models.Model
+) -> None:
+    """
+    Recalculate the values of the pumps in the newest sessions.
+    :param env: Odoo environment
+    :param session: session object "cash.control.session"
+    :return: None
+    """
+
+    sessions_to_update = env["cash.control.session"].search(
+        [
+            ("config_id", "=", session.config_id.id),
+            ("date_start", ">", session.date_end),
+            ("state", "!=", "final_close"),
+        ],
+        order="date_start",
+    )
+
+    fuel_move_ids = session.mapped("fuel_move_ids")
+
+    # We update the sessions sequentially
+    for session_to_upd in sessions_to_update:
+        fuel_move_ids_to_upd = session_to_upd.mapped("fuel_move_ids")
+        for fuel_move_id in fuel_move_ids:
+            # We search for a fuel move with the same pump.
+            fuel_move_to_update = fuel_move_ids_to_upd.filtered(
+                lambda x, fuel_move_id=fuel_move_id: x.pump_id.id
+                == fuel_move_id.pump_id.id
+            )
+            if fuel_move_to_update:
+                fuel_move_to_update.write({"initial_qty": fuel_move_id.final_qty})
+                fuel_move_to_update.write(
+                    {
+                        "final_qty": fuel_move_to_update.initial_qty
+                        + fuel_move_to_update.cubic_meters
+                    }
+                )
+                fuel_move_to_update.write(
+                    {
+                        "amount": fuel_move_to_update.cubic_meters
+                        * fuel_move_to_update.price
+                    }
+                )
+
+        fuel_move_ids = session_to_upd.mapped("fuel_move_ids")
+
+
 class CashControlSessionSpreadsheet(models.Model):
     _name = "cash.control.session.spreadsheet"
     _description = "Cash Control Session Spreadsheet"
@@ -107,6 +155,46 @@ class CashControlSessionSpreadsheet(models.Model):
         default=lambda self: self.env.company,
     )
 
+    company_currency_id = fields.Many2one(
+        related="company_id.currency_id", readonly=True
+    )
+
+    maintain_pumps_values_forward = fields.Boolean(
+        help="If this is checked, the pumps values of all the following "
+        "spreadsheets in draft state will be updated when this one is validated.",
+    )
+
+    @api.onchange("maintain_pumps_values_forward")
+    def _compute_maintain_pumps_values_forward_status(self):
+        for record in self:
+            if record.maintain_pumps_values_forward:
+                sessions_to_update = self.env["cash.control.session"].search(
+                    [
+                        ("config_id", "=", record.session_id.config_id.id),
+                        ("date_start", ">", record.session_id.date_end),
+                        ("state", "!=", "final_close"),
+                    ]
+                )
+                if sessions_to_update:
+                    msg = _("The following sessions will be updated: ")
+                    for session in sessions_to_update:
+                        msg += f"\n{session.name} "
+                    record.update({"maintain_pumps_values_forward_status": msg})
+                else:
+                    record.update(
+                        {
+                            "maintain_pumps_values_forward_status": _(
+                                "There are no sessions to update."
+                            )
+                        }
+                    )
+            else:
+                record.update({"maintain_pumps_values_forward_status": False})
+
+    maintain_pumps_values_forward_status = fields.Text(
+        compute=_compute_maintain_pumps_values_forward_status
+    )
+
     state = fields.Selection(
         selection=[
             ("draft", "Draft"),
@@ -116,10 +204,6 @@ class CashControlSessionSpreadsheet(models.Model):
         required=True,
     )
 
-    company_currency_id = fields.Many2one(
-        related="company_id.currency_id", readonly=True
-    )
-
     def action_spreadsheet_validate(self):
         """
         Button action to validate the cash control session spreadsheet
@@ -127,6 +211,8 @@ class CashControlSessionSpreadsheet(models.Model):
         """
         self.ensure_one()
         self.update({"state": "validated"})
+        if self.maintain_pumps_values_forward:
+            recalculate_pumps_values_newest_sessions(self.env, self.session_id)
         self.session_id.update({"state": "final_close"})
         self.action_close_statement()
 

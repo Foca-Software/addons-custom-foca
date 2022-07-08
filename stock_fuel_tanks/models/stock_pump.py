@@ -8,8 +8,53 @@ class StockPump(models.Model):
     _name = "stock.pump"
     _description = "Stock Pump"
 
-    name = fields.Char(string="Name")
-    code = fields.Char(string="Code")
-    description = fields.Char(string="Description")
-    tank_id = fields.Many2one(comodel_name='stock.location', string='Tank', domain="[('is_fuel_tank','=',True)]")
-    product_id = fields.Many2one(related="tank_id.product_id", string='Product')
+    name = fields.Char()
+    code = fields.Char()
+    description = fields.Char()
+    tank_id = fields.Many2one(
+        comodel_name="stock.location",
+        string="Tank",
+        domain="[('is_fuel_tank','=',True)]",
+    )
+    product_id = fields.Many2one(related="tank_id.product_id", string="Product")
+
+    pump_history_ids = fields.One2many(
+        comodel_name="stock.pump.history",
+        inverse_name="pump_id",
+        domain=[("pump_id", "=", "id")],
+        string="Pump History",
+    )
+
+
+class StockPumpHistory(models.Model):
+    _name = "stock.pump.history"
+    _description = "Stock Pump History"
+    _rec_name = "cash_control_session_id"
+
+    modified_date = fields.Datetime(
+        default=lambda self: fields.Datetime.now(),
+        readonly=True,
+    )
+
+    cash_control_session_id = fields.Many2one(
+        "cash.control.session",
+        string="Cash Control Session",
+        required=True,
+    )
+
+    pump_id = fields.Many2one(
+        "stock.pump",
+        string="Pump",
+        required=True,
+    )
+
+    initial_qty = fields.Float(string="Initial Quantity")
+    final_qty = fields.Float(string="Final Quantity")
+    cubic_meters = fields.Float()
+    amount = fields.Float()
+
+    def name_get(self):
+        res = []
+        for history_rec in self:
+            res.append((history_rec.id, "%s" % history_rec.stock_pump_id.display_name))
+        return res

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-05 11:05+0000\n"
-"PO-Revision-Date: 2022-07-05 11:05+0000\n"
+"POT-Creation-Date: 2022-07-08 02:39+0000\n"
+"PO-Revision-Date: 2022-07-08 02:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,8 +27,8 @@ msgid ""
 "<p>There exists differences between the Fuel Sales and the Invoices. "
 "Complement Invoices are needed by the following Fuel Sales: </p><ul>"
 msgstr ""
-"<p>Existen diferencias entre las Ventas de Aforados y las Facturas. "
-"Se necesitan las Facturas Complemento por las siguientes Ventas: </p><ul>"
+"<p>Existen diferencias entre las Ventas de Aforados y las Facturas. Se "
+"necesitan las Facturas Complemento por las siguientes Ventas: </p><ul>"
 
 #. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
@@ -540,6 +540,16 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
 
 #. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,help:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__maintain_pumps_values_forward
+msgid ""
+"If this is checked, the pumps values of all the following spreadsheets in "
+"draft state will be updated when this one is validated."
+msgstr ""
+"Si está marcado, los valores de los surtidores de todas las siguientes "
+"Planillas de Cierre en estado borrador serán actualizados cuando ésta se "
+"valide."
+
+#. module: debo_cc_session_spreadsheet
 #: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
 msgid "In and Out Vouchers"
 msgstr "Vales y Contra-vales"
@@ -636,6 +646,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "Adjunto principal"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__maintain_pumps_values_forward
+msgid "Maintain Pumps Values Forward"
+msgstr "Mantener Valores de Surtidores hacia próximas Planillas"
+
+#. module: debo_cc_session_spreadsheet
+#: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__maintain_pumps_values_forward_status
+msgid "Maintain Pumps Values Forward Status"
+msgstr "Estado de Mantener Valores de Surtidores hacia próximas Planillas"
 
 #. module: debo_cc_session_spreadsheet
 #. openerp-web
@@ -770,6 +790,20 @@ msgid ""
 msgstr ""
 "Vaya al diario %s y defina una cuenta %s . Esta cuenta se usará para "
 "registrar la diferencia de efectivo."
+
+#. module: debo_cc_session_spreadsheet
+#: model_terms:ir.ui.view,arch_db:debo_cc_session_spreadsheet.form_cash_control_session_spreadsheet
+msgid ""
+"Please notice that if you want to update the values on the future "
+"spreadsheets with the pump values of this spreadsheet, the field Maintain "
+"Pump Values Forward should be set. Want to continue with the current "
+"Maintain Pump Values Forward value?"
+msgstr ""
+"Por favor tenga en cuenta que si desea actualizar los valores de surtidores "
+"en las Planillas de Cierre futuras con los valores de la Planilla de Cierre "
+"actual, el campo 'Mantener Valores de Surtidores hacia próximas Planillas' "
+"debe estar marcado. ¿Desea continuar con el valor actual de 'Mantener "
+"Valores de Surtidores hacia próximas Planillas'?"
 
 #. module: debo_cc_session_spreadsheet
 #. openerp-web
@@ -950,6 +984,18 @@ msgid ""
 msgstr ""
 "¡El balance final es incorrecto!\n"
 "El balance esperado (%s) es diferente del calculado. (%s)"
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid "The following sessions will be updated: "
+msgstr "Las siguientes planillas serán actualizadas: "
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid "There are no sessions to update."
+msgstr "No hay planillas para actualizar."
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_cards_details_line__ticket_number
