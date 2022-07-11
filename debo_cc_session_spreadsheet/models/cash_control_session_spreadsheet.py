@@ -93,7 +93,6 @@ def recalculate_pumps_values_newest_sessions(
         [
             ("config_id", "=", session.config_id.id),
             ("date_start", ">", session.date_end),
-            ("state", "!=", "final_close"),
         ],
         order="date_start",
     )
