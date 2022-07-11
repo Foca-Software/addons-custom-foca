@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 23:25+0000\n"
-"PO-Revision-Date: 2022-07-04 23:25+0000\n"
+"POT-Creation-Date: 2022-07-11 13:33+0000\n"
+"PO-Revision-Date: 2022-07-11 13:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_categ_id
+msgid "Category"
+msgstr "Categoría"
 
 #. module: debo_ypf_franchise_product
 #: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_ypf_major_product_category__code
@@ -108,6 +113,11 @@ msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_product_uom_po_id
+msgid "Purchase UOM"
+msgstr "Unidad de Medida (compras)"
+
+#. module: debo_ypf_franchise_product
 #: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__store_ids
 msgid "Store"
 msgstr "Sucursal"
@@ -120,7 +130,7 @@ msgstr "Impuesto"
 #. module: debo_ypf_franchise_product
 #: model_terms:ir.ui.view,arch_db:debo_ypf_franchise_product.add_ypf_fields
 msgid "YPF FULL"
-msgstr ""
+msgstr "YPF FULL"
 
 #. module: debo_ypf_franchise_product
 #: model:ir.model,name:debo_ypf_franchise_product.model_ypf_major_product_category
@@ -138,9 +148,14 @@ msgid "YPF Product Category"
 msgstr "Rubro"
 
 #. module: debo_ypf_franchise_product
-#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_code_bar
-msgid "Ypf Code Bar"
-msgstr "Código de Barra"
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_barcode
+msgid "Ypf Barcode"
+msgstr "Código de barras"
+
+#. module: debo_ypf_franchise_product
+#: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_cost
+msgid "Ypf Cost"
+msgstr "Costo"
 
 #. module: debo_ypf_franchise_product
 #: model:ir.model.fields,field_description:debo_ypf_franchise_product.field_product_product__ypf_description
