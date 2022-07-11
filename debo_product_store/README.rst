@@ -1,6 +1,6 @@
-===========
-Module Name
-===========
+==================
+Debo Product Store 
+==================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    !! This file is intended to be in every module    !!
