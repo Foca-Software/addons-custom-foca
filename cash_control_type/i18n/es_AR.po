@@ -33,7 +33,7 @@ msgstr "Tipo de Caja"
 #. module: cash_control_type
 #: model:ir.model.fields,field_description:cash_control_type.field_cash_control_config__type_id
 msgid "Cashbox Type"
-msgstr "Typo de Caja"
+msgstr "Tipo de Caja"
 
 #. module: cash_control_type
 #: model:ir.ui.menu,name:cash_control_type.cash_control_config_type_menu_act

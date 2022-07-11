@@ -88,7 +88,7 @@ msgstr "Precio"
 #. module: debo_product_store
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__pricelist_id
 msgid "Pricelist"
-msgstr "Tarufa"
+msgstr "Tarifa"
 
 #. module: debo_product_store
 #: model:ir.model,name:debo_product_store.model_product_product
