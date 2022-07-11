@@ -28,14 +28,17 @@
                     <group>
                         <field name="ypf_description"/>
                         <field name="ypf_internal_code"/>
-                        <field name="ypf_code_bar"/>
+                        <field name="ypf_barcode"/>
                         <field name="ypf_product_category_id"/>
                         <field name="ypf_major_product_category_id"/>
+                        <field name="ypf_categ_id"/>
                     </group>
                     <group>
                         <field name="ypf_product_uom_id"/>
+                        <field name="ypf_product_uom_po_id"/>
                         <field name="ypf_pricelist"/>
                         <field name="ypf_price"/>
+                        <field name="ypf_cost"/>
                         <field name="ypf_tax_ids" widget="many2many_tags"/>
                         <field name="store_ids" widget="many2many_tags"/>
                     </group>

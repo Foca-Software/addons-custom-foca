@@ -11,7 +11,10 @@ class ProductProduct(models.Model):
 
     ypf_description = fields.Text(readonly=True)
     ypf_internal_code = fields.Char(readonly=True)
-    ypf_code_bar = fields.Char(readonly=True)
+    ypf_barcode = fields.Char(readonly=True)
+
+    ypf_categ_id = fields.Many2one(comodel_name="product.category", string="Category")
+    ypf_cost = fields.Float(readonly=True)
 
     #'rubro'
     ypf_product_category_id = fields.Many2one(
@@ -26,6 +29,8 @@ class ProductProduct(models.Model):
     )
 
     ypf_product_uom_id = fields.Many2one(comodel_name="uom.uom", readonly=True)
+
+    ypf_product_uom_po_id = fields.Many2one(comodel_name="uom.uom", readonly=True, string="Purchase UOM")
 
     ypf_pricelist = fields.Many2one(
         comodel_name="product.pricelist",
@@ -51,6 +56,9 @@ class ProductProduct(models.Model):
         "ypf_pricelist",
         "ypf_price",
         "ypf_tax_ids",
+        "ypf_cost",
+        "ypf_categ_id",
+        "ypf_product_uom_po_id"
         "store_ids",
     )
     def _onchange_ypf_fields(self):
