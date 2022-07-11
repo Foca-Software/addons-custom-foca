@@ -171,7 +171,6 @@ class CashControlSessionSpreadsheet(models.Model):
                     [
                         ("config_id", "=", record.session_id.config_id.id),
                         ("date_start", ">", record.session_id.date_end),
-                        ("state", "!=", "final_close"),
                     ]
                 )
                 if sessions_to_update:
