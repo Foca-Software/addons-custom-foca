@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_product_store
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-11 13:35+0000\n"
+"PO-Revision-Date: 2022-07-11 13:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__barcode
+msgid "Barcode"
+msgstr "Código de Barras"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__categ_id
+msgid "Categ"
+msgstr "Categoría"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__cost
+msgid "Cost"
+msgstr "Costo"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__id
+msgid "ID"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__internal_reference
+msgid "Internal Reference"
+msgstr "Referencia Interna"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__pricelist_id
+msgid "Pricelist"
+msgstr "Tarufa"
+
+#. module: debo_product_store
+#: model:ir.model,name:debo_product_store.model_product_product
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: debo_product_store
+#: model:ir.model,name:debo_product_store.model_product_store_dependent
+msgid "Product Store Dependent"
+msgstr "Valores de Producto por Sucursal"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__uom_po_id
+msgid "Purchase UOM"
+msgstr "Unidad de Medida (Compras)"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__store_id
+msgid "Store"
+msgstr "Sucursal"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_product__store_dependent_field_ids
+#: model_terms:ir.ui.view,arch_db:debo_product_store.add_ypf_fields
+msgid "Store Dependent Fields"
+msgstr "Valores por Sucursal"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.add_ypf_fields
+msgid "Stores"
+msgstr "Sucursales"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__taxes_id
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__uom_id
+msgid "Uom"
+msgstr "Unidad de Medida"
+
+#. module: debo_product_store
+#: code:addons/debo_product_store/models/product_store_dependent.py:0
+#, python-format
+msgid "You cannot have multiple settings for the same Store"
+msgstr "No puede tener multiples configuraciones para la misma sucursal"
