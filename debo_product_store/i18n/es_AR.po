@@ -1,0 +1,143 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* store_dependent_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-08 14:53+0000\n"
+"PO-Revision-Date: 2022-07-08 14:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__barcode
+msgid "Barcode"
+msgstr "Código de Barra"
+
+#. module: store_dependent_fields
+#: model:ir.model,name:store_dependent_fields.model_cash_control_config
+msgid "Cash Control Config"
+msgstr "Control de Turnos"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__categ_id
+msgid "Categ"
+msgstr "Categoria"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__cost
+msgid "Cost"
+msgstr "Coste"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__id
+msgid "ID"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__internal_reference
+msgid "Internal Reference"
+msgstr "Referencia Interna"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_cash_control_config__location_ids
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__pricelist_id
+msgid "Pricelist"
+msgstr "Tarifa"
+
+#. module: store_dependent_fields
+#: model:ir.model,name:store_dependent_fields.model_product_product
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: store_dependent_fields
+#: model:ir.model,name:store_dependent_fields.model_product_store_dependent
+msgid "Product Store Dependent"
+msgstr "Productos Dependientes de Sucursal"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__uom_po_id
+msgid "Purchase UOM"
+msgstr "UdM Compra"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__store_id
+msgid "Store"
+msgstr "Sucursal"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_product__store_dependent_field_ids
+#: model_terms:ir.ui.view,arch_db:store_dependent_fields.add_ypf_fields
+msgid "Store Dependent Fields"
+msgstr "Campos Dependientes de Sucursal"
+
+#. module: store_dependent_fields
+#: model_terms:ir.ui.view,arch_db:store_dependent_fields.add_ypf_fields
+msgid "Sucursales"
+msgstr "Sucursales"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__tax_ids
+msgid "Tax"
+msgstr "Impuestos"
+
+#. module: store_dependent_fields
+#: model:ir.model.fields,field_description:store_dependent_fields.field_product_store_dependent__uom_id
+msgid "Uom"
+msgstr "Unidad de Medida"
