@@ -1,15 +1,16 @@
+# pylint: disable=missing-module-docstring,pointless-statement
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Send DEBO Fields",
+    "name": "Debo Sector",
     "summary": """
-        Add capability to send data to DEBO db.
+        Implement Sector concept in odoo for integration
     """,
     "author": "Calyx Servicios S.A.",
     "maintainers": ["marcooegg"],
     "website": "https://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
-    "category": "Endpoint",
-    "version": "13.0.0.0.2",
+    "category": "Technical Settings",
+    "version": "13.0.1.0.0",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
@@ -17,18 +18,12 @@
         "python": [],
         "bin": [],
     },
-    "depends": [
-        "base",
-        "account",
-        "contacts",
-        "product",
-        "debo_integration_fields",
-        "debo_sector"
-    ],
+    "depends": ["base","stock"],
+    ### XML Data files
     "data": [
-        "views/res_config.xml",
-        "views/res_partner.xml",
-        "views/product_product.xml",
-        "views/product_pricelist.xml",
+        "security/ir.model.access.csv",
+        "views/sector_sector.xml",
+        "views/stock_warehouse.xml",
+        "views/product.xml",
     ],
 }

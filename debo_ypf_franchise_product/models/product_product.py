@@ -45,22 +45,3 @@ class ProductProduct(models.Model):
     )
 
     store_ids = fields.Many2many(comodel_name="res.store", readonly=True)  # compute?
-
-    @api.onchange(
-        "is_ypf_franchise_product",
-        "ypf_description",
-        "ypf_internal_code",
-        "ypf_barcode",
-        "ypf_product_category_id",
-        "ypf_major_product_category_id",
-        "ypf_pricelist",
-        "ypf_price",
-        "ypf_tax_ids",
-        "ypf_cost",
-        "ypf_categ_id",
-        "ypf_product_uom_po_id",
-        "store_ids",
-    )
-    def _onchange_ypf_fields(self):
-        #TODO: change message once someone falls for it ಠﭛಠ
-        raise ValidationError("ridinly=Fils ... Hacete el vivo...")
