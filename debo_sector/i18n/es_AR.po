@@ -1,0 +1,137 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* debo_sector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-12 20:42+0000\n"
+"PO-Revision-Date: 2022-07-12 20:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__code
+msgid "Code"
+msgstr "Código"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__company_id
+msgid "Company"
+msgstr "Companía"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__id
+msgid "ID"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__id_debo
+msgid "Id Debo"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: debo_sector
+#: model:ir.model,name:debo_sector.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: debo_sector
+#: model:ir.model,name:debo_sector.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: debo_sector
+#: model:ir.model,name:debo_sector.model_sector_sector
+#: model:ir.model.fields,field_description:debo_sector.field_stock_warehouse__sector_id
+#: model_terms:ir.ui.view,arch_db:debo_sector.sector_sector_view_form
+msgid "Sector"
+msgstr "Sector"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_product_product__sector_codes
+msgid "Sector Codes"
+msgstr "Códigos de Sectores"
+
+#. module: debo_sector
+#: model:ir.actions.act_window,name:debo_sector.sector_sector_action
+msgid "Sector Configuration"
+msgstr "Configuración de Sectores"
+
+#. module: debo_sector
+#: code:addons/debo_sector/models/sector_sector.py:0
+#, python-format
+msgid "Sector Name already exists"
+msgstr "El nombre del Sector ya existe"
+
+#. module: debo_sector
+#: code:addons/debo_sector/models/sector_sector.py:0
+#, python-format
+msgid "Sector code already exists"
+msgstr "El codigo de Sector ya existe"
+
+#. module: debo_sector
+#: model:ir.ui.menu,name:debo_sector.sector_menu_act
+msgid "Sectors"
+msgstr "Sectores"
+
+#. module: debo_sector
+#: model:ir.model,name:debo_sector.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_product_product__warehouse_ids
+#: model:ir.model.fields,field_description:debo_sector.field_product_template__warehouse_ids
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__warehouse_ids
+msgid "Warehouses"
+msgstr "Almacenes"

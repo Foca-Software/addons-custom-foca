@@ -132,6 +132,7 @@ class ProductProduct(models.Model):
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
             "ID_DEBO_CLOUD": self.id,
             "id_debo": self.id_debo,
+            "sectores": self.sector_codes,
         }
         debo_like_fields.update(self._calculate_bom_fields())
         return debo_like_fields
@@ -149,25 +150,13 @@ class ProductProduct(models.Model):
     @api.model
     def create(self, vals_list):
         res = super().create(vals_list)
-        try:
-            data_sender.send_debo_fields(
-                data=res._get_debo_fields(),
-                endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
-                allow_import=True,
-            )
-        except Exception as e:
-            _logger.error(e)
-            raise Warning(e.args)
-        return res
-
-    def write(self, vals_list):
-        res = super().write(vals_list)
         if res:
             try:
-                if not self.env.context.get("create_product_product", False):
+                data = res._get_debo_fields()
+                if data.get('sectores'):
                     data_sender.send_debo_fields(
-                        data=self._get_debo_fields(),
-                        endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
+                        data=data,
+                        endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
                         allow_import=True,
                     )
             except Exception as e:
@@ -175,51 +164,22 @@ class ProductProduct(models.Model):
                 raise Warning(e.args)
         return res
 
+    def write(self, vals_list):
+        res = super().write(vals_list)
+        if res:
+            try:
+                if not self.env.context.get("create_product_product", False):
+                    data = self._get_debo_fields()
+                    if self.should_send_data(data,vals_list):
+                        data_sender.send_debo_fields(
+                            data=data,
+                            endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
+                            allow_import=True,
+                        )
+            except Exception as e:
+                _logger.error(e)
+                raise Warning(e.args)
+        return res
 
-# unused
-
-# def _necessary_fields(self) -> list:
-#     """
-#     Return the fields that are necessary to send to DEBO
-#     """
-#     fields = [
-#         "name",  # DetArt
-#         "categ_id",  # CodRub
-#         "product_tmpl_id",
-#         "standard_price",  # Precio
-#         "lst_price",  # PreNet
-#         "taxes_id",  # ImpInt
-#         "uom_id",  # UniVen
-#         "__last_update",  # UltAct
-#         "seller_ids",  # CodPro
-#         "type",
-#         "display_name",  # DET_LAR
-#         "active",  # NHA
-#         "id",  # ID_DEBO_CLOUD
-#         "qty_available",  # ExiDep
-#     ]
-#     return fields
-# fields = self._necessary_fields()
-# fields_dict = self.read(fields)[0]
-# PreVen = self._calculate_PreNet(
-#     fields_dict["lst_price"], fields_dict["taxes_id"]
-# )
-# ExiDep = self._calculate_ExiDep(fields_dict["lst_price"], fields_dict["qty_available"])
-# debo_like_fields = {
-#     "DetArt": fields_dict["name"],
-#     "CodRub": fields_dict["categ_id"][0],
-#     "Costo": fields_dict["standard_price"],
-#     "PreNet": fields_dict["lst_price"],
-#     "ImpInt": taxes,
-#     "UniVen": fields_dict["uom_id"][0],
-#     "UltAct": datetime.strftime(fields_dict["__last_update"], "%d/%m/%Y"),
-#     "ALT" : datetime.strftime(self.write_date, "%d/%m/%Y"),
-#     "CodPro": fields_dict["seller_ids"],
-#     "ExiDep": ExiDep,
-#     "PreVen": PreVen,
-#     "TIP": fields_dict["type"],
-#     "ESS": 1 if fields_dict["type"] == "service" else 0,
-#     "NHA": 0 if fields_dict["active"] else 1,
-#     "DET_LAR": fields_dict["display_name"],
-#     "ID_DEBO_CLOUD": fields_dict["id"],
-# }
+    def should_send_data(self,data,vals_list):
+        return data.get('sectores') or self.warehouse_ids or vals_list.get('warehouse_ids')
