@@ -7,7 +7,6 @@ class CashControlConfig(models.Model):
     is_fuel_cashbox = fields.Boolean()
     is_shop_cashbox = fields.Boolean()
 
-    # TODO: add base field in cash_control_extension
     location_id = fields.Many2one(
         comodel_name="stock.location",
         string="Location",
