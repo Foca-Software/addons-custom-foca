@@ -18,7 +18,7 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base","stock"],
+    "depends": ["base","stock","cash_control_extension"],
     ### XML Data files
     "data": [
         "security/ir.model.access.csv",

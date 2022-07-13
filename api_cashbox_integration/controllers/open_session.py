@@ -47,7 +47,9 @@ class OpenSession(Controller):
             if pump_ids:
                 cash_box.current_session_id.pump_ids = [(6,cash_box.current_session_id.id,pump_ids)]
                 cash_box.current_session_id.create_fuel_move_lines()
-            return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
+
+            sector_stock_quants = cash_box.sector_id.inform_sector_stock()
+            return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name),"sector_current_stock": sector_stock_quants} 
         except Exception as e:
             # Response.status = "400 Bad Request"
             request.env["cash.control.session"].with_user(user_id).search(

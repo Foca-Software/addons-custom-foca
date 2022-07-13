@@ -21,6 +21,7 @@
         "base",
         "debo_fuel_tanks",
         "fuel_tanks_cash_control",
+        "debo_sector",
     ],
     "data": [
         "views/cash_control_config.xml",

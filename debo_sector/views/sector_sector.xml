@@ -32,6 +32,7 @@
                         <group>
                             <field name="description"/>
                         </group>
+                        <field name="stock_quant_ids" invisible="1"/>
                     </group>
                 </sheet>
             </form>
