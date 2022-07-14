@@ -23,6 +23,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/sector_sector.xml",
+        "views/stock_picking.xml",
         "views/stock_warehouse.xml",
         "views/product.xml",
     ],
