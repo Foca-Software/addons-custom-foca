@@ -56,5 +56,5 @@ class ProductStoreDependent(models.Model):
     @api.constrains('store_id')
     def _constraint_store_id(self):
         for line in self:
-            if len(self.search([('store_id','=',line.store_id.id)])) > 1:
+            if self.search_count([('store_id','=',line.store_id.id),('product_id','=',line.product_id.id)]) > 1:
                 raise ValidationError(_("You cannot have multiple settings for the same Store"))
