@@ -5,6 +5,8 @@ from odoo.http import request, route, Controller
 
 _logger = logging.getLogger(__name__)
 
+ADMIN_ID = 2
+
 
 class RemoveUser(Controller):
     _name = "debo.cloud.connector.remove.user"
@@ -18,24 +20,17 @@ class RemoveUser(Controller):
     )
     def remove_user(self, **kwargs):
         _logger.info("Removing User: %s", dict(**kwargs))
-        cashbox_id = kwargs.get("cashbox_id", False)
+        planilla = kwargs.get("planilla", False)
+        store_id = kwargs.get("store_id", False)
         user_id = kwargs.get("user_id", False)
-        if not cashbox_id or not user_id:
-            return {
-                "status": "error",
-                "message": "cashbox_id or user_id is missing",
-            }
-        cashbox = request.env["cash.control.config"].with_user(1).browse(cashbox_id)
-        if not cashbox:
-            return {
-                "status": "error",
-                "message": "cashbox_id does not exist",
-            }
-        user_removed = cashbox.current_session_id._api_remove_user(user_id)
+
+        session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
+        session_id = session_obj.get_session_by_id_debo(planilla, store_id)
+        user_removed = session_id._api_remove_user(user_id)
         if user_removed:
             return {
                 "status": "success",
-                "message": f"user removed to cashbox {cashbox.name}",
+                "message": f"user removed from spreadsheet {session_id.id_debo}",
             }
         return {
             "status": "error",

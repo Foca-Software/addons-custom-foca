@@ -46,7 +46,7 @@ class TransferCash(Controller):
 
         try:
             amount = data.get("amount", False)
-            session_id = self._get_session_id(data.get("planilla"))
+            session_id = self._get_session_id(data.get("planilla"),data.get("store_id"))
             if session_id.has_final_cash_transfer:
                 raise ValidationError("Session already has final transfer")
             context = {}
@@ -105,7 +105,7 @@ class TransferCash(Controller):
         )
         return cashbox_id
 
-    def _get_session_id(self, planilla: str) -> Model:
+    def _get_session_id(self, planilla: str,sucursal:int) -> Model:
         """gets cash_control_session object search by id_debo ('planilla')
 
         Args:
@@ -118,9 +118,7 @@ class TransferCash(Controller):
             models.Model: cash.control.session
         """
         session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
-        session_id = session_obj.search([("id_debo", "=", planilla)], limit=1)
-        if not session_id:
-            raise ValidationError(_("Session not found"))
+        session_id = session_obj.get_session_by_id_debo(planilla,sucursal)
         return session_id
 
     def _return_error(self, error_type: str, info: str = False) -> dict:
