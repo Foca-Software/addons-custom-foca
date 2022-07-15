@@ -27,6 +27,7 @@ def create_sale_order(user_id: int, data: dict) -> object or False:
     if non_fuel_lines:
         non_fuel_order = _create_sale_order(sale_data, sale_obj)
         non_fuel_order._add_lines(non_fuel_lines)
+        non_fuel_order.warehouse_id = _get_warehouse_id(non_fuel_order).id
         sale_order_ids.append(non_fuel_order)
     return sale_obj.browse(order.id for order in sale_order_ids)
 
@@ -449,3 +450,18 @@ def check_required_fields(data: dict, move_type: int) -> list or False:
 
     return missing_fields if missing_fields else False
 
+def _get_warehouse_id(sale_order : models.Model) -> models.Model:
+    """Finds the correct warehouse_id to add to non fuel sale orders
+
+    Args:
+        sale_order (models.Model): Non fuel sale orders
+
+    Returns:
+        models.Model: stock.warehouse
+    """
+    config_id = sale_order.cash_control_session_id.config_id
+    location_id = config_id.location_id
+    warehouse_obj = request.env['stock.warehouse'].with_user(ADMIN_ID)
+    domain = [('lot_stock_id','=',location_id.id)]
+    warehouse_id = warehouse_obj.search(domain,limit=1)
+    return warehouse_id
