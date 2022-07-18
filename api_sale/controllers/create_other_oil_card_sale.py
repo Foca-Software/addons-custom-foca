@@ -6,7 +6,7 @@ from ..utils.other_oil_card_sale import (
     check_lines_format,
     create_oil_card_move,
     confirm_stock_moves,
-    _get_cc_session_id
+    
 )
 
 _logger = logging.getLogger(__name__)

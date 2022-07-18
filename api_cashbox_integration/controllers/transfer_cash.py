@@ -40,13 +40,14 @@ class TransferCash(Controller):
         request.env.user = user_id
         request.env.company = user_id.company_id
         # check if cashbox_id exists
-        cashbox_id = self._get_cashbox(data)
-        if not cashbox_id:
-            return self._return_error("cashbox_id")
+        # cashbox_id = self._get_cashbox(data)
+        # if not cashbox_id:
+        #     return self._return_error("cashbox_id")
 
         try:
             amount = data.get("amount", False)
             session_id = self._get_session_id(data.get("planilla"),data.get("store_id"))
+            cashbox_id = session_id.config_id
             if session_id.has_final_cash_transfer:
                 raise ValidationError("Session already has final transfer")
             context = {}

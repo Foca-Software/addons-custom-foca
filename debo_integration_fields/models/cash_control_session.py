@@ -20,7 +20,7 @@ class CashControlSession(models.Model):
         Returns:
             models.Model: cash.control.session
         """
-        session_id = self.search([('id_debo','=',id_debo),('store_id','=',store_id)])
+        session_id = self.search([('id_debo','=',id_debo),('config_id.store_id','=',store_id)])
         if not session_id:
             raise ValidationError(_("Session not found"))
         if len(session_id) > 1:

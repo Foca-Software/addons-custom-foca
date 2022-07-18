@@ -133,6 +133,7 @@ class ProductProduct(models.Model):
             "ID_DEBO_CLOUD": self.id,
             "id_debo": self.id_debo,
             "sectores": self.sector_codes,
+            "store_id": self.store_id.id,
         }
         debo_like_fields.update(self._calculate_bom_fields())
         return debo_like_fields

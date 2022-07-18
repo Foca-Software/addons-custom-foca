@@ -65,7 +65,7 @@ class CashControlSession(models.Model):
             )
 
     # TODO: group pending stock moves by pump_id
-    def _current_session_pump_moves_total(self, pump_id: int) -> float:
+    def _current_session_pump_moves_total(self, pump_id: int):
         """
         Returns the total amount of fuel moves for the current session and pump
         """
@@ -77,6 +77,8 @@ class CashControlSession(models.Model):
             fields=["product_uom_qty"],
             groupby=["product_id"],
         )
+        if not move:
+            return []
         return move[0]["product_uom_qty"]
 
     def action_test_button(self):

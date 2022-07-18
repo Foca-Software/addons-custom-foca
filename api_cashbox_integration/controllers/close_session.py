@@ -34,7 +34,7 @@ class CloseSession(Controller):
             #     .with_user(user_id)
             #     .browse(data.get("cash_id", []))
             # )
-            cashbox_id = data.get('cash_id','')
+            cashbox_id = data.get('cash_id',[])
             store_id = data.get('store_id',False)
             cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id),('store_id','=',store_id)])
         except Exception as e:
@@ -45,6 +45,7 @@ class CloseSession(Controller):
             cash_box.api_close_session()
             return {"status": "OK", "message": "Cash box %s Closed" % (cash_box.name)}
         except Exception as e:
+            _logger.error(e.args)
             return self._return_error("other", info=e.args[0])
 
     def load_fuel_moves(self, cash_box: Model, fuel_lines: list = False):

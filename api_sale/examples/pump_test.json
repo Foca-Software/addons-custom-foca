@@ -1,12 +1,17 @@
+
 {
     "params":{
-        "user_id": 18,
+        "user_id": 12,
+        "store_id": 1,
+        "spreadsheet": "007",
         "company_id": 1,
         "line": {
-            "product_id": 215,
+            "product_id": 132316,
             "pump_id": 9,
             "product_uom_qty": 5,
             "price_unit": 100
         }
     }
 }
+
+ 

@@ -29,9 +29,9 @@ class OpenSession(Controller):
 
         try:
             # cash_box = request.env['cash.control.config'].with_user(user_id).browse(data.get('cash_id',[]))
-            cashbox_id = data.get('cash_id','')
+            cashbox_id = data.get('cash_id',[])
             store_id = data.get('store_id',False)
-            cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id),('store_id','=',store_id)])
+            cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id)])#,('store_id','=',store_id)
         except Exception as e:
             # Response.status = "400 Bad Request"
             return {"status": "ERROR", "message": "Cash box not found"}

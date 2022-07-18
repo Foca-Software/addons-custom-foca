@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 DEBO_DATE_FORMAT = "%d/%m/%Y"
 ADMIN_ID = 2
 
+
 def check_request_format(data: dict) -> bool:
     """Check if any necessary fields are missing from main request
 
@@ -38,9 +39,12 @@ def check_lines_format(data: dict) -> bool:
     Returns:
         bool: True
     """
-    if any(field not in line.keys() for field in _needed_lines_fields()for line in data):
+    if any(
+        field not in line.keys() for field in _needed_lines_fields() for line in data
+    ):
         raise ValidationError("Fields missing in lines")
     return True
+
 
 def confirm_stock_moves(picking_id: models.Model) -> bool:
     """Confirm stock moves
@@ -58,6 +62,7 @@ def confirm_stock_moves(picking_id: models.Model) -> bool:
     wiz.process()
     return True
 
+
 def create_oil_card_move(data: dict) -> models.Model:
     """Create a stock.picking record with stock.moves assigned to it
 
@@ -68,13 +73,14 @@ def create_oil_card_move(data: dict) -> models.Model:
         models.Model: stock.picking record
     """
     picking_id = _create_stock_picking(
-        source = data["src_location_id"],
-        destination = data["dest_location_id"],
-        company_id = data["company_id"],
-        planilla = data["planilla"],
-        oil_card_number= data["oil_card_number"],
-        origin = data.get("origin", False),
-        partner_id = data.get("partner_id", False)
+        source=data["src_location_id"],
+        destination=data["dest_location_id"],
+        company_id=data["company_id"],
+        planilla=data["spreadsheet"],
+        store_id=data["store_id"],
+        oil_card_number=data["oil_card_number"],
+        origin=data.get("origin", False),
+        partner_id=data.get("partner_id", False),
     )
     move_lines = _create_move_lines(data["lines"], picking_id)
     return picking_id
@@ -85,9 +91,10 @@ def _create_stock_picking(
     destination: int,
     company_id: int,
     planilla: str,
+    store_id: int,
     oil_card_number: str,
     origin: str = "",
-    partner_id: int = False
+    partner_id: int = False,
 ) -> models.Model:
     """Private method creates stock.picking recordset
 
@@ -115,30 +122,23 @@ def _create_stock_picking(
     stock_picking_vals = {
         "company_id": company_id,
         "origin": origin,
-        "cash_control_session_id" : _get_cc_session_id(planilla).id,
-        "is_other_oil_sale_move" : True,
+        "cash_control_session_id": get_session_id(planilla, store_id).id,
+        "is_other_oil_sale_move": True,
         "picking_type_id": picking_type_id.id,
         "location_id": source,
         "location_dest_id": destination,
-        "partner_id" : partner_id,
-        "oil_card_number" : oil_card_number,
+        "partner_id": partner_id,
+        "oil_card_number": oil_card_number,
     }
     stock_picking_id = stock_picking.create(stock_picking_vals)
     return stock_picking_id
 
 
-def _get_cc_session_id(planilla:str) -> models.Model:
-    """gets cash.control.session id through the session's id_debo
-
-    Args:
-        planilla (str): number of session's id_debo aka 'planilla
-
-    Returns:
-        models.Model: cash.control.session
-    """
-    cc_obj = request.env['cash.control.session'].with_user(ADMIN_ID)
-    session_id = cc_obj.search([("id_debo",'=',planilla),('state','=','opened')])
+def get_session_id(spreadsheet: str, store_id: int):
+    session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
+    session_id = session_obj.get_session_by_id_debo(spreadsheet, store_id)
     return session_id
+
 
 def _create_move_lines(data: list, picking: models.Model) -> models.Model:
     """Create move lines
@@ -175,7 +175,6 @@ def _get_picking_context(picking_id) -> dict:
     return picking_context
 
 
-
 def _stock_vals(line: dict, name: str) -> dict:
     """Creates a dictionary of values used for stock.move creation
 
@@ -197,8 +196,6 @@ def _stock_vals(line: dict, name: str) -> dict:
     return stock_vals
 
 
-
-
 def _needed_picking_fields() -> list:
     """fields needed in main JSON request for endpoint to work
 
@@ -208,7 +205,8 @@ def _needed_picking_fields() -> list:
     return [
         "user_id",
         "company_id",
-        "planilla",
+        "spreadsheet",
+        "store_id",
         "oil_card_number",
         "src_location_id",
         "dest_location_id",

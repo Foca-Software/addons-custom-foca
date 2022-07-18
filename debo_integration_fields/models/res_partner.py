@@ -11,5 +11,7 @@ class ResPartner(models.Model):
     id_debo_c = fields.Char(string="ID_DEBO Customer")
     eventual_customer = fields.Boolean(string="Eventual Customer", default=False)
 
+    store_id = fields.Many2one(comodel_name='res.users',default=lambda self: self.env.user.store_id)
+
     # can_have_check_account = fields.Boolean(string="Check Account", default=False)
     # oil_card = fields.Selection(selection=[("invoice","Invoice"),("remittance","Remittance")],string="Oil Card",)
