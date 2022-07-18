@@ -1,13 +1,14 @@
 {
     "params": {
-        "planilla": "10938",
+        "spreadsheet": "3834",
+        "store_id" : 1,
         "company_id": 1,
-        "journal_id": 10,
+        "journal_id": 8,
         "pay_now_journal_id": 6,
-        "l10n_latam_document_type_id": 2,
+        "l10n_latam_document_type_id": 1,
         "lines": [
             {
-                "product_id": 215,
+                "product_id": 136695,
                 "quantity": 20,
                 "price_unit": 200
             }

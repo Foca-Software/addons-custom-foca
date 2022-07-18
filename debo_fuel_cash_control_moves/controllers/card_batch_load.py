@@ -34,29 +34,16 @@ class CardBatchLoad(Controller):
 
     def _needed_fields(self) -> list:
         return [
-            "planilla",
+            "spreadsheet",
             "orig_journal_id",
             "dest_journal_id",
             "amount",
             "lot_number",
         ]
 
-    def _get_session_id(self, planilla: str) -> models.Model:
-        """gets cash_control_session object search by id_debo ('planilla')
-
-        Args:
-            planilla (str): id_debo, sent in request data
-
-        Raises:
-            ValidationError: no session_id was found
-
-        Returns:
-            models.Model: cash.control.session
-        """
+    def _get_session_id(self, spreadsheet: str,store_id:int) -> models.Model:
         session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
-        session_id = session_obj.search([("id_debo", "=", planilla)], limit=1)
-        if not session_id:
-            raise ValidationError(_("Session not found"))
+        session_id = session_obj.get_session_by_id_debo(spreadsheet, store_id)
         return session_id
 
     def card_batch_load(self, data: dict) -> models.Model:
@@ -71,7 +58,7 @@ class CardBatchLoad(Controller):
         dest_journal_id = data["dest_journal_id"]
         orig_journal_id = data["orig_journal_id"]
         payment_method = self._get_bank_payment_method(int(orig_journal_id))
-        session_id = self._get_session_id(data["planilla"])
+        session_id = self._get_session_id(data["spreadsheet"],data['store_id'])
         # amount = self.compute_amount(session_id, dest_journal_id, data["amount"])
         amount = data["amount"]
         vals = {

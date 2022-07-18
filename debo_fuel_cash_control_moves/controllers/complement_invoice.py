@@ -48,11 +48,15 @@ class ComplementInvoice(Controller):
 
         except Exception as e:
             _logger.error(e)
-            if invoice_id:
-                invoice_id.button_draft()
-                invoice_id.button_cancel()
-                invoice_id.delete_number()
-            return {"status": "ERROR", "message": e.args[0]}
+            try:
+                #invoice might not be created and thus error handling fails
+                if invoice_id:
+                    invoice_id.button_draft()
+                    invoice_id.button_cancel()
+                    invoice_id.delete_number()
+                return {"status": "ERROR", "message": e.args[0]}
+            except Exception as e:
+                return {"status": "ERROR", "message": e.args[0]}
 
     def check_missing_fields(self, data: dict) -> bool:
         """Handles requests with not enough data
@@ -81,7 +85,7 @@ class ComplementInvoice(Controller):
     def _needed_fields(self) -> list:
         return [
             "company_id",
-            "planilla",
+            "spreadsheet",
             "journal_id",
             "pay_now_journal_id",
             "l10n_latam_document_type_id",
@@ -95,22 +99,9 @@ class ComplementInvoice(Controller):
             "price_unit",
         ]
 
-    def _get_session_id(self, planilla: str) -> models.Model:
-        """gets cash_control_session models.Model search by id_debo ('planilla')
-
-        Args:
-            planilla (str): id_debo, sent in request data
-
-        Raises:
-            ValidationError: no session_id was found
-
-        Returns:
-            models.Model: cash.control.session
-        """
+    def _get_session_id(self, spreadsheet: str,store_id:int) -> models.Model:
         session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
-        session_id = session_obj.search([("id_debo", "=", planilla)], limit=1)
-        if not session_id:
-            raise ValidationError(_("Session not found"))
+        session_id = session_obj.get_session_by_id_debo(spreadsheet, store_id)
         return session_id
 
     def create_complement_invoice(self, data: dict) -> models.Model:
@@ -129,6 +120,7 @@ class ComplementInvoice(Controller):
             account_obj = request.env["account.move"].with_user(ADMIN_ID)
             invoice_data = data
             invoice_id = account_obj.create(self._get_invoice_vals(invoice_data))
+            _logger.info(invoice_id.name)
             lines = self._add_invoice_lines(invoice_id, data["lines"])
             # invoice_id.update({"pay_now_journal_id": data["pay_now_journal_id"]})
             return invoice_id
@@ -162,7 +154,6 @@ class ComplementInvoice(Controller):
         return payment_group
 
     def _get_payment_context(self, invoice_id: models.Model) -> dict:
-        # execute 'register payment' button to get context values
         """execute 'register payment' button to get context values
 
         Args:
@@ -283,7 +274,7 @@ class ComplementInvoice(Controller):
         """
         partner_id = self._get_partner_id(data)
         company_id = self._get_company_id(data["company_id"])
-        session_id = self._get_session_id(data["planilla"])
+        session_id = self._get_session_id(data["spreadsheet"],data['store_id'])
         invoice_date = (
             datetime.strptime(data["invoice_date"], DEBO_DATE_FORMAT)
             if data.get("invoice_date")

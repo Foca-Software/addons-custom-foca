@@ -10,7 +10,14 @@
                     <group>
                         <group>
                             <field name="day" required="1"/>
-                            <field name="cash_control_config_id" required="1" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+                            <field name="user_store_ids" invisible="1"/>
+                            <field name="store_ids_count" invisible="1"/>
+                            <field name="cash_id_domain" invisible="1"/>
+                            <field name="cash_control_config_id" required="1" options="{'no_open':True,'no_create':True,'no_create_edit':True}"
+                            domain='cash_id_domain'/>
+                            <field name="store_id_domain" invisible="1"/>
+                            <field name="store_id" domain="store_id_domain" attrs="{'invisible':[('store_ids_count','=',1)]}"/>
+                            <field name="user_id" invisible="1"/>
                         </group>
                         <group>
                             <field name="perceptions_apply"/>
@@ -53,6 +60,7 @@
                                     <field name="total_percentage" widget="progressbar"/>
                                 </span>
                                 <strong class="o_kanban_record_title">
+                                    <field name="store_id"/>
                                     <field name="name" />
                                 </strong>
                             </div>

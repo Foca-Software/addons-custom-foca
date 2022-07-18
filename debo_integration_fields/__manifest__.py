@@ -17,7 +17,16 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base", "account", "contacts", "product", "sale", "cash_control","stock"],
+    "depends": [
+        "base",
+        "account",
+        "contacts",
+        "product",
+        "sale",
+        "cash_control_extension",
+        "cash_control_multi_store",
+        "stock",
+    ],
     "data": [
         "views/account_move.xml",
         "views/id_debo_views.xml",

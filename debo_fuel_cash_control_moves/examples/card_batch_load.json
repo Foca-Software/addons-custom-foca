@@ -1,8 +1,9 @@
 {
     "params": {
-        "planilla": "10938",
+        "spreadsheet": "3834",
+        "store_id":1,
         "orig_journal_id": 6,
-        "dest_journal_id": 16,
+        "dest_journal_id": 41,
         "amount": 15000,
         "lot_number": 1100501
     }

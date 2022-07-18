@@ -17,9 +17,6 @@ class ProductProduct(models.Model):
 
     is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
     
-    # def _default_last_update_debo(self):
-    #     if not self.last_update_debo:
-    #         return self.write_date - datetime.timedelta(days=1)
 
     last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
     
@@ -84,6 +81,7 @@ class ProductPriceListItem(models.Model):
             ),
             "ID_DEBO_CLOUD": self.pricelist_id.id,
             "id_debo": self.pricelist_id.id_debo,
+            "store_id": self.pricelist_id.store_id.id,
         }
         debo_like_fields.update(self._format_amounts())
         return debo_like_fields

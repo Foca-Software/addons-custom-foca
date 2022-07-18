@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, api
 from ..utils import data_sender
 import logging
 
@@ -7,8 +7,6 @@ data_sender = data_sender.DataSender()
 
 class ResStore(models.Model):
     _inherit = "res.store"
-
-    id_debo = fields.Char()
 
     def _get_base_endpoint(self):
         config_params = self.env["ir.config_parameter"].sudo()

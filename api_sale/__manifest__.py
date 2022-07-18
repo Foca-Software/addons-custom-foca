@@ -20,10 +20,10 @@
     "depends": [
         "base",
         "account",
-        "cash_control",
+        "cash_control_multi_store",
         "debo_fuel_tanks",
         "debo_integration_fields",
-        "fuel_tanks_cash_control",
+        # "fuel_tanks_cash_control",
     ],
     "data": [
         "data/account_journal_data.xml",
