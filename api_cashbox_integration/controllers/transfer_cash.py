@@ -39,14 +39,12 @@ class TransferCash(Controller):
         #'login'
         request.env.user = user_id
         request.env.company = user_id.company_id
-        # check if cashbox_id exists
-        # cashbox_id = self._get_cashbox(data)
-        # if not cashbox_id:
-        #     return self._return_error("cashbox_id")
 
         try:
             amount = data.get("amount", False)
-            session_id = self._get_session_id(data.get("planilla"),data.get("store_id"))
+            session_id = self._get_session_id(
+                data.get("spreadsheet"), data.get("store_id")
+            )
             cashbox_id = session_id.config_id
             if session_id.has_final_cash_transfer:
                 raise ValidationError("Session already has final transfer")
@@ -72,7 +70,7 @@ class TransferCash(Controller):
             )
             is_last_transfer = data.get("is_last_session_transfer", False)
             if is_last_transfer:
-                session_id.update({"has_final_cash_transfer" : True})
+                session_id.update({"has_final_cash_transfer": True})
             return {
                 "status": "SUCCESS",
                 "message": "Transferencia realizada con éxito",
@@ -95,7 +93,7 @@ class TransferCash(Controller):
         return missing_fields
 
     def _required_fields(self) -> list:
-        return ["user_id", "cashbox_id", "amount", "transfer_number"]
+        return ["user_id", "spreadsheet", "store_id", "amount", "transfer_number"]
 
     def _get_cashbox(self, data: dict) -> object:
         user = request.env.user
@@ -106,11 +104,11 @@ class TransferCash(Controller):
         )
         return cashbox_id
 
-    def _get_session_id(self, planilla: str,sucursal:int) -> Model:
-        """gets cash_control_session object search by id_debo ('planilla')
+    def _get_session_id(self, spreadsheet: str, sucursal: int) -> Model:
+        """gets cash_control_session object search by id_debo ('spreadsheet')
 
         Args:
-            planilla (str): id_debo, sent in request data
+            spreadsheet (str): id_debo, sent in request data
 
         Raises:
             ValidationError: no session_id was found
@@ -119,7 +117,7 @@ class TransferCash(Controller):
             models.Model: cash.control.session
         """
         session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
-        session_id = session_obj.get_session_by_id_debo(planilla,sucursal)
+        session_id = session_obj.get_session_by_id_debo(spreadsheet, sucursal)
         return session_id
 
     def _return_error(self, error_type: str, info: str = False) -> dict:

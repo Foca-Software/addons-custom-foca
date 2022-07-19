@@ -1,12 +1,10 @@
 {
     "params":{
-        "user_id" : 6,
+        "user_id" : 12,
         "data": {
-            "cash_id": 10,
-            "store_id" : 1,
+            "cash_id": 5,
             "amount" : 1000,
-            "id_debo" : "0899926",
-            "pump_ids" : [1]
+            "spreadsheet" : "007"
         }
     }
 }

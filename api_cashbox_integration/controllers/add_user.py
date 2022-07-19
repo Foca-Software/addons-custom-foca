@@ -22,13 +22,13 @@ class AddUser(Controller):
         csrf=False,
     )
     def add_user(self, **kwargs):
-        planilla = kwargs.get("planilla", False)
+        spreadsheet = kwargs.get("spreadsheet", False)
         store_id = kwargs.get("store_id", False)
         user_id = kwargs.get("user_id", False)
         session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
         if session_obj._user_is_active(user_id):
             return self._return_error("active")
-        session_id = session_obj.get_session_by_id_debo(planilla, store_id)
+        session_id = session_obj.get_session_by_id_debo(spreadsheet, store_id)
         user_added = session_id._api_add_user(user_id)
         if user_added:
             return {
