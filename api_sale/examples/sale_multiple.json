@@ -1,11 +1,14 @@
 {
     "params": {
-        "user_id":18,
-        "company_id" : 1,
+        "user_id": 12,
+        "company_id": 1,
+        "store_id": 1,
+        "spreadsheet": "010",
         "payload": {
             "header": {
                 "partner_id": 136695,
-                "date_order": "02/03/2022"
+                "date_order": "02/03/2022",
+                "invoice": 1
             },
             "lines": [
                 {
@@ -13,24 +16,26 @@
                     "product_uom_qty": 5
                 }
             ],
-            "invoice_data":{
+            "invoice_data": {
                 "journal_id": 10,
                 "l10n_latam_document_type_id": 6
             },
-            "payment_data" :[{
-                "journal_id": 10,
-                "payment_method_id": 4,
-                "amount" : 20,
-                "card_id" : 1,
-                "card_number" : "4111111111111111",
-                "lot_number" : "123456789",
-                "ticket_number" : "123456789"
-            },
-            {
-                "journal_id": 7,
-                "payment_method_id": 1,
-                "amount" : 15
-            }]
+            "payment_data": [
+                {
+                    "journal_id": 10,
+                    "payment_method_id": 4,
+                    "amount": 20,
+                    "card_id": 1,
+                    "card_number": "4111111111111111",
+                    "lot_number": "123456789",
+                    "ticket_number": "123456789"
+                },
+                {
+                    "journal_id": 7,
+                    "payment_method_id": 1,
+                    "amount": 15
+                }
+            ]
         }
     }
 }

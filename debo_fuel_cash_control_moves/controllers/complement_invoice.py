@@ -85,6 +85,7 @@ class ComplementInvoice(Controller):
     def _needed_fields(self) -> list:
         return [
             "company_id",
+            "store_id"
             "spreadsheet",
             "journal_id",
             "pay_now_journal_id",

@@ -76,7 +76,7 @@ def create_oil_card_move(data: dict) -> models.Model:
         source=data["src_location_id"],
         destination=data["dest_location_id"],
         company_id=data["company_id"],
-        planilla=data["spreadsheet"],
+        spreadsheet=data["spreadsheet"],
         store_id=data["store_id"],
         oil_card_number=data["oil_card_number"],
         origin=data.get("origin", False),
@@ -90,7 +90,7 @@ def _create_stock_picking(
     source: int,
     destination: int,
     company_id: int,
-    planilla: str,
+    spreadsheet: str,
     store_id: int,
     oil_card_number: str,
     origin: str = "",
@@ -102,7 +102,7 @@ def _create_stock_picking(
         source (int): stock.location id from which the product is taken
         destination (int): stock.location id to which the product is taken
         company_id (int): res.company id to which the move belongs to
-        planilla (str): number of 'planilla'
+        spreadsheet (str): number of 'planilla'
         oil_card_number (str): number of oil card used in transaction
         origin (str, optional): move origin description. Defaults to "".
         partner_id (int, optional): res.partner id if needed. Defaults to False.
@@ -122,7 +122,7 @@ def _create_stock_picking(
     stock_picking_vals = {
         "company_id": company_id,
         "origin": origin,
-        "cash_control_session_id": get_session_id(planilla, store_id).id,
+        "cash_control_session_id": get_session_id(spreadsheet, store_id).id,
         "is_other_oil_sale_move": True,
         "picking_type_id": picking_type_id.id,
         "location_id": source,

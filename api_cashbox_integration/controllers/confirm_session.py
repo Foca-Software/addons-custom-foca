@@ -24,7 +24,7 @@ class ConfirmSession(Controller):
             data = kwargs
             request.env.user = ADMIN_ID
             session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
-            session_id = session_obj.get_session_by_id_debo(data.get("planilla"),data.get("store_id"))
+            session_id = session_obj.get_session_by_id_debo(data.get("spreadsheet"),data.get("store_id"))
             session_id.confirm_session(data.get("change_delivered"))
             return {
                 "session": session_id.name,

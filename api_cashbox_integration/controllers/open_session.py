@@ -43,7 +43,7 @@ class OpenSession(Controller):
                 return {"status": "OK", "message": "Cash box %s already opened" %(cash_box.name)}
             # Response.status= "200 OK"
             cash_box.api_open_cashbox(balance='start')
-            cash_box.current_session_id.id_debo = data.get('id_debo',False)
+            cash_box.current_session_id.id_debo = data.get('spreadsheet',False)
             cash_box.current_session_id.change_received = data.get('amount',0)
 
             pump_ids = data.get('pump_ids',False)
