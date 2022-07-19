@@ -42,6 +42,8 @@ class ProductStoreDependent(models.Model):
         string="Purchase UOM",
     )
 
+    sector_ids = fields.Many2many(comodel_name="sector.sector", string="Sectors")
+
     @api.onchange("product_id")
     def _onchange_product_id(self):
         self.name = self.product_id.name

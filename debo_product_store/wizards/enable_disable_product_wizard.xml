@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- enable.disable.product form view -->
+    <record id="enable_disable_product_view_form" model="ir.ui.view">
+        <field name="name">enable.disable.product.view.form</field>
+        <field name="model">enable.disable.product</field>
+        <field name="arch" type="xml">
+            <form string="Enable/Disable Products">
+                <sheet>
+                    <group>
+                        <field name="product_ids" invisible="1"/>
+                        <field name="store_id"/>
+                        <field name="sector_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Apply" name="action_apply" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_financial_report_tree" model="ir.actions.act_window">
+        <field name="name">Enable Disable Product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">enable.disable.product</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="enable_disable_product_view_form"/>
+        <field name="binding_model_id" ref="product.model_product_product"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- key2="client_action_multi" -->
+    <!-- <act_window id="act_enable_disable_products" name="Enable/Disable Products" res_model="enable.disable.product" src_model="product.product" view_mode="form" target="new" /> -->
+</odoo>

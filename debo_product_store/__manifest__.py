@@ -18,9 +18,17 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base","base_multi_store","account_multi_store","sale_multi_store","product"],
+    "depends": [
+        "base",
+        "base_multi_store",
+        "account_multi_store",
+        "sale_multi_store",
+        "product",
+        "debo_sector",
+    ],
     "data": [
         "security/ir.model.access.csv",
         "views/product_product.xml",
+        "wizards/enable_disable_product_wizard.xml"
     ],
 }
