@@ -26,5 +26,6 @@
         "views/stock_picking.xml",
         "views/stock_warehouse.xml",
         "views/product.xml",
+        "views/cc_config.xml",
     ],
 }

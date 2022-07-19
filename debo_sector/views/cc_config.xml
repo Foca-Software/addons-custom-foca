@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- cash.control.config inherit form view -->
+    <record id="cash_control_config_view" model="ir.ui.view">
+        <field name="name">cash.control.config.inherit.view.form</field>
+        <field name="model">cash.control.config</field>
+        <field name="inherit_id" ref="cash_control.cash_control_config_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="sector_id"/>
+                <field name="child_sector_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
