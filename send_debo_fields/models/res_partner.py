@@ -126,7 +126,8 @@ class ResPartner(models.Model):
             "ID_CLIENTE_DEBO": self.env.company.id_debo,
             "ID_DEBO_CLOUD": self.id,
             "id_debo_c": self.id_debo_c,
-            "id_debo_p": self.id_debo_p
+            "id_debo_p": self.id_debo_p,
+            "store_id" : self.store_id.id,
         }
         # res.update(debo_like_fields)
         return debo_like_fields

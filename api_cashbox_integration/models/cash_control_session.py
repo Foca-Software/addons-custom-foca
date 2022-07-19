@@ -38,6 +38,11 @@ class CashControlSession(models.Model):
             _logger.error(e)
             return False
 
+    def _user_is_active(self, user_id):
+        open_sessions = self.search([('state', '=', 'opened')])
+        active_users = open_sessions.mapped('user_ids')
+        return user_id in active_users.ids
+
     def _api_remove_user(self,user_id):
         try:
             self.write({"user_ids" : [(3, user_id)]})

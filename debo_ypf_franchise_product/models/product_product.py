@@ -13,7 +13,9 @@ class ProductProduct(models.Model):
     ypf_internal_code = fields.Char(readonly=True)
     ypf_barcode = fields.Char(readonly=True)
 
-    ypf_categ_id = fields.Many2one(comodel_name="product.category", string="Category",readonly=True)
+    ypf_categ_id = fields.Many2one(
+        comodel_name="product.category", string="Category", readonly=True
+    )
     ypf_cost = fields.Float(readonly=True)
 
     #'rubro'
@@ -30,7 +32,9 @@ class ProductProduct(models.Model):
 
     ypf_product_uom_id = fields.Many2one(comodel_name="uom.uom", readonly=True)
 
-    ypf_product_uom_po_id = fields.Many2one(comodel_name="uom.uom", readonly=True, string="Purchase UOM")
+    ypf_product_uom_po_id = fields.Many2one(
+        comodel_name="uom.uom", readonly=True, string="Purchase UOM"
+    )
 
     ypf_pricelist = fields.Many2one(
         comodel_name="product.pricelist",
@@ -38,10 +42,18 @@ class ProductProduct(models.Model):
         readonly=True,
     )
 
-    ypf_price = fields.Float(string="YPF Price",readonly=True) #compute?
+    ypf_price = fields.Float(string="YPF Price", readonly=True)  # compute?
 
     ypf_tax_ids = fields.Many2many(
         comodel_name="account.tax", domain=[("is_ypf_tax", "=", True)], readonly=True
     )
 
-    store_ids = fields.Many2many(comodel_name="res.store", readonly=True)  # compute?
+    ypf_store_ids = fields.Many2many(
+        comodel_name="res.store", readonly=True, compute="_compute_store_ids"
+    )
+
+    def _compute_store_ids(self):
+        for product in self:
+            product.ypf_store_ids = self.env["res.store"].search(
+                [("is_ypf_franchise", "=", True)]
+            ).ids

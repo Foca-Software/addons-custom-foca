@@ -5,7 +5,7 @@ class ResStore(models.Model):
     """
     _inherit = "res.store"
 
-    is_ypf_franchise = fields.Boolean(compute="_compute_is_ypf_franchise")
+    is_ypf_franchise = fields.Boolean(compute="_compute_is_ypf_franchise", store=True)
 
     def _compute_is_ypf_franchise(self):
         for store in self:

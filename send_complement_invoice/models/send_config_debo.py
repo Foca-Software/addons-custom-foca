@@ -10,7 +10,7 @@ class ComplementInvoiceConfig(models.Model):
     _inherit = "complement.invoice.config"
 
     def _get_config_fields(self):
-        config_fields = self.read(['id','day','cash_control_config_id','company_id','perceptions_apply'])
+        config_fields = self.read(['id','day','cash_control_config_id','company_id','perceptions_apply','store_id'])
         for config in config_fields:
             config['ID_CLIENTE_DEBO'] = config['company_id']
             del config['company_id']

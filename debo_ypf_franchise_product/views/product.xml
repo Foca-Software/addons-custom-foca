@@ -40,7 +40,7 @@
                         <field name="ypf_price"/>
                         <field name="ypf_cost"/>
                         <field name="ypf_tax_ids" widget="many2many_tags"/>
-                        <field name="store_ids" widget="many2many_tags"/>
+                        <field name="ypf_store_ids" widget="many2many_tags"/>
                     </group>
                 </group>
                 </page>

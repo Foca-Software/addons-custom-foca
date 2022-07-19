@@ -19,7 +19,7 @@
         "bin": [],
     },
     # any module necessary for this one to work correctly
-    "depends": ["base","cash_control_type","debo_fuel_tanks", "account"],
+    "depends": ["base","cash_control_type","debo_fuel_tanks", "account","account_multi_store","web_domain_field"],
     "data": [
         "data/add_script.xml",
         "security/ir.model.access.csv",

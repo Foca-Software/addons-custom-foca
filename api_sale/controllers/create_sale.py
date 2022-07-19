@@ -1,3 +1,4 @@
+from odoo import models
 from odoo.http import request, route, Controller
 import logging
 
@@ -7,6 +8,7 @@ from ..utils.create_methods import (
     create_sale_order,
     confirm_or_unreserve_orders,
     create_invoices_from_sale,
+    get_session_id,
 )
 
 _logger = logging.getLogger(__name__)
@@ -29,6 +31,7 @@ class ReceiveData(Controller):
         user_id = request.env["res.users"].sudo().search([("id", "=", sent_user_id)])
         request.env.user = user_id
         request.env.company = request.env["res.company"].browse(data["company_id"])
+        session_id = get_session_id(data.get('spreadsheet'),data.get('store_id'))
         payload = data["payload"]
         res = {"status": "SUCCESS"}
 
@@ -42,6 +45,7 @@ class ReceiveData(Controller):
             return self._return_error("eventual")
         try:
             sale_orders = create_sale_order(user_id, payload)
+            assign_session_id(sale_orders,session_id)
             _logger.info(f"Sale Order {sale_orders.ids} created")
             res["sale_order_ids"] = sale_orders.ids
         except Exception as e:
@@ -51,6 +55,7 @@ class ReceiveData(Controller):
         try:
             sale_orders.action_confirm()
             picking_ids = confirm_or_unreserve_orders(sale_orders, user_id)
+            assign_session_id(picking_ids,session_id)
             _logger.info(f"Pickings {picking_ids.ids} confirmed or unreserved")
             res["picking_ids"] = picking_ids.ids
         except Exception as e:
@@ -63,6 +68,7 @@ class ReceiveData(Controller):
             invoice_data = payload["invoice_data"]
             invoice_data.update({"oil_card_number": payload["header"].get("oil_card_number")})
             invoice_id = create_invoices_from_sale(sale_orders, invoice_data)
+            assign_session_id(invoice_id,session_id)
             _logger.info(f"Invoice {invoice_id.id} created")
             res["invoice_id"] = invoice_id.id
         except Exception as e:
@@ -74,6 +80,7 @@ class ReceiveData(Controller):
             payment_data = payload.get("payment_data",False)
             payment = create_payments_from_invoices(invoice_id, payment_data, user_id)
             if payment:
+                assign_session_id(payment,session_id)
                 _logger.info(f"Payment {payment.ids} created")
                 res["payment_id"] = payment.ids
             elif invoice_id.invoice_payment_state == "paid":
@@ -195,3 +202,8 @@ class ReceiveData(Controller):
             "state_id": data.get("state_id"),  # optional
         }
         return eventual_partner_data
+
+def assign_session_id(moves:models.Model,session_id:models.Model):
+    for move in moves:
+        move.cash_control_session_id = session_id.id
+

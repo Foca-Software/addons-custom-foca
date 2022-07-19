@@ -56,3 +56,8 @@ def unreserve_orders(sale_orders: object) -> object:
 
 def _get_pump_test_journal_id() -> int:
     return request.env.ref("api_sale.debo_pump_test_journal").id
+
+def get_session_id(spreadsheet:str,store_id:int):
+    session_obj = request.env['cash.control.session'].with_user(ADMIN_ID)
+    session_id = session_obj.get_session_by_id_debo(spreadsheet,store_id)
+    return session_id

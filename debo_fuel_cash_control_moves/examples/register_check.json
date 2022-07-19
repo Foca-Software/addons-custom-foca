@@ -1,17 +1,18 @@
 {
     "params": {
         "company_id": 1,
-     "planilla": "10936",
-    "orig_journal_id": 6,
-    "dest_journal_id": 9,
-    "checks": [
-        {
-            "number": 8950,
-            "issue_date" : "27/05/2022",
-            "amount" : 20000,
-            "partner_id" : 214,
-            "bank_id" : 1
-        }
-    ]
+        "spreadsheet": "3834",
+        "store_id": 1,
+        "orig_journal_id": 6,
+        "dest_journal_id": 9,
+        "checks": [
+            {
+                "number": 8950,
+                "issue_date": "27/05/2022",
+                "amount": 20000,
+                "partner_id": 136695,
+                "bank_id": 1
+            }
+        ]
     }
 }

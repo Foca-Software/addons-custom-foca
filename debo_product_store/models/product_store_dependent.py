@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+
 class ProductStoreDependent(models.Model):
     _name = "product.store.dependent"
     _description = "Product Store Dependent"
@@ -52,9 +53,14 @@ class ProductStoreDependent(models.Model):
         self.uom_id = self.product_id.uom_id
         self.uom_po_id = self.product_id.uom_po_id
 
-
-    @api.constrains('store_id')
+    @api.constrains("store_id")
     def _constraint_store_id(self):
         for line in self:
-            if len(self.search([('store_id','=',line.store_id.id)])) > 1:
-                raise ValidationError(_("You cannot have multiple settings for the same Store"))
+            domain = [
+                ("store_id", "=", line.store_id.id),
+                ("product_id", "=", line.product_id.id),
+            ]
+            if self.search_count(domain) > 1:
+                raise ValidationError(
+                    _("You cannot have multiple settings for the same Store")
+                )

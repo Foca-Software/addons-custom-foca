@@ -3,13 +3,14 @@ from . import account_tax
 from . import cash_control_session
 from . import product_product
 from . import product_category
-from . import product_pricelist_item
+from . import product_pricelist
 from . import product_template
 from . import res_bank
 from . import res_company
 from . import res_partner
 from . import res_config
 from . import res_users
+from . import res_store
 from . import sale_order
 from . import sale_order_line
 from . import stock_picking
