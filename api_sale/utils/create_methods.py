@@ -1,5 +1,5 @@
 from odoo.http import request
-from odoo import models,fields, http, api
+from odoo import models, fields, http, api
 from datetime import datetime
 import logging
 from odoo.exceptions import AccessError, ValidationError
@@ -12,7 +12,7 @@ ADMIN_ID = 2
 # public methods
 def create_sale_order(user_id: int, data: dict) -> object or False:
     """
-        Return list of sale.order object
+    Return list of sale.order object
     """
     sale_data = data.get("header")
     sale_order_ids = []
@@ -27,7 +27,9 @@ def create_sale_order(user_id: int, data: dict) -> object or False:
     if non_fuel_lines:
         non_fuel_order = _create_sale_order(sale_data, sale_obj)
         non_fuel_order._add_lines(non_fuel_lines)
-        non_fuel_order.warehouse_id = _get_warehouse_id(non_fuel_order).id
+        non_fuel_order.warehouse_id = _get_warehouse_id(
+            sale_order=non_fuel_order, sector_code=sale_data.get("sector")
+        ).id
         sale_order_ids.append(non_fuel_order)
     return sale_obj.browse(order.id for order in sale_order_ids)
 
@@ -43,7 +45,7 @@ def confirm_or_unreserve_orders(sale_orders: object, user_id: int) -> object:
         unreserve_required = any(line.product_id.is_fuel for line in picking.move_lines)
         if unreserve_required:
             picking.do_unreserve()
-            
+
         else:
             try:
                 picking.action_assign()
@@ -61,15 +63,17 @@ def confirm_or_unreserve_orders(sale_orders: object, user_id: int) -> object:
                 # odoo response to this has not been specified
     return picking_ids
 
+
 def _update_oil_card_number(picking: models.Model) -> bool:
     picking.is_other_oil_sale_move = True
     picking.oil_card_number = picking.sale_id.oil_card_number
+
 
 def create_invoices_from_sale(sale_orders: object, invoice_data: dict) -> object:
     invoice_ids = sale_orders._create_invoices()
     for invoice in invoice_ids:
         invoice.write(invoice_data)
-        _logger.info(invoice.read(['oil_card_number']))
+        _logger.info(invoice.read(["oil_card_number"]))
         invoice.pay_now_journal_id = _check_pay_now_journal_ok(invoice)
     return invoice_ids
 
@@ -94,6 +98,7 @@ def create_payments_from_invoices(
     _compute_and_post_payment(payment_group)
     return payment_group
 
+
 def _compute_and_post_payment(payment_group: object) -> bool:
     payment_group._compute_payments_amount()
     payment_group._compute_matched_amounts()
@@ -107,6 +112,7 @@ def _compute_and_post_payment(payment_group: object) -> bool:
         payment.post()
     payment_group.post()
     return True
+
 
 # private methods
 def _check_pay_now_journal_ok(invoice: object) -> int or False:
@@ -156,7 +162,7 @@ def _create_sale_order(sale_data: dict, sale_obj: object) -> object:
             "partner_shipping_id": sale_data.get("partner_shipping_id")
             or sale_order.partner_shipping_id.id,
             "pricelist_id": sale_data.get("pricelist_id") or sale_order.pricelist_id.id,
-            "oil_card_number" : sale_data.get("oil_card_number", "")
+            "oil_card_number": sale_data.get("oil_card_number", ""),
         }
     )
     return sale_order
@@ -237,7 +243,7 @@ def _create_payments(
             "to_pay_move_line_ids": context["to_pay_move_line_ids"],
         }
         payment_context.update(context)
-        payment_vals.update(_get_additional_payment_vals(payment,payment_group))
+        payment_vals.update(_get_additional_payment_vals(payment, payment_group))
         acc_payment = acc_payment_obj.with_context(payment_context).create(payment_vals)
         payment_list.append(acc_payment)
 
@@ -249,13 +255,13 @@ def _get_additional_payment_vals(payment: dict, payment_group: object) -> dict:
     return dictionary with fields necessary for different types of payments
     """
     default_date = datetime.now()
-    default_date_str = datetime.strftime(default_date,DEBO_DATE_FORMAT)
+    default_date_str = datetime.strftime(default_date, DEBO_DATE_FORMAT)
     check_vals = {
         "check_number": payment.get("check_number"),
         "check_name": _get_name_from_number(payment.get("check_number")),
         "check_bank_id": payment.get("check_bank_id"),
         "check_issue_date": datetime.strptime(
-            payment.get("check_issue_date",default_date_str), DEBO_DATE_FORMAT
+            payment.get("check_issue_date", default_date_str), DEBO_DATE_FORMAT
         ),
         "check_owner_vat": payment_group.partner_id.vat,
         "check_owner_name": payment_group.partner_id.name,
@@ -269,10 +275,10 @@ def _get_additional_payment_vals(payment: dict, payment_group: object) -> dict:
         "lot_number": payment.get("lot_number", False),
     }
     new_payment_vals = {
-        "received_third_check" : check_vals,
-        "inbound_debit_card" : credit_debit_vals,
-        "inbound_credit_card" : credit_debit_vals,
-        False : {}, #in case _get_payment_method_code returns False
+        "received_third_check": check_vals,
+        "inbound_debit_card": credit_debit_vals,
+        "inbound_credit_card": credit_debit_vals,
+        False: {},  # in case _get_payment_method_code returns False
     }
     journal_id = payment.get("journal_id")
     payment_journal_code = _get_payment_method_code(journal_id)
@@ -317,7 +323,6 @@ def _get_name_from_number(number):
     if len(str(number)) > padding:
         padding = len(str(number))
     return "%%0%sd" % padding % number
-
 
 
 def create_invoice(user_id: int, data: dict) -> dict:
@@ -450,7 +455,8 @@ def check_required_fields(data: dict, move_type: int) -> list or False:
 
     return missing_fields if missing_fields else False
 
-def _get_warehouse_id(sale_order : models.Model) -> models.Model:
+
+def _get_warehouse_id(sale_order: models.Model, sector_code: int) -> models.Model:
     """Finds the correct warehouse_id to add to non fuel sale orders
 
     Args:
@@ -459,14 +465,16 @@ def _get_warehouse_id(sale_order : models.Model) -> models.Model:
     Returns:
         models.Model: stock.warehouse
     """
+
     config_id = sale_order.cash_control_session_id.config_id
-    location_id = config_id.location_id
-    warehouse_obj = request.env['stock.warehouse'].with_user(ADMIN_ID)
-    domain = [('lot_stock_id','=',location_id.id)]
-    warehouse_id = warehouse_obj.search(domain,limit=1)
+    store_id = config_id.store_id
+    warehouse_obj = request.env["stock.warehouse"].with_user(ADMIN_ID)
+    domain = [("sector_id.code", "=", sector_code), ("store_id", "=", store_id.id)]
+    warehouse_id = warehouse_obj.search(domain, limit=1)
     return warehouse_id
 
-def get_session_id(spreadsheet:str,store_id:int):
-    session_obj = request.env['cash.control.session'].with_user(ADMIN_ID)
-    session_id = session_obj.get_session_by_id_debo(spreadsheet,store_id)
+
+def get_session_id(spreadsheet: str, store_id: int):
+    session_obj = request.env["cash.control.session"].with_user(ADMIN_ID)
+    session_id = session_obj.get_session_by_id_debo(spreadsheet, store_id)
     return session_id
