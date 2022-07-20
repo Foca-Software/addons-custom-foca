@@ -38,6 +38,7 @@ class EnableDisableProduct(models.TransientModel):
         for product in product_ids:
             for line in product.store_dependent_field_ids:
                 line.enabled = True
+            product.action_send_debo_fields()
 
     def action_apply(self):
         """Add or edits store dependent fields for all products selectedfor all stores selected.
@@ -70,6 +71,7 @@ class EnableDisableProduct(models.TransientModel):
                             "enabled": self.enable_all,
                         }
                     )
+            product.action_send_debo_fields()
         return self.product_ids.store_dependent_field_ids
 
     def filter_sector_by_store(
@@ -88,7 +90,7 @@ class EnableDisableProduct(models.TransientModel):
             lambda wh: wh.store_id.id == store.id
         )
         store_sectors = product_store_warehouses.mapped("sector_id")
-        sector_ids = self.sector_ids.filtered(lambda sector: sector.id in store_sectors)
+        sector_ids = self.sector_ids.filtered(lambda sector: sector.id in store_sectors.ids)
         return sector_ids
 
     def _get_product_store_line(self, product, store_id):

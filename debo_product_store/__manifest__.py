@@ -20,12 +20,12 @@
     },
     "depends": [
         "base",
-        "base_multi_store",
         "account_multi_store",
         "sale_multi_store",
         "product",
         "debo_sector",
         "web_domain_field",
+        "send_debo_fields",
     ],
     "data": [
         "wizards/change_warehouse_wizard.xml",

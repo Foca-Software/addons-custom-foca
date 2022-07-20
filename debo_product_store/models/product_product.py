@@ -29,3 +29,24 @@ class ProductProduct(models.Model):
         for line in res.store_dependent_field_ids:
             line._onchange_product_id()
         return res
+
+    def _get_debo_fields(self):
+        debo_fields = super()._get_debo_fields()
+        store_fields = []
+        for store_line in self.store_dependent_field_ids:
+            fields = {
+                "store_id": store_line.store_id.id,
+                "price": store_line.price,
+                "pricelist": store_line.pricelist_id.id,
+                "internal_reference": store_line.internal_reference,
+                "barcode": store_line.barcode,
+                "category": store_line.categ_id.id,
+                "taxes": store_line.taxes_id.ids,
+                "cost": store_line.cost,
+                "sectors": store_line.sector_ids.mapped("code"),
+                "enabled": store_line.enabled,
+            }
+            store_fields.append(fields)
+        logging.info(store_fields)
+        debo_fields["store_dependent_fields"] = store_fields
+        return debo_fields
