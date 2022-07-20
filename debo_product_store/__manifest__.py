@@ -25,10 +25,13 @@
         "sale_multi_store",
         "product",
         "debo_sector",
+        "web_domain_field",
     ],
     "data": [
+        "wizards/change_warehouse_wizard.xml",
         "security/ir.model.access.csv",
         "views/product_product.xml",
+        "wizards/actions.xml",
         "wizards/enable_disable_product_wizard.xml"
     ],
 }

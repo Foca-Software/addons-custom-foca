@@ -5,11 +5,16 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_ids']" position="after">
+                <span name="update_warehouse">
+                    <button string="Update Warehouse" type="action" name="%(action_view_product_change_warehouse)d" class="oe_link pt-0 oe_inline"/>
+                </span>
+            </xpath>
             <xpath expr="//notebook[last()]" position="inside">
                 <page string="Stores" name="stores">
                     <group name="store_dependent_fields" string="Store Dependent Fields">
-                        <field name="store_dependent_field_ids" nolabel="1" >
-                            <tree editable="bottom">
+                        <field name="store_dependent_field_ids" nolabel="1">
+                            <tree editable="bottom" decoration-muted="enabled == False">
                                 <field name="product_id" invisible="1"/>
                                 <field name="store_id" />
                                 <field name="name"/>
@@ -20,6 +25,7 @@
                                 <field name="price"/>
                                 <field name="pricelist_id"/>
                                 <field name="sector_ids" string="Available in" widget="many2many_tags"/>
+                                <field name="warehouse_ids" widget="many2many_tags" optional="hide"/>
                                 <field name="enabled"/>
                                 <field name="taxes_id" widget="many2many_tags" optional="hide"/>
                                 <field name="uom_id" optional="hide"/>
