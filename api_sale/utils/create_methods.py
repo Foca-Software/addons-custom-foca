@@ -25,9 +25,7 @@ def create_sale_order(user_id: int, data: dict) -> object or False:
         fuel_order._add_lines(fuel_lines)
         sale_order_ids.append(fuel_order)
     if non_fuel_lines:
-        _logger.info(non_fuel_lines)
         for line in non_fuel_lines:
-            _logger.info(line)
             line_order = _create_sale_order(sale_data, sale_obj)
             line_order._add_lines([line])
             line_order.warehouse_id = _get_warehouse_id(
