@@ -17,17 +17,24 @@ class ProductProduct(models.Model):
 
     pre_net = fields.Float(string="Precio Neto", compute="_compute_pre_net")
 
-    is_up_to_date = fields.Boolean(string="Sent to Debo", default=False, compute="_compute_is_up_to_date")
-    
+    is_up_to_date = fields.Boolean(
+        string="Sent to Debo", default=False, compute="_compute_is_up_to_date"
+    )
+
     # def _default_last_update_debo(self):
     #     if not self.last_update_debo:
     #         return self.write_date - datetime.timedelta(days=1)
 
-    last_update_debo = fields.Datetime(string="Last Update Debo")#, default=_default_last_update_debo
-    
+    last_update_debo = fields.Datetime(
+        string="Last Update Debo"
+    )  # , default=_default_last_update_debo
+
     def _compute_is_up_to_date(self):
         for record in self:
-            if not record.last_update_debo or record.last_update_debo < record.write_date:
+            if (
+                not record.last_update_debo
+                or record.last_update_debo < record.write_date
+            ):
                 record.is_up_to_date = False
             else:
                 record.is_up_to_date = True
@@ -154,7 +161,7 @@ class ProductProduct(models.Model):
         if res:
             try:
                 data = res._get_debo_fields()
-                if data.get('sectores'):
+                if data.get("sectores"):
                     data_sender.send_debo_fields(
                         data=data,
                         endpoint=f"{res._get_base_endpoint()}{res._get_final_endpoint()}",
@@ -171,7 +178,7 @@ class ProductProduct(models.Model):
             try:
                 if not self.env.context.get("create_product_product", False):
                     data = self._get_debo_fields()
-                    if self.should_send_data(data,vals_list):
+                    if self.should_send_data(data, vals_list):
                         data_sender.send_debo_fields(
                             data=data,
                             endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
@@ -182,5 +189,14 @@ class ProductProduct(models.Model):
                 raise Warning(e.args)
         return res
 
-    def should_send_data(self,data,vals_list):
-        return data.get('sectores') or self.warehouse_ids or vals_list.get('warehouse_ids')
+    def should_send_data(self, data, vals_list):
+        return (
+            data.get("sectores") or self.warehouse_ids or vals_list.get("warehouse_ids")
+        )
+
+    def action_send_debo_fields(self):
+        data_sender.send_debo_fields(
+            data=self._get_debo_fields(),
+            endpoint=f"{self._get_base_endpoint()}{self._get_final_endpoint()}",
+            allow_import=True,
+        )

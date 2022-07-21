@@ -23,7 +23,7 @@
         "cash_control_multi_store",
         "debo_fuel_tanks",
         "debo_integration_fields",
-        # "fuel_tanks_cash_control",
+        "debo_sector",
     ],
     "data": [
         "data/account_journal_data.xml",

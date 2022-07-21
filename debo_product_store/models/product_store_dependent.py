@@ -42,6 +42,20 @@ class ProductStoreDependent(models.Model):
         string="Purchase UOM",
     )
 
+    sector_ids = fields.Many2many(comodel_name="sector.sector", string="Sectors")
+
+    warehouse_ids = fields.Many2many(
+        comodel_name="stock.warehouse", compute="_compute_warehouse_id"
+    )
+
+    enabled = fields.Boolean()
+
+    def _compute_warehouse_id(self):
+        for line in self:
+            line.warehouse_ids = line.store_id.mapped("warehouse_ids").filtered(
+                lambda wh: wh.sector_id in line.sector_ids
+            )
+
     @api.onchange("product_id")
     def _onchange_product_id(self):
         self.name = self.product_id.name

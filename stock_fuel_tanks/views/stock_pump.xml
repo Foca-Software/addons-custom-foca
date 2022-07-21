@@ -32,18 +32,6 @@
                             <field name="tank_id" />
                         </group>
                     </group>
-                    <group>
-                        <field name="pump_history_ids" readonly="1">
-                            <tree>
-                                <field name="cash_control_session_id" />
-                                <field name="modified_date" />
-                                <field name="initial_qty" />
-                                <field name="final_qty" />
-                                <field name="cubic_meters" />
-                                <field name="amount" />
-                            </tree>
-                        </field>
-                    </group>
                 </sheet>
             </form>
         </field>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-07 20:50+0000\n"
-"PO-Revision-Date: 2022-07-07 20:50+0000\n"
+"POT-Creation-Date: 2022-07-21 14:38+0000\n"
+"PO-Revision-Date: 2022-07-21 14:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__amount
-msgid "Amount"
-msgstr ""
-
-#. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__capacity
 msgid "Capacity"
 msgstr "Capacidad"
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__cash_control_session_id
-msgid "Cash Control Session"
-msgstr "Planilla"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__code
@@ -37,20 +27,13 @@ msgstr "Código"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__create_uid
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__create_date
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__create_date
 msgid "Created on"
 msgstr ""
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__cubic_meters
-msgid "Cubic Meters"
-msgstr "Litros/m3"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__description
@@ -59,14 +42,8 @@ msgstr "Descripción"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__display_name
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__display_name
 msgid "Display Name"
 msgstr "Nombre"
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__final_qty
-msgid "Final Quantity"
-msgstr "Cantidad Final"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_product_product__is_fuel
@@ -76,14 +53,8 @@ msgstr "Es Combustible"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__id
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__id
 msgid "ID"
 msgstr ""
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__initial_qty
-msgid "Initial Quantity"
-msgstr "Cantidad Inicial"
 
 #. module: stock_fuel_tanks
 #: model:ir.model,name:stock_fuel_tanks.model_stock_location
@@ -97,26 +68,18 @@ msgstr "Es un Tanque de Combustible"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump____last_update
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__write_uid
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__write_date
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__write_date
 msgid "Last Updated on"
 msgstr ""
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__modified_date
-msgid "Modified Date"
-msgstr "Fecha de Registro"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__name
@@ -141,16 +104,6 @@ msgid "Product Template"
 msgstr "Plantilla de producto"
 
 #. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump_history__pump_id
-msgid "Pump"
-msgstr "Surtidor"
-
-#. module: stock_fuel_tanks
-#: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__pump_history_ids
-msgid "Pump History"
-msgstr "Historial de Surtidor"
-
-#. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_location__pump_ids
 #: model:ir.ui.menu,name:stock_fuel_tanks.stock_pump_view_menu_act
 #: model_terms:ir.ui.view,arch_db:stock_fuel_tanks.add_tank_info
@@ -161,11 +114,6 @@ msgstr "Surtidores"
 #: model:ir.model,name:stock_fuel_tanks.model_stock_pump
 msgid "Stock Pump"
 msgstr "Surtidores"
-
-#. module: stock_fuel_tanks
-#: model:ir.model,name:stock_fuel_tanks.model_stock_pump_history
-msgid "Stock Pump History"
-msgstr "Historial de Surtidores"
 
 #. module: stock_fuel_tanks
 #: model:ir.model.fields,field_description:stock_fuel_tanks.field_stock_pump__tank_id
