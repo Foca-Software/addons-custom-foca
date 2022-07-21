@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 13:35+0000\n"
-"PO-Revision-Date: 2022-07-11 13:35+0000\n"
+"POT-Creation-Date: 2022-07-20 21:42+0000\n"
+"PO-Revision-Date: 2022-07-20 21:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,33 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: debo_product_store
+#: model:ir.model.fields,help:debo_product_store.field_enable_disable_product__enable_all
+msgid ""
+"Activating this will make all selected products available for selected "
+"stores"
+msgstr ""
+"Activar esto habilitará todos los productos para estas tiendas"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.enable_disable_product_view_form
+msgid "All previous sector configuration will be lost. Continue?"
+msgstr "Todas las configuraciones previas de Sectores se perderan. Continuar?"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.add_ypf_fields
+msgid "Available in"
+msgstr "Habilitado en"
+
+#. module: debo_product_store
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__barcode
 msgid "Barcode"
 msgstr "Código de Barras"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.enable_disable_product_view_form
+#: model_terms:ir.ui.view,arch_db:debo_product_store.view_product_change_warehouse
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. module: debo_product_store
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__categ_id
@@ -26,16 +50,36 @@ msgid "Categ"
 msgstr "Categoría"
 
 #. module: debo_product_store
+#: model:ir.actions.act_window,name:debo_product_store.action_view_product_change_warehouse
+#: model_terms:ir.ui.view,arch_db:debo_product_store.view_product_change_warehouse
+msgid "Change Product Warehouses"
+msgstr "Cambiar Almacenes del Producto"
+
+#. module: debo_product_store
+#: model:ir.model,name:debo_product_store.model_change_warehouse_wizard
+msgid "Change Warehouse Wizard"
+msgstr "Gestor de Cambio de Almacenes"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.view_product_change_warehouse
+msgid "Change Warehouses"
+msgstr "Cambiar Almacenes"
+
+#. module: debo_product_store
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__cost
 msgid "Cost"
 msgstr "Costo"
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__create_uid
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__create_uid
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__create_date
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__create_date
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__create_date
 msgid "Created on"
 msgstr ""
@@ -46,11 +90,41 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__display_name
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__display_name
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__enable_all
+msgid "Enable All"
+msgstr "Habilitar Todos"
+
+#. module: debo_product_store
+#: model:ir.model,name:debo_product_store.model_enable_disable_product
+msgid "Enable Disable Product"
+msgstr "Habilitar/Deshabilitar Productos"
+
+#. module: debo_product_store
+#: model:ir.actions.server,name:debo_product_store.action_enable_products_as_is
+msgid "Enable for Stores"
+msgstr "Habilitar para Sucursales"
+
+#. module: debo_product_store
+#: model:ir.actions.act_window,name:debo_product_store.action_enable_disable_product
+#: model_terms:ir.ui.view,arch_db:debo_product_store.enable_disable_product_view_form
+msgid "Enable/Disable Products"
+msgstr "Gestionar Sucursales"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__enabled
+msgid "Enabled"
+msgstr "Habilitado"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__id
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__id
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__id
 msgid "ID"
 msgstr ""
@@ -61,16 +135,22 @@ msgid "Internal Reference"
 msgstr "Referencia Interna"
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard____last_update
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product____last_update
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__write_uid
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__write_uid
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__write_date
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__write_date
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -92,6 +172,8 @@ msgstr "Tarifa"
 
 #. module: debo_product_store
 #: model:ir.model,name:debo_product_store.model_product_product
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__product_ids
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__product_ids
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__product_id
 msgid "Product"
 msgstr "Producto"
@@ -107,6 +189,22 @@ msgid "Purchase UOM"
 msgstr "Unidad de Medida (Compras)"
 
 #. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__sector_ids
+msgid "Sector"
+msgstr "Sector"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__sector_ids_domain
+msgid "Sector Ids Domain"
+msgstr ""
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__sector_ids
+msgid "Sectors"
+msgstr "Sectores"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_enable_disable_product__store_ids
 #: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__store_id
 msgid "Store"
 msgstr "Sucursal"
@@ -133,7 +231,28 @@ msgid "Uom"
 msgstr "Unidad de Medida"
 
 #. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.add_ypf_fields
+msgid "Update Warehouse"
+msgstr "Actualizar Almacenes"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_product_store_dependent__warehouse_ids
+msgid "Warehouse"
+msgstr "Almacen"
+
+#. module: debo_product_store
+#: model:ir.model.fields,field_description:debo_product_store.field_change_warehouse_wizard__warehouse_ids
+msgid "Warehouses"
+msgstr "Almacenes"
+
+#. module: debo_product_store
 #: code:addons/debo_product_store/models/product_store_dependent.py:0
 #, python-format
 msgid "You cannot have multiple settings for the same Store"
 msgstr "No puede tener multiples configuraciones para la misma sucursal"
+
+#. module: debo_product_store
+#: model_terms:ir.ui.view,arch_db:debo_product_store.enable_disable_product_view_form
+#: model_terms:ir.ui.view,arch_db:debo_product_store.view_product_change_warehouse
+msgid "_Apply"
+msgstr "Aceptar"
