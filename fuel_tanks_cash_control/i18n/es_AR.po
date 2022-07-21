@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 12:38+0000\n"
-"PO-Revision-Date: 2022-05-30 12:38+0000\n"
+"POT-Creation-Date: 2022-07-21 14:40+0000\n"
+"PO-Revision-Date: 2022-07-21 14:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,7 @@ msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__amount
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__amount
 msgid "Amount"
 msgstr "Importe"
 
@@ -28,6 +29,7 @@ msgstr "Control de Turnos"
 #. module: fuel_tanks_cash_control
 #: model:ir.model,name:fuel_tanks_cash_control.model_cash_control_session
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_picking__cash_control_session_id
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__cash_control_session_id
 msgid "Cash Control Session"
 msgstr "Sesión"
 
@@ -48,26 +50,36 @@ msgstr "Código"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__create_uid
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__create_date
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__cubic_meters
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__cubic_meters
 msgid "Cubic Meters"
 msgstr "Litros/m3"
 
 #. module: fuel_tanks_cash_control
+#: model:ir.model.fields,help:fuel_tanks_cash_control.field_cash_control_config__location_id
+msgid "Default location to deduce stock for non fuel products"
+msgstr ""
+
+#. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__display_name
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__display_name
 msgid "Display Name"
 msgstr "Nombre"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__final_qty
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__final_qty
 msgid "Final Quantity"
 msgstr "Final"
 
@@ -88,18 +100,15 @@ msgstr "Movimiento de Stock de combustible"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__id
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__id
 msgid "ID"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__initial_qty
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__initial_qty
 msgid "Initial Quantity"
 msgstr "Inicial"
-
-#. module: fuel_tanks_cash_control
-#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__is_fuel_cashbox
-msgid "Is Fuel Cashbox"
-msgstr "Es una caja de Playa"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__is_shop_cashbox
@@ -108,23 +117,36 @@ msgstr "Es una caja de Tienda"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line____last_update
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__write_uid
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__write_date
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__location_id
+msgid "Location"
 msgstr ""
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__manual_qty
 msgid "Manual Quantity"
 msgstr "Manual"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__modified_date
+msgid "Modified Date"
+msgstr "Fecha de Registro"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__price
@@ -138,8 +160,14 @@ msgstr "Producto"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__pump_id
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump_history__pump_id
 msgid "Pump"
 msgstr "Surtidor"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_pump__pump_history_ids
+msgid "Pump History"
+msgstr "Historial de Surtidor"
 
 #. module: fuel_tanks_cash_control
 #: model_terms:ir.ui.view,arch_db:fuel_tanks_cash_control.cash_control_session_add_fuel_form
@@ -152,6 +180,11 @@ msgid "Pumps"
 msgstr "Surtidores"
 
 #. module: fuel_tanks_cash_control
+#: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_cash_control_config__is_fuel_cashbox
+msgid "Sells Fuel"
+msgstr "Vende Combustible"
+
+#. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__session_id
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_stock_move__cash_control_session_id
 msgid "Session"
@@ -161,6 +194,16 @@ msgstr "Sesión"
 #: model:ir.model,name:fuel_tanks_cash_control.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model,name:fuel_tanks_cash_control.model_stock_pump
+msgid "Stock Pump"
+msgstr "Surtidores"
+
+#. module: fuel_tanks_cash_control
+#: model:ir.model,name:fuel_tanks_cash_control.model_stock_pump_history
+msgid "Stock Pump History"
+msgstr "Historial de Surtidores"
 
 #. module: fuel_tanks_cash_control
 #: model:ir.model.fields,field_description:fuel_tanks_cash_control.field_fuel_move_line__tank_id

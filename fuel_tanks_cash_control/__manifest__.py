@@ -29,5 +29,6 @@
         "views/cash_control_config.xml",
         "views/cash_control_session.xml",
         "views/stock_picking.xml",
+        "views/stock_pump.xml",
     ],
 }
