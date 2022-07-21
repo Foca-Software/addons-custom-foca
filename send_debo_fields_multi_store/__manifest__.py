@@ -18,8 +18,9 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base","send_debo_fields","base_multi_store"],
+    "depends": ["base","send_debo_fields","base_multi_store",],
     "data": [
         "views/store.xml",
+        "views/stock_picking.xml",
     ],
 }

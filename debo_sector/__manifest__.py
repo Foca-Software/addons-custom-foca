@@ -18,12 +18,11 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["base","stock","cash_control_extension"],
+    "depends": ["base","stock","cash_control_extension",],
     ### XML Data files
     "data": [
         "security/ir.model.access.csv",
         "views/sector_sector.xml",
-        "views/stock_picking.xml",
         "views/stock_warehouse.xml",
         "views/product.xml",
         "views/cc_config.xml",
