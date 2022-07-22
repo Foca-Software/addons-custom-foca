@@ -30,7 +30,7 @@
     "data": [
         "security/ir.model.access.csv",
         "wizards/change_warehouse_wizard.xml",
-        "wizards/enable_disable_product_wizard.xml"
+        "wizards/enable_disable_product_wizard.xml",
         "views/product_product.xml",
         "wizards/actions.xml",
     ],
