@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-12 20:42+0000\n"
-"PO-Revision-Date: 2022-07-12 20:42+0000\n"
+"POT-Creation-Date: 2022-07-25 16:12+0000\n"
+"PO-Revision-Date: 2022-07-25 16:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,6 +61,11 @@ msgid "Id Debo"
 msgstr ""
 
 #. module: debo_sector
+#: model:ir.model,name:debo_sector.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: debo_sector
 #: model:ir.model.fields,field_description:debo_sector.field_sector_sector____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -95,7 +100,7 @@ msgstr "Plantilla de producto"
 #: model:ir.model.fields,field_description:debo_sector.field_stock_warehouse__sector_id
 #: model_terms:ir.ui.view,arch_db:debo_sector.sector_sector_view_form
 msgid "Sector"
-msgstr "Sector"
+msgstr ""
 
 #. module: debo_sector
 #: model:ir.model.fields,field_description:debo_sector.field_product_product__sector_codes
@@ -123,6 +128,16 @@ msgstr "El codigo de Sector ya existe"
 #: model:ir.ui.menu,name:debo_sector.sector_menu_act
 msgid "Sectors"
 msgstr "Sectores"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_stock_location__lot_stock_warehouse_id
+msgid "Stock Location for Warehouse"
+msgstr "Ubicacion de stock del Almacen"
+
+#. module: debo_sector
+#: model:ir.model.fields,field_description:debo_sector.field_sector_sector__stock_quant_ids
+msgid "Stock Quant"
+msgstr "Cantidades en Mano"
 
 #. module: debo_sector
 #: model:ir.model,name:debo_sector.model_stock_warehouse

@@ -9,7 +9,6 @@
             </xpath>
             <xpath expr="//field[@name='location_id']" position="replace">
                 <field name="sector_ids" widget="many2many_tags"/>
-                <button name="inform_sectors_stock" type="object" string="test"/>
             </xpath>
         </field>
     </record>
