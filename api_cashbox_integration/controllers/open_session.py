@@ -28,10 +28,11 @@ class OpenSession(Controller):
             return {"status": "ERROR", "message": "Data not found in request"}
 
         try:
-            # cash_box = request.env['cash.control.config'].with_user(user_id).browse(data.get('cash_id',[]))
             cashbox_id = data.get('cash_id',[])
             store_id = data.get('store_id',False)
-            cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id)])#,('store_id','=',store_id)
+            cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id),('store_id','=',store_id)])
+            if not cash_box:
+                return {"status": "ERROR", "message": "Cash box not found"}
         except Exception as e:
             # Response.status = "400 Bad Request"
             return {"status": "ERROR", "message": "Cash box not found"}
@@ -50,7 +51,9 @@ class OpenSession(Controller):
             if pump_ids:
                 cash_box.current_session_id.pump_ids = [(6,cash_box.current_session_id.id,pump_ids)]
                 cash_box.current_session_id.create_fuel_move_lines()
-            return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name)} 
+            
+            stock = cash_box.inform_sectors_stock()
+            return {"status": "OK", "message": "Cash box %s opened" %(cash_box.name), "stock":stock} 
         except Exception as e:
             # Response.status = "400 Bad Request"
             request.env["cash.control.session"].with_user(user_id).search(
