@@ -35,6 +35,7 @@ class ComplementInvoice(Controller):
             data = kwargs
             request.env.user = ADMIN_ID
             self.check_missing_fields(data)
+            _logger.info("pasamos el check")
             invoice_id = self.create_complement_invoice(data)
             invoice_id.action_post()
             payment_id = self.pay_invoice(invoice_id, data)
@@ -55,7 +56,7 @@ class ComplementInvoice(Controller):
                     invoice_id.button_cancel()
                     invoice_id.delete_number()
                 return {"status": "ERROR", "message": e.args[0]}
-            except Exception as e:
+            except Exception as e2:
                 return {"status": "ERROR", "message": e.args[0]}
 
     def check_missing_fields(self, data: dict) -> bool:
@@ -85,7 +86,7 @@ class ComplementInvoice(Controller):
     def _needed_fields(self) -> list:
         return [
             "company_id",
-            "store_id"
+            "store_id",
             "spreadsheet",
             "journal_id",
             "pay_now_journal_id",
@@ -123,12 +124,10 @@ class ComplementInvoice(Controller):
             invoice_id = account_obj.create(self._get_invoice_vals(invoice_data))
             _logger.info(invoice_id.name)
             lines = self._add_invoice_lines(invoice_id, data["lines"])
-            # invoice_id.update({"pay_now_journal_id": data["pay_now_journal_id"]})
             return invoice_id
         except Exception as e:
-            msg = f"{','.join([arg for arg in e.args])}"
-            _logger.error(msg)
-            raise ValidationError(msg)
+            _logger.error(e)
+            raise ValidationError(e)
 
     def pay_invoice(self, invoice_id: models.Model, data: dict) -> models.Model:
         """Creates payment_group and payment models.Models to pay invoice in cash
