@@ -1,3 +1,4 @@
+import logging
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
@@ -42,3 +43,18 @@ class SectorSector(models.Model):
             code_already_exists = self.search_count(domain) > 1
             if code_already_exists:
                 raise ValidationError(_("Sector code already exists"))
+
+
+    stock_quant_ids = fields.Many2many(comodel_name='stock.quant', compute="_compute_stock_quant_ids")
+
+    def _compute_stock_quant_ids(self):
+        stock_quant_obj = self.env['stock.quant']
+        for sector in self:
+            if not sector.warehouse_ids:
+                sector.stock_quant_ids = False
+                continue
+            location_ids = []
+            for warehouse in sector.warehouse_ids:
+                stock_location = warehouse.lot_stock_id
+                location_ids.append(stock_location.id)
+            sector.stock_quant_ids = stock_quant_obj.search([('location_id','in',location_ids)])

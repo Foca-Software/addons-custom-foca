@@ -7,6 +7,9 @@
             <xpath expr="//field[@name='current_session_id']" position="after">
                 <field name="id_debo" attrs="{'invisible': [('id_debo', '=', False)]}"/>
             </xpath>
+            <xpath expr="//field[@name='location_id']" position="replace">
+                <field name="sector_ids" widget="many2many_tags"/>
+            </xpath>
         </field>
     </record>
 

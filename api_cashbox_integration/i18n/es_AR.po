@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-16 15:19+0000\n"
-"PO-Revision-Date: 2022-06-16 15:19+0000\n"
+"POT-Creation-Date: 2022-07-25 16:10+0000\n"
+"PO-Revision-Date: 2022-07-25 16:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,16 +61,15 @@ msgid "Planilla actual"
 msgstr ""
 
 #. module: api_cashbox_integration
+#: model:ir.model,name:api_cashbox_integration.model_sector_sector
+#: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_config__sector_ids
+msgid "Sector"
+msgstr "Sectores"
+
+#. module: api_cashbox_integration
 #: model_terms:ir.ui.view,arch_db:api_cashbox_integration.add_planilla_session_form
 msgid "Session is closed but not confirmed"
 msgstr "La Sesión esta cerrada pero sin Confirmar"
-
-#. module: api_cashbox_integration
-#: code:addons/api_cashbox_integration/controllers/transfer_cash.py:0
-#: code:addons/foca/api_cashbox_integration/controllers/transfer_cash.py:0
-#, python-format
-msgid "Session not found"
-msgstr "Sesión no encontrada"
 
 #. module: api_cashbox_integration
 #: model:ir.model.fields,field_description:api_cashbox_integration.field_cash_control_session__show_confirmation_alert

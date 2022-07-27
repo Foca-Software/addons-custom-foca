@@ -29,16 +29,13 @@ class CloseSession(Controller):
             return self._return_error("missing fields")
 
         try:
-            # cash_box = (
-            #     request.env["cash.control.config"]
-            #     .with_user(user_id)
-            #     .browse(data.get("cash_id", []))
-            # )
             cashbox_id = data.get('cash_id',[])
             store_id = data.get('store_id',False)
             cash_box = request.env['cash.control.config'].with_user(user_id).search([('id','=',cashbox_id),('store_id','=',store_id)])
+            if not cash_box:
+                return self._return_error("cashbox_id")
         except Exception as e:
-            return self._return_error("cashbox_id")
+            return self._return_error("other")
 
         try:
             self.load_fuel_moves(cash_box,data.get("fuel_moves",False))
@@ -58,7 +55,7 @@ class CloseSession(Controller):
         messages = {
             "missing fields": "Data not found in request",
             "user_id": "Invalid User ID",
-            "cashbox_id": "Invalid Cashbox ID",
+            "cashbox_id": "Cashbox not found",
             "other": f"Cashbox could not be closed. {info or ''}",
         }
         _logger.error(messages[error_type])
