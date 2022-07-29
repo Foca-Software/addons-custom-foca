@@ -1,3 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_fuel_move_line,access_fuel_move_line,model_fuel_move_line,base.group_user,1,1,1,1
-access_stock_pump_history,access_stock_pump_history,model_stock_pump_history,base.group_user,1,1,1,1

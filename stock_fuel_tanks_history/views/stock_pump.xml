@@ -4,18 +4,22 @@
     <record id="stock_pump_view_form" model="ir.ui.view">
         <field name="name">stock.pump.inherit.view.form</field>
         <field name="model">stock.pump</field>
-        <field name="inherit_id" ref="stock_fuel_tanks.stock_pump_view_form"/>
+        <field name="inherit_id" ref="stock_fuel_tanks.stock_pump_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//group[last()]" position="after">
                 <group>
                     <field name="pump_history_ids" readonly="1">
-                        <tree>
+                        <tree default_order="id desc">
+                            <field name="cash_control_config_id" />
                             <field name="cash_control_session_id" />
                             <field name="modified_date" />
                             <field name="initial_qty" />
                             <field name="final_qty" />
                             <field name="cubic_meters" />
-                            <field name="amount" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            <field name="amount" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            <field name="details" />
                         </tree>
                     </field>
                 </group>

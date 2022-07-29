@@ -1,5 +1,4 @@
-from xml.dom import ValidationErr
-from odoo import models, fields, api,_
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 import logging
@@ -10,8 +9,12 @@ _logger = logging.getLogger(__name__)
 class CashControlSession(models.Model):
     _inherit = "cash.control.session"
 
-    config_sells_fuel = fields.Boolean(related="config_id.is_fuel_cashbox", string="Cashbox sells Fuel")
-    config_is_shop = fields.Boolean(related="config_id.is_shop_cashbox", string="Cashbox is Shop")
+    config_sells_fuel = fields.Boolean(
+        related="config_id.is_fuel_cashbox", string="Cashbox sells Fuel"
+    )
+    config_is_shop = fields.Boolean(
+        related="config_id.is_shop_cashbox", string="Cashbox is Shop"
+    )
 
     pump_ids = fields.Many2many(comodel_name="stock.pump", string="Pumps")
     fuel_move_ids = fields.One2many(
@@ -55,6 +58,16 @@ class CashControlSession(models.Model):
             _logger.info(line_ids)
             session.write({"fuel_move_ids": [(6, session.id, line_ids)]})
 
+    @api.model
+    def update_fuel_move_lines(self, fuel_move_id: int, line: dict) -> bool:
+        move_line = self.env["fuel.move.line"].browse(fuel_move_id)
+        del line["pump_id"]
+        move_written = move_line.write(line)
+        if not move_written:
+            _logger.error("fuel line not written")
+            return False
+        return True
+
     def _api_edit_fuel_lines(self, data: dict) -> bool:
         """
         Edits all fuel lines depending on the pump closing data handled by the controller
@@ -69,9 +82,9 @@ class CashControlSession(models.Model):
                 if not fuel_move_id:
                     _logger.error("fuel move id not found")
                     continue
-                move_line = self.env["fuel.move.line"].browse(fuel_move_id)
-                del line["pump_id"]
-                move_line.write(line)
+                if not self.update_fuel_move_lines(fuel_move_id, line):
+                    _logger.error("fuel move not updated")
+                    continue
             except Exception as e:
                 _logger.error(e)
                 return False

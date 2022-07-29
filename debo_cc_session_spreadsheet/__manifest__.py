@@ -21,13 +21,14 @@
         "debo_fuel_cash_control_moves",
         "fuel_tanks_cash_control",
         "debo_fuel_tanks",
+        "stock_fuel_tanks_history",
     ],
     "qweb": [
         "static/src/xml/product_sales_list_widget_template.xml",
         "static/src/xml/fuel_detailed_list_widget_template.xml",
     ],
     "data": [
-        #Temporary fix to access
+        # Temporary fix to access
         "security/ir.model.access.csv",
         "wizard/cc_spreadsheet_cards_details_wizard.xml",
         "wizard/cc_spreadsheet_checks_wizard.xml",

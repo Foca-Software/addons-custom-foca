@@ -9,6 +9,24 @@ IN_CHECK = "account_check.account_payment_method_received_third_check"
 
 _logger = logging.getLogger(__name__)
 
+# Table of contents
+
+## Helpers Functions
+# add_to_product_list
+# add_to_fuel_list
+# recalculate_pumps_values_newest_sessions (Called if maintain_pumps_values_forward boolean
+# field value is True when the spreadsheet is validated)
+
+## Cash Control Session Spreadsheet Class/Model/Methods
+# Write Method
+# Computed Methods and Fields
+# State Field and State Changes Actions
+# Cash Control Session fields
+# Spreadsheet values
+# Complement Invoice Check
+# Summary Table
+# Products and Fuel sales lists
+
 
 def add_to_product_list(products: dict, name: str, line: models.Model) -> dict:
     """
@@ -79,8 +97,27 @@ def add_to_fuel_list(fuels: dict, name: str, line: models.Model) -> dict:
     return fuels
 
 
+def create_pump_history_record(spreadsheet, session, fuel_move_updated, details=False):
+    pump = fuel_move_updated.pump_id
+    hist_vals = {
+        "modified_date": fields.Datetime.now(),
+        "cash_control_session_id": session.id,
+        "pump_id": pump.id,
+        "initial_qty": fuel_move_updated.initial_qty,
+        "final_qty": fuel_move_updated.final_qty,
+        "cubic_meters": fuel_move_updated.cubic_meters,
+        "price": fuel_move_updated.price,
+        "amount": fuel_move_updated.amount,
+        "details": details
+        or _("Created from Validation of Cash Control Session Spreadsheet %s.")
+        % spreadsheet.name,
+    }
+    _logger.info("Creating pump history for pump %s", pump.display_name)
+    pump.pump_history_ids = [(0, 0, hist_vals)]
+
+
 def recalculate_pumps_values_newest_sessions(
-    env: models.Model, session: models.Model
+    spreadsheet: models.Model, env: models.Model, session: models.Model
 ) -> None:
     """
     Recalculate the values of the pumps in the newest sessions.
@@ -88,39 +125,46 @@ def recalculate_pumps_values_newest_sessions(
     :param session: session object "cash.control.session"
     :return: None
     """
+    pump_ids = session.mapped("fuel_move_ids").mapped("pump_id")
 
-    sessions_to_update = env["cash.control.session"].search(
-        [
-            ("config_id", "=", session.config_id.id),
-            ("date_start", ">", session.date_end),
-        ],
-        order="date_start",
+    sessions_to_upd = (
+        pump_ids.mapped("pump_history_ids")
+        .filtered(
+            lambda h, session=session: h.modified_date > session.date_end
+            and session.id != h.cash_control_session_id.id
+        )
+        .mapped("cash_control_session_id")
     )
 
     fuel_move_ids = session.mapped("fuel_move_ids")
 
     # We update the sessions sequentially
-    for session_to_upd in sessions_to_update:
+    for session_to_upd in sessions_to_upd:
         fuel_move_ids_to_upd = session_to_upd.mapped("fuel_move_ids")
         for fuel_move_id in fuel_move_ids:
             # We search for a fuel move with the same pump.
-            fuel_move_to_update = fuel_move_ids_to_upd.filtered(
+            fuel_move_to_upd = fuel_move_ids_to_upd.filtered(
                 lambda x, fuel_move_id=fuel_move_id: x.pump_id.id
                 == fuel_move_id.pump_id.id
             )
-            if fuel_move_to_update:
-                fuel_move_to_update.write({"initial_qty": fuel_move_id.final_qty})
-                fuel_move_to_update.write(
+            if fuel_move_to_upd:
+                fuel_move_to_upd.write({"initial_qty": fuel_move_id.final_qty})
+                fuel_move_to_upd.write(
                     {
-                        "final_qty": fuel_move_to_update.initial_qty
-                        + fuel_move_to_update.cubic_meters
+                        "final_qty": fuel_move_to_upd.initial_qty
+                        + fuel_move_to_upd.cubic_meters
                     }
                 )
-                fuel_move_to_update.write(
-                    {
-                        "amount": fuel_move_to_update.cubic_meters
-                        * fuel_move_to_update.price
-                    }
+                fuel_move_to_upd.write(
+                    {"amount": fuel_move_to_upd.cubic_meters * fuel_move_to_upd.price}
+                )
+                _logger.info(
+                    "Pump %s updated in session %s",
+                    fuel_move_to_upd.pump_id.name,
+                    session_to_upd.name,
+                )
+                create_pump_history_record(
+                    spreadsheet, session_to_upd, fuel_move_to_upd
                 )
 
         fuel_move_ids = session_to_upd.mapped("fuel_move_ids")
@@ -167,15 +211,21 @@ class CashControlSessionSpreadsheet(models.Model):
     def _compute_maintain_pumps_values_forward_status(self):
         for record in self:
             if record.maintain_pumps_values_forward:
-                sessions_to_update = self.env["cash.control.session"].search(
-                    [
-                        ("config_id", "=", record.session_id.config_id.id),
-                        ("date_start", ">", record.session_id.date_end),
-                    ]
+                pump_ids = record.session_id.mapped("fuel_move_ids").mapped("pump_id")
+
+                sessions_to_upd = (
+                    pump_ids.mapped("pump_history_ids")
+                    .filtered(
+                        lambda h, record=record: h.modified_date
+                        > record.session_id.date_end
+                        and record.session_id.id != h.cash_control_session_id.id
+                    )
+                    .mapped("cash_control_session_id")
                 )
-                if sessions_to_update:
+
+                if sessions_to_upd:
                     msg = _("The following sessions will be updated: ")
-                    for session in sessions_to_update:
+                    for session in sessions_to_upd:
                         msg += f"\n{session.name} "
                     record.update({"maintain_pumps_values_forward_status": msg})
                 else:
@@ -210,7 +260,7 @@ class CashControlSessionSpreadsheet(models.Model):
         self.ensure_one()
         self.update({"state": "validated"})
         if self.maintain_pumps_values_forward:
-            recalculate_pumps_values_newest_sessions(self.env, self.session_id)
+            recalculate_pumps_values_newest_sessions(self, self.env, self.session_id)
         self.session_id.update({"state": "final_close"})
         self.action_close_statement()
 
@@ -681,4 +731,12 @@ class CashControlSessionSpreadsheet(models.Model):
             fuel_move_line.session_id.mapped("fuel_move_ids").mapped("amount")
         )
         spreadsheet.update({"total_fuel_sales": total_fuel_sales})
+
+        history_details = (
+            _("Created from Pump Update in Cash Control Session Spreadsheet %s.")
+            % spreadsheet.name
+        )
+        create_pump_history_record(
+            spreadsheet, spreadsheet.session_id, fuel_move_line, history_details
+        )
         return json.dumps({"success": True})

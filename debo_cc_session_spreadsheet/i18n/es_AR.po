@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-08 02:39+0000\n"
-"PO-Revision-Date: 2022-07-08 02:39+0000\n"
+"POT-Creation-Date: 2022-07-29 13:40+0000\n"
+"PO-Revision-Date: 2022-07-29 13:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -385,6 +385,18 @@ msgstr "Confirmar"
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cc_spreadsheet_partial_withdrawals_wizard__create_uid
 msgid "Created by"
 msgstr "Creado por"
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid "Created from Pump Update in Cash Control Session Spreadsheet %s."
+msgstr "Creado desde Actualización de Surtidor en Planilla de Cierre de Turno %s."
+
+#. module: debo_cc_session_spreadsheet
+#: code:addons/debo_cc_session_spreadsheet/models/cash_control_session_spreadsheet.py:0
+#, python-format
+msgid "Created from Validation of Cash Control Session Spreadsheet %s."
+msgstr "Creado desde la Validación de la planilla de cierre de turno %s."
 
 #. module: debo_cc_session_spreadsheet
 #: model:ir.model.fields,field_description:debo_cc_session_spreadsheet.field_cash_control_session_spreadsheet__create_date
